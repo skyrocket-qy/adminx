@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Story } from '@/lib/posts';
 import './sidebar.css';
 
@@ -9,7 +9,7 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ stories, onSelectPost }) => {
   const [selectedType, setSelectedType] = useState('All');
-  const [recommendedStory, setRecommendedStory] = useState<Story | null>(null);
+  // const [recommendedStory, setRecommendedStory] = useState<Story | null>(null);
 
   // Get unique story types
   const articleTypes = ['All', ...new Set(stories.map(story => story.topic))];
@@ -28,15 +28,15 @@ const Sidebar: React.FC<SidebarProps> = ({ stories, onSelectPost }) => {
   };
 
   // Function to select a random story for recommendation
-  const getRandomStory = () => {
-    const randomIndex = Math.floor(Math.random() * stories.length);
-    return stories[randomIndex];
-  };
+  // const getRandomStory = () => {
+  //   const randomIndex = Math.floor(Math.random() * stories.length);
+  //   return stories[randomIndex];
+  // };
 
   // Set a random recommended story on component mount
-  useEffect(() => {
-    setRecommendedStory(getRandomStory());
-  }, [stories]);
+  // useEffect(() => {
+  //   setRecommendedStory(getRandomStory());
+  // }, [stories]);
 
   return (
     <div className=" bg-violet-50 h-full border-t-0 p-2 flex flex-col">

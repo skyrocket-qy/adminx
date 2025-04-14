@@ -1,6 +1,7 @@
-'use server';
-import fs from 'fs/promises';
-import path from 'path';
+// src/lib/posts.ts
+// import fs from 'fs';
+// import path from 'path';
+// import matter from 'gray-matter';
 
 export interface Story {
   title: string;
@@ -9,33 +10,31 @@ export interface Story {
   topic: string;
 }
 
-export async function getMarkdownFiles(): Promise<Story[]> {
-  const postsDirectory = path.join(process.cwd(), 'src/app/blog/stories');
-  const fileNames = await fs.readdir(postsDirectory);
+// Helper function to load .md files at build time
+export function getMarkdownFiles(): Story[] {
+  // const postsDirectory = path.join(process.cwd(), 'src/app/blog/stories');
+  // const fileNames = fs.readdirSync(postsDirectory);
 
-  const allPostsData: Story[] = await Promise.all(
-    fileNames.map(async (fileName) => {
-      const fullPath = path.join(postsDirectory, fileName);
-      const fileContents = await fs.readFile(fullPath, 'utf8');
+  // const allPostsData: Story[] = fileNames.map((fileName) => {
+  //   const fullPath = path.join(postsDirectory, fileName);
+  //   const fileContents = fs.readFileSync(fullPath, 'utf8');
 
-      const lines = fileContents.split('\n');
-      const date = lines[0] || '';
-      const topic = lines[1] || '';
-      const content = lines.slice(2).join('\n');
+  //   // Use gray-matter to parse markdown front-matter
+  //   const { data, content } = matter(fileContents);
 
-      return {
-        title: fileName.replace(/\.md$/, '').replaceAll('_', ' '),
-        content,
-        date,
-        topic,
-      };
-    })
-  );
+  //   return {
+  //     title: fileName.replace(/\.md$/, '').replaceAll('_', ' '),
+  //     content: content,
+  //     date: data.date || '',
+  //     topic: data.topic || '',
+  //   };
+  // });
 
-  allPostsData.sort((a, b) => {
-    const toDate = (d: string) => new Date(+d.slice(0,4), +d.slice(4,6)-1, +d.slice(6,8));
-    return toDate(b.date).getTime() - toDate(a.date).getTime();
-  });
+  // allPostsData.sort((a, b) => {
+  //   const toDate = (d: string) => new Date(+d.slice(0, 4), +d.slice(4, 6) - 1, +d.slice(6, 8));
+  //   return toDate(b.date).getTime() - toDate(a.date).getTime();
+  // });
 
-  return allPostsData;
+  // return allPostsData;
+  return [];
 }

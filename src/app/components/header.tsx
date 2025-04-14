@@ -1,14 +1,12 @@
 'use client';
 import Link from 'next/link';
-import Image from 'next/image';
 // import head from '@/public/head.png';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 // import { AddVisitCount, loadVisitCount } from '@/utils/visit';
 
-interface HeaderProps {}
 
-const Header: React.FC<HeaderProps> = () => {
-  const [visitCount, setVisitCount] = useState(234);
+const Header: React.FC = () => {
+  const [visitCount] = useState(234);
 
   // useEffect(() => {
   //   const fetchVisitCount = async () => {
