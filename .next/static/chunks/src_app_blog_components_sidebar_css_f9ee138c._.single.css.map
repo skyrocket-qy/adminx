@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/src/app/blog/components/sidebar.css"],"sourcesContent":[".custom-select {\n  appearance: none; /* Remove default arrow */\n  background-image: url('data:image/svg+xml;utf8,<svg fill=\"green\" height=\"30\" viewBox=\"0 0 24 24\" width=\"25\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M7 10l5 5 5-5z\"/></svg>');\n  background-repeat: no-repeat;\n  background-position-x: 98%;\n  background-position-y: 50%;\n}\n\n.custom-select:focus {\n  outline: none;\n  border-color: #a0c0ae; /* Tailwind border color for gray-400 */\n  box-shadow: 0 0 0 1px rgba(66, 153, 225, 0.5); /* Tailwind shadow for focus ring */\n}"],"names":[],"mappings":"AAAA;;;;;;;AAQA"}}]
-}

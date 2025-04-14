@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/src/app/blog/scroll.css"],"sourcesContent":["/* scroll.css */\n::-webkit-scrollbar {\n  width: 4px; /* Adjust as needed */\n}\n::-webkit-scrollbar-button {\n  background: #ffffff; /* Scrollbar button color */\n}\n::-webkit-scrollbar-track-piece {\n  background: #ffffff; /* Track piece background color */\n}\n::-webkit-scrollbar-thumb {\n  background: #424a53; /* Scrollbar thumb color */\n  border-radius: 12px; /* Rounded corners for the thumb */\n}\n"],"names":[],"mappings":"AACA;;;;AAGA;;;;AAGA;;;;AAGA"}}]
-}
