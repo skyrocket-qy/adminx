@@ -1,12 +1,12 @@
-import Image from "next/image";
+// import Image from "next/image";
 
 export default function Home() {
   return (
     <div className="relative w-full h-full">
-      <Image
+      <img
         src='/home.png'
         alt="Home"
-        fill
+        // fill
         className="object-fill"
       />
     </div>
