@@ -1,0 +1,14 @@
+/* scroll.css */
+::-webkit-scrollbar {
+  width: 4px; /* Adjust as needed */
+}
+::-webkit-scrollbar-button {
+  background: #ffffff; /* Scrollbar button color */
+}
+::-webkit-scrollbar-track-piece {
+  background: #ffffff; /* Track piece background color */
+}
+::-webkit-scrollbar-thumb {
+  background: #424a53; /* Scrollbar thumb color */
+  border-radius: 12px; /* Rounded corners for the thumb */
+}

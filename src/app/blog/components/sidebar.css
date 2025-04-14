@@ -1,0 +1,13 @@
+.custom-select {
+  appearance: none; /* Remove default arrow */
+  background-image: url('data:image/svg+xml;utf8,<svg fill="green" height="30" viewBox="0 0 24 24" width="25" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position-x: 98%;
+  background-position-y: 50%;
+}
+
+.custom-select:focus {
+  outline: none;
+  border-color: #a0c0ae; /* Tailwind border color for gray-400 */
+  box-shadow: 0 0 0 1px rgba(66, 153, 225, 0.5); /* Tailwind shadow for focus ring */
+}

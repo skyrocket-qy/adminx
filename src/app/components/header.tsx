@@ -37,7 +37,7 @@ const Header: React.FC<HeaderProps> = () => {
       > 
         Blog
       </Link>
-      <Link href="/auth/admin" className="w-32 text-center font-mono items-center hover:border-b-4 justify-center
+      <Link href="/admin" className="w-32 text-center font-mono items-center hover:border-b-4 justify-center
        hover:border-black hover:text-gray-800"
       >
         Admin

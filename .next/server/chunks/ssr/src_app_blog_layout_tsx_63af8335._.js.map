@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 7, "column": 0}, "map": {"version":3,"sources":["file:///Users/zelin/project/adminx/src/app/blog/layout.tsx"],"sourcesContent":["export default function DashboardLayout({\n  children,\n}: {\n  children: React.ReactNode\n}) {\n  return <section className=\"h-full\">{children}</section>\n}"],"names":[],"mappings":";;;;;AAAe,SAAS,gBAAgB,EACtC,QAAQ,EAGT;IACC,qBAAO,6WAAC;QAAQ,WAAU;kBAAU;;;;;;AACtC","debugId":null}}]
+}
