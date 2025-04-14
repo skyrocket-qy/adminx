@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <div className="relative w-full h-full">
       <img
-        src='/home.png'
+        src='home.png'
         alt="Home"
         // fill
         className="object-fill"
