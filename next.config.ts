@@ -4,8 +4,8 @@ const nextConfig: NextConfig = {
   /* config options here */
   
   output: 'export',
-  // basePath: '/adminx',
-  // assetPrefix: '/adminx',
+  basePath: '/adminx/docs',
+  assetPrefix: '/adminx/docs',
   images: {
     unoptimized: true, // ✅ Add this
   },
