@@ -2,6 +2,7 @@
 // import * as grpc from '@grpc/grpc-js';
 
 export async function signIn(username: string, password: string): Promise<string | null> {
+  console.log(username, password);
   return 'fake-token'
   // const client = new MainClient("localhost:50051", grpc.credentials.createInsecure());
   // const req: LoginReq = { UserName: username, Password: password };

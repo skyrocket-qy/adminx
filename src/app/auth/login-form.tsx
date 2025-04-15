@@ -39,7 +39,7 @@ export default function LoginForm() {
         }
         localStorage.setItem('session', resp);
         router.push('/admin');
-    } catch (error) {
+    } catch {
       setErrorMessage('An unexpected error occurred.');
     } finally {
       setIsLoading(false);
