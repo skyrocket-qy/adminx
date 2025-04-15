@@ -7,7 +7,7 @@ export default function Home() {
         src='home.png'
         alt="Home"
         // fill
-        className="object-fill absolute inset-0 w-full h-full"
+        className="absolute inset-0 w-full h-full object-cover"
       />
     </div>
   );
