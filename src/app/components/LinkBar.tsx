@@ -12,10 +12,13 @@ const LinkBar = () => {
   ];
 
   return (
-    <div className="bg-violet-100 p-1 h-full">
-      {links.map((link, index) => (
-        <LinkItem key={index} href={link.href} src={link.src} alt={link.alt} />
-      ))}
+    <div className=" h-full rounded-lg">
+      <img src='/head.png' className='m-0.5 mb-2 h-9 w-9'/>
+      <div className="">
+        {links.map((link, index) => (
+          <LinkItem key={index} href={link.href} src={link.src} alt={link.alt} />
+        ))}
+      </div>
     </div>
   );
 };

@@ -1,23 +1,52 @@
+'use client';
 import "./globals.css";
 import Header from '@/app/components/header';
 import LinkBar from '@/app/components/LinkBar';
+import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const [showHeader, setShowHeader] = useState(false);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    if (pathname == '/'){
+      setShowHeader(true);
+      return;
+    }
+    const handleMouseMove = (e: MouseEvent) => {
+      if (e.clientY < 20 || e.clientY > window.innerHeight - 20 || 
+        e.clientX < 20 || e.clientX > window.innerWidth - 20) {
+        setShowHeader(true);
+      } else {
+        setShowHeader(false);
+      }
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
   return (
-    <html lang="en" className="h-full ">
+    <html lang="en" className="h-full bg-hover-200">
       <body className="h-full overflow-hidden">
-        <div className="h-7 bg-red-400 ">
+        <div className={`h-6 ${showHeader ? 'translate-y-0' : '-translate-y-full'}
+          fixed top-0 left-0 w-full bg-white shadow z-50 transition-transform duration-500`}
+        >
           <Header />
         </div>
         <div className="flex h-full bg-pink-100">
           <main className="flex-1 overflow-hidden h-full">
             {children}
           </main>
-          <div className="w-12 h-full overflow-y-auto bg-yellow-400">
+          <div className={`w-10 h-[95%] rounded-lg justify-center fixed right-0 top-10 shadow
+            transition-transform duration-500 z-40
+            ${showHeader ? 'translate-x-0' : 'translate-x-full'}`}
+          >
             <LinkBar />
           </div>
         </div>
