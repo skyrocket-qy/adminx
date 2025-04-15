@@ -17,6 +17,8 @@ export default function RootLayout({
     if (pathname == '/'){
       setShowHeader(true);
       return;
+    }else{
+      setShowHeader(false);
     }
     const handleMouseMove = (e: MouseEvent) => {
       if (e.clientY < 20 || e.clientY > window.innerHeight - 20 || 
@@ -27,9 +29,21 @@ export default function RootLayout({
       }
     };
 
+    // Optional: force hide once navigated if mouse not near top
+    const handleLeaveTop = () => {
+      if (window.scrollY > 0) {
+        setShowHeader(false);
+      }
+    };
+
     window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
+    window.addEventListener('scroll', handleLeaveTop);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('scroll', handleLeaveTop);
+    };
+  }, [pathname]);
 
   return (
     <html lang="en" className="h-full bg-hover-200">
