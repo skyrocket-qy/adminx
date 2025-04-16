@@ -1,12 +1,11 @@
 'use client';
 import Link from 'next/link';
 // import head from '@/public/head.png';
-import { useState } from 'react';
+// import { useState } from 'react';
 // import { AddVisitCount, loadVisitCount } from '@/utils/visit';
 
 
 const Header: React.FC = () => {
-  const [visitCount] = useState(234);
 
   return (
     <header className={`bg-black h-full w-full font-semibold 
@@ -28,7 +27,7 @@ const Header: React.FC = () => {
     ))}
       <div className="flex items-center ml-auto mr-2">
         <span className="text-white font-sans">
-          visit count: {visitCount}
+          Jimmy Huang
         </span>
       </div>
     </header>

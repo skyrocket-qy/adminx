@@ -4,7 +4,7 @@ import LinkItem from '@/app/components/LinkItem';
 
 const LinkBar = () => {
   const links = [
-    { href: 'https://github.com/skyrocketOoO', src: '/github.png', alt: 'GitHub' },
+    { href: 'https://github.com/skyrocket-qy', src: '/github.png', alt: 'GitHub' },
     { href: 'https://www.instagram.com/jimmyjenny0801', src: '/instagram.png', alt: 'Instagram' },
     { href: 'https://www.linkedin.com/in/jimmy-huang-07aa4722a/', src: '/linkedin.png', alt: 'LinkedIn' },
     { href: 'https://leetcode.com/u/rivendinner/', src: '/leetcode.svg', alt: 'LeetCode' },
