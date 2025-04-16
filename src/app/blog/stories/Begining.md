@@ -1,5 +1,6 @@
 20240712
 Life
+
 From I become an SWE, I always ask a lot of questions, and try a lot of new things.
 Most of them make me surprise!!
 

@@ -9,71 +9,55 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ stories, onSelectPost }) => {
   const [selectedType, setSelectedType] = useState('All');
-  // const [recommendedStory, setRecommendedStory] = useState<Story | null>(null);
+  const articleTypes = ['All', ...new Set(stories.map((story) => story.topic))];
 
-  // Get unique story types
-  const articleTypes = ['All', ...new Set(stories.map(story => story.topic))];
+  const filteredStories =
+    selectedType === 'All'
+      ? stories
+      : stories.filter((story) => story.topic === selectedType);
 
-  // Filter stories by selected type
-  const filteredStories = selectedType === 'All'
-    ? stories
-    : stories.filter(story => story.topic === selectedType);
-
-  // Helper function to truncate content
   const truncateContent = (content: string, maxLength: number) => {
-    if (content.length <= maxLength) {
-      return content;
-    }
-    return content.substring(0, maxLength) + '...';
+    return content.length <= maxLength
+      ? content
+      : content.substring(0, maxLength) + '...';
   };
 
-  // Function to select a random story for recommendation
-  // const getRandomStory = () => {
-  //   const randomIndex = Math.floor(Math.random() * stories.length);
-  //   return stories[randomIndex];
-  // };
-
-  // Set a random recommended story on component mount
-  // useEffect(() => {
-  //   setRecommendedStory(getRandomStory());
-  // }, [stories]);
-
   return (
-    <div className=" bg-violet-50 h-full border-t-0 p-2 flex flex-col">
-      <label htmlFor="typeFilter" className="block text-gray-700 text-sm p-1">
-        Topic:
+    <div className="h-full p-4 flex flex-col bg-white rounded-2xl shadow-inner">
+      <label htmlFor="typeFilter" className="text-sm text-gray-600 mb-2 font-medium">
+        Filter by Topic
       </label>
       <select
         id="typeFilter"
         value={selectedType}
         onChange={(e) => setSelectedType(e.target.value)}
-        className="mb-2 p-1 h-10 border-2 rounded w-full bg-gray-200 custom-select items-center text-base"
+        className="mb-4 p-2 border border-gray-300 rounded-lg bg-gray-100 text-gray-800 focus:outline-none focus:ring-2 focus:ring-violet-400"
       >
-        {articleTypes.map(type => (
-          <option key={type} value={type}>{type}</option>
+        {articleTypes.map((type) => (
+          <option key={type} value={type}>
+            {type}
+          </option>
         ))}
       </select>
 
-      <ul className='leading-0 flex-grow'>
+      <ul className="flex-grow space-y-3 overflow-y-auto pr-1">
         {filteredStories.map((story) => (
-          <button key={story.title} onClick={() => onSelectPost(story.title)} className="p-1 text-base block border-l pl-4 -ml-px border-transparent hover:border-slate-400 dark:hover:border-slate-500 text-slate-700 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-300">
-            <div className='flex items-center p-1 font-bold'>
-              <div className="w-2.5 h-2.5 bg-violet-400 rounded-full mr-2"></div>
-              <div>
-                <div
-                  className="text-slate-900 w-full h-2.5 hover:underline"
-                >
+          <li key={story.title}>
+            <button
+              onClick={() => onSelectPost(story.title)}
+              className="w-full text-left p-3 rounded-lg hover:bg-violet-100 transition-colors duration-200"
+            >
+              <div className="flex items-center gap-2">
+                <div className="w-2.5 h-2.5 bg-violet-400 rounded-full" />
+                <h3 className="font-semibold text-gray-900 text-sm line-clamp-1">
                   {story.title}
-                </div>
+                </h3>
               </div>
-            </div>
-            <div className='flex p-1'>
-              <div className="w-2.5 h-2.5 bg-violet-50 rounded-full mr-2"></div>
-              <p className="text-sm text-left text-gray-900">
-                {truncateContent(story.content, 60)} {/* Adjust the maxLength as needed */}
+              <p className="text-xs text-gray-600 mt-1 pl-5 line-clamp-2">
+                {truncateContent(story.content, 100)}
               </p>
-            </div>
-          </button>
+            </button>
+          </li>
         ))}
       </ul>
     </div>
