@@ -13,12 +13,12 @@ const links = [
   { name: 'Home', href: '/admin', icon: HomeIcon, count: 1 },
   {
     name: 'role',
-    href: '/auth/admin/invoices',
+    href: '/admin/role',
     icon: DocumentDuplicateIcon,
     count: 2, 
     subLinks: [
-      { name: 'Pending', href: '/auth/admin/invoices/pending', count: 1 },
-      { name: 'Paid', href: '/auth/admin/invoices/paid', count: 1 },
+      { name: 'Pending', href: '/admin/role', count: 1 },
+      { name: 'Paid', href: '/admin/role', count: 1 },
     ],
   },
   { name: 'user', href: '/admin/user', icon: UserGroupIcon, count: 0 },
