@@ -26,7 +26,7 @@ export default async function DemoPage() {
   const data = await getData()
 
   return (
-    <div className="py-4 m-4">
+    <div className="">
       <DataTable columns={columns} data={data} />
     </div>
   )

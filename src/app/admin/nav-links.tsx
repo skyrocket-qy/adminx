@@ -12,7 +12,7 @@ import { useState } from 'react';
 const links = [
   { name: 'Home', href: '/admin', icon: HomeIcon, count: 1 },
   {
-    name: 'Invoices',
+    name: 'role',
     href: '/auth/admin/invoices',
     icon: DocumentDuplicateIcon,
     count: 2, 
@@ -22,7 +22,7 @@ const links = [
     ],
   },
   { name: 'user', href: '/admin/user', icon: UserGroupIcon, count: 0 },
-  { name: 'role', href: '/auth/admin/role', icon: UserGroupIcon, count: 0 },
+  // { name: 'role', href: '/auth/admin/role', icon: UserGroupIcon, count: 0 },
 ];
 
 export default function NavLinks() {

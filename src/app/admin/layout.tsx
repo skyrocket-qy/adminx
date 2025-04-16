@@ -2,21 +2,33 @@
 import SideNav from './sidenav';
 
 export const experimental_ppr = true;
- 
+
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex h-full">
-      <div className={`w-[20%] h-full`}>
+    <div className="flex h-screen overflow-hidden bg-gradient-to-br from-violet-100 to-violet-200">
+      {/* Sidebar */}
+      <aside className="w-[16%] h-full bg-violet-50 shadow-md border-r border-violet-200 pb-0 p-4">
         <SideNav />
-      </div>
-      <div className='w-full bg-violet-200'>
-        <div className='w-full h-7'>
-          <div className='my-2 w-7 h-full ml-auto mr-2'>
-            <img className='' src='/user.png'></img>
+      </aside>
+
+      {/* Main content area */}
+      <main className="flex-1 flex flex-col">
+        {/* Top Bar */}
+        <header className="flex items-center justify-end h-11 px-4 pt-5">
+          <img
+            className="w-10 h-10 rounded-full border-2 border-violet-300 shadow-sm hover:shadow-md transition"
+            src="/user.png"
+            alt="User"
+          />
+        </header>
+
+        {/* Main Content */}
+        <section className="flex-1 overflow-auto p-6">
+          <div className="bg-white rounded-2xl shadow-lg p-6 h-full">
+            {children}
           </div>
-        </div>
-        <section className='ml-8 mr-8 my-3 h-[88%] rounded-xl bg-violet-50'>{children}</section>
-      </div>
+        </section>
+      </main>
     </div>
   );
 }

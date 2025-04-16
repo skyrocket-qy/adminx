@@ -8,9 +8,9 @@ export default function SideNav() {
   const router = useRouter();
   return (
     <div className="flex h-full flex-col px-2 py-2 bg-violet-50">
-      <div className="w-full">
+      {/* <div className="w-full">
         <p className="text-[24px] text-center">Admin</p>
-      </div>
+      </div> */}
       <div className="overflow-y-auto bg-violet-50">
         <NavLinks />
       </div>
