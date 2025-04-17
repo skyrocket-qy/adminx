@@ -13,6 +13,7 @@ const Header: React.FC = () => {
     >
     {[
       { href: "/", label: "Home" },
+      { href: "/about/info", label: "About"},
       { href: "/blog", label: "Blog" },
       { href: "/admin", label: "Admin" },
     ].map(({ href, label }) => (
