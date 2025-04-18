@@ -54,7 +54,7 @@ export default function RootLayout({
           <Header />
         </div>
         <div className="flex h-full bg-pink-100">
-          <main className="flex-1 overflow-hidden h-full">
+          <main className="w-full overflow-hidden h-full">
             {children}
           </main>
           <div className={`w-10 h-[95%] rounded-lg justify-center fixed right-0 top-10 shadow

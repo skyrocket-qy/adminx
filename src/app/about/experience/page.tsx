@@ -1,8 +1,8 @@
 const jobs = [
     {
-      period: "2024/11~仍在職",
+      period: "2024/11 ~ Now",
       title: "Senior Backend Engineer",
-      company: "方客特股份有限公司（電腦軟體服務業 1~30人）",
+      company: "Fontech（1~30 people）",
       location: "台北市大同區",
       highlights: [
         "Built a real-time, high-throughput, multi-tenant SaaS alarm management service from the ground up (>1000 RPS)",
@@ -14,9 +14,9 @@ const jobs = [
       tags: ["Github", "Go", "AWS", "SaaS", "系統架構規劃", "Microservice"],
     },
     {
-      period: "2024/10~2025/3 ・6個月",
+      period: "2024/10~2025/3 ・6 months",
       title: "BMC Firmware Engineer II",
-      company: "美商安邁科技股份有限公司台灣分公司（電腦軟體服務業 500人以上）",
+      company: "American Megatrends (500 people up)",
       location: "新北市汐止區",
       highlights: [
         "Independently Operates in BMC",
@@ -29,9 +29,9 @@ const jobs = [
       tags: ["C++", "BMC", "Redfish", "dbus", "Yocto", "Linux"],
     },
     {
-      period: "2024/3~2024/9 ・7個月",
+      period: "2024/3~2024/9 ・7 months",
       title: "Backend Developer",
-      company: "太禾科技有限公司（電腦軟體服務業 30~100人）",
+      company: "Taihe (30~100 people",
       location: "台北市中山區",
       highlights: [
         "Implemented and maintained microservices using PHP and Go",
@@ -42,9 +42,9 @@ const jobs = [
       tags: ["Go", "PHP", "MySQL", "mongo", "singlestore", "MemSQL"],
     },
     {
-      period: "2023/9~2024/3 ・7個月",
+      period: "2023/9~2024/3 ・7 months",
       title: "Software Engineer (On-site at Google)",
-      company: "瞬聯科技股份有限公司（電腦軟體服務業 100~500人）",
+      company: "Cienet（100~500 people）",
       location: "新北市新店區",
       highlights: [
         "Developed test scripts to increase Pixel camera test coverage from 85% to 95%",
@@ -54,9 +54,9 @@ const jobs = [
       tags: ["Python", "Shell", "Linux", "Test Scripts"],
     },
     {
-      period: "2022/6~2023/8 ・1年3個月",
+      period: "2022/6~2023/8 ・1 year 3 months",
       title: "Backend Developer",
-      company: "Ubitus（網際網路相關業 100~500人）",
+      company: "Ubitus（100~500 people）",
       location: "台北市松山區",
       highlights: [
         "Built microservices on K8s with Go, Python, Node.js",
@@ -82,11 +82,11 @@ const jobs = [
   
   export default function WorkPage() {
     return (
-      <main className="h-full w-full p-8">
-        <h1 className="text-2xl font-bold mb-6">工作經驗</h1>
-        <p className="mb-6 text-gray-600">總年資：3~4年工作經驗</p>
+      <main className=" w-full p-8 h-full overflow-y-auto flex flex-col">
+        <h1 className="text-2xl font-bold mb-6">Working experience</h1>
+        <p className="mb-6 text-gray-600">Total : 3~4 years</p>
   
-        <div className="space-y-8">
+        <div className="space-y-8 h-full">
           {jobs.map((job, index) => (
             <div
               key={index}

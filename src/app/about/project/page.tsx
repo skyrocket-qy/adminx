@@ -35,7 +35,7 @@ export default function ProjectPage() {
   
     return (
       <main className="p-8">
-        <h1 className="text-2xl font-bold mb-6">專案成就</h1>
+        <h1 className="text-2xl font-bold mb-6">Project</h1>
         <div className="space-y-6">
           {projects.map((project, idx) => (
             <div key={idx} className="bg-gray-100 p-6 rounded-xl shadow-md">

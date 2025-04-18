@@ -1,105 +1,48 @@
 export default function SkillPage() {
     const skills = [
       {
-        title: "Lang & Framework",
-        items: [
-          "Go (Gin)",
-          "Python (Flask, FastAPI)",
-          "JavaScript, TypeScript",
-          "React (Next.js)",
-          "HTML, CSS, Tailwind CSS",
-          "C/C++",
-          "PHP",
-          "Shell",
-        ],
-        tags: ["Go", "Python", "C", "JavaScript", "PHP", "C++", "Node.js", "CSS", "ReactJS", "HTML"],
+        title: "Languages & Frameworks",
+        items: ["Go (Gin)", "Python (Flask, FastAPI)", "JavaScript / TypeScript", "React (Next.js)", "HTML, CSS, Tailwind", "C / C++", "PHP", "Shell"],
       },
       {
-        title: "DevOps",
-        items: [
-          "AWS: EC2, RDS, S3, Cognito, SES, KMS...etc",
-          "Ansible",
-          "Helm",
-          "Docker",
-          "Kubernetes (K8S)",
-          "CI/CD",
-          "Prometheus",
-          "Fluentd",
-          "Loki",
-          "K6",
-          "Grafana",
-          "Terraform",
-        ],
-        tags: ["Git", "Github", "AWS"],
+        title: "DevOps & Cloud",
+        items: ["AWS (EC2, RDS, S3, Cognito, etc.)", "Docker & Kubernetes", "Helm, Terraform, Ansible", "Prometheus, Fluentd, Loki", "Grafana", "CI/CD pipelines", "K6"],
       },
       {
         title: "Database & OS",
-        items: [
-          "MySQL",
-          "PostgreSQL",
-          "Redis",
-          "MongoDB",
-          "NebulaGraph",
-          "Linux",
-          "versioned-migration",
-        ],
-        tags: ["PostgreSQL", "資料庫程式設計", "Shell", "MySQL", "Linux", "UNIX", "RDBMS"],
+        items: ["MySQL / PostgreSQL", "Redis, MongoDB", "NebulaGraph", "Linux / UNIX", "Schema versioning"],
       },
       {
-        title: "Protocol",
-        items: [
-          "RESTful",
-          "gRPC",
-          "ConnectRPC",
-          "D-Bus",
-          "WebSocket",
-          "GraphQL",
-        ],
-        tags: ["Git", "Django", "Linux", "系統架構規劃", "軟體程式設計", "軟體工程系統開發", "模組化系統設計", "Shell", "UNIX"],
+        title: "Protocols",
+        items: ["RESTful API", "gRPC / ConnectRPC", "GraphQL", "WebSocket", "D-Bus"],
       },
       {
-        title: "Project Management & Architecture",
-        items: [
-          "Jira",
-          "Git, GitLab, GitHub",
-          "Object-Oriented Programming",
-          "Domain-Driven Design",
-          "Test-Driven Design",
-          "Dependency Injection",
-          "Clean Architecture",
-        ],
-        tags: ["Git", "Github", "Version Control", "OOP", "SaaS"],
+        title: "Architecture & PM",
+        items: ["Git, GitHub, Jira", "OOP", "DDD", "TDD", "Dependency Injection", "Clean Architecture"],
       },
       {
         title: "Machine Learning",
-        items: [
-          "Machine Learning",
-          "Deep Learning",
-          "Natural Language Processing",
-        ],
-        tags: ["Machine Learning", "深度學習", "TensorFlow", "NLP", "機器學習"],
+        items: ["Machine Learning", "Deep Learning", "NLP (Natural Language Processing)"],
       },
     ];
   
     return (
-      <main className="p-8">
-        <h1 className="text-2xl font-bold mb-6">專長技能</h1>
-        <div className="space-y-10">
-          {skills.map((section, index) => (
-            <div key={index}>
-              <h2 className="text-xl font-semibold mb-2">{section.title}</h2>
-              <ul className="list-disc list-inside mb-3 text-sm space-y-1">
-                {section.items.map((item, i) => (
-                  <li key={i}>{item}</li>
+      <main className="p-8 bg-[#f5f7fa] min-h-screen">
+        <h1 className="text-3xl font-bold mb-10 text-gray-800">Skill Set</h1>
+        <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+          {skills.map((skill, index) => (
+            <div
+              key={index}
+              className="bg-white rounded-2xl shadow-md p-6 flex flex-col hover:shadow-lg transition duration-300"
+            >
+              <h2 className="text-xl font-semibold mb-4 text-gray-700">{skill.title}</h2>
+              <ul className="space-y-2 text-sm text-gray-600">
+                {skill.items.map((item, i) => (
+                  <li key={i} className="pl-2 relative before:absolute before:left-0 before:top-2 before:w-1 before:h-1 before:bg-blue-500 before:rounded-full">
+                    {item}
+                  </li>
                 ))}
               </ul>
-              <div className="flex flex-wrap gap-2 text-xs text-blue-800">
-                {section.tags.map((tag, i) => (
-                  <span key={i} className="bg-blue-100 px-2 py-0.5 rounded-full">
-                    #{tag}
-                  </span>
-                ))}
-              </div>
             </div>
           ))}
         </div>
