@@ -11,7 +11,6 @@ const jobs = [
         "Integrated various AWS infrastructure (Cognito, EC2, KMS, RDS...etc) to reduce operational overhead",
         "Developed advanced SQL query optimizations that reduced complex query times from 60s to 0.1s",
       ],
-      tags: ["Github", "Go", "AWS", "SaaS", "系統架構規劃", "Microservice"],
     },
     {
       period: "2024/10~2025/3 ・6 months",
@@ -26,7 +25,6 @@ const jobs = [
         "Resolved multiple defects across different level modules",
         "Collaborated with India and US teams using English communication",
       ],
-      tags: ["C++", "BMC", "Redfish", "dbus", "Yocto", "Linux"],
     },
     {
       period: "2024/3~2024/9 ・7 months",
@@ -39,7 +37,6 @@ const jobs = [
         "Quickly familiarized with custom ORM and architecture",
         "Assisted juniors resolving backend and frontend issues",
       ],
-      tags: ["Go", "PHP", "MySQL", "mongo", "singlestore", "MemSQL"],
     },
     {
       period: "2023/9~2024/3 ・7 months",
@@ -51,7 +48,6 @@ const jobs = [
         "Analyzed test data and resolved issues",
         "Maintained automated testing pipeline",
       ],
-      tags: ["Python", "Shell", "Linux", "Test Scripts"],
     },
     {
       period: "2022/6~2023/8 ・1 year 3 months",
@@ -65,7 +61,6 @@ const jobs = [
         "Developed AI-related services",
         "Built log collectors and CI/CD pipelines",
       ],
-      tags: ["Go", "Python", "Kubernetes", "Docker", "PostgreSQL", "Linux"],
     },
     {
       period: "2020/9~2022/6 ・1年10個月",
@@ -76,7 +71,6 @@ const jobs = [
         "OOP & Data Science TA",
         "Wrote automation scripts for grading",
       ],
-      tags: ["Shell", "Python", "OOP", "Machine Learning", "Linux"],
     },
   ];
   
@@ -105,16 +99,6 @@ const jobs = [
                   <li key={i}>{point}</li>
                 ))}
               </ul>
-              <div className="flex flex-wrap gap-2 text-xs text-blue-800">
-                {job.tags.map((tag, i) => (
-                  <span
-                    key={i}
-                    className="bg-blue-100 px-2 py-0.5 rounded-full"
-                  >
-                    #{tag}
-                  </span>
-                ))}
-              </div>
             </div>
           ))}
         </div>

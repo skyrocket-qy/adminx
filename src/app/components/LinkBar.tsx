@@ -13,7 +13,7 @@ const LinkBar = () => {
 
   return (
     <div className=" h-full rounded-lg">
-      <img src='/head.png' className='m-0.5 mb-2 h-9 w-9'/>
+      <img src='/head.png' className='m-0.5 mb-6 h-9 w-9'/>
       <div className="">
         {links.map((link, index) => (
           <LinkItem key={index} href={link.href} src={link.src} alt={link.alt} />

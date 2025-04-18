@@ -9,15 +9,15 @@ export default function ProjectPage() {
           "Clarify the Pros and Cons for Different Business Scales",
         ],
         linkText: "前往查看",
+        href: "https://github.com/skyrocket-qy/hrbacx"
       },
       {
         title: "The application of tree-based model for well interpretation strategy -Taking League of Legends as an example-",
-        duration: "0-1",
+        duration: "2021/1~2022/6",
         description: [
           "Using Machine Learning methods to explore effective strategies for winning during MOBA game play.",
           "Use data augument methods to increase the model accuracy also decrease the label times.",
         ],
-        linkText: "前往查看",
       },
       {
         title: "Alarm management system",
@@ -28,8 +28,7 @@ export default function ProjectPage() {
           "Architected critical system components focusing on horizontal scalability",
           "Integrated various AWS infrastructure(Cognito, EC2, KMS, RDS...etc) to reduce operational overhead",
           "Developed advanced SQL query optimizations that reduced complex query times from 60s to 0.1s",
-        ],
-        linkText: "前往查看",
+        ], 
       },
     ];
   
@@ -48,14 +47,16 @@ export default function ProjectPage() {
                   <li key={i}>{line}</li>
                 ))}
               </ul>
-              <div className="mt-3 text-right">
-                <a
-                  href="#"
-                  className="text-blue-600 hover:underline text-sm"
-                >
-                  {project.linkText}
-                </a>
-              </div>
+              {project.linkText !== "" && (
+                <div className="mt-3 text-right">
+                    <a
+                    href={project.href}
+                    className="text-blue-600 hover:underline text-sm"
+                    >
+                    {project.linkText}
+                    </a>
+                </div>
+                )}
             </div>
           ))}
         </div>

@@ -11,7 +11,7 @@ interface LinkItemProps {
 
 const LinkItem: React.FC<LinkItemProps> = ({ href, src, alt }) => (
   <Link href={href} target="_blank" rel="noopener noreferrer" className=''>
-    <div className="size-full mb-6 mt-4 hover:bg-violet-200 rounded-full">
+    <div className="size-full mb-8 mt-8 hover:bg-violet-200 rounded-full">
       <img src={src} alt={alt} className="object-cover size-full items-center"/>
     </div>
   </Link>
