@@ -1,5 +1,6 @@
 'use client';
 
+
 export default function Home() {
 
   return (
@@ -18,7 +19,9 @@ export default function Home() {
           <p className="text-xl text-amber-900 opacity-0 animate-[fadeUp_0.8s_ease-out_1.7s_forwards]">
             Welcome to my playground
           </p>
+
         </div>
+
     </div>
   );
 }

@@ -1,0 +1,1 @@
+(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[255],{1596:(e,s,n)=>{Promise.resolve().then(n.bind(n,9261))},9261:(e,s,n)=>{"use strict";n.r(s),n.d(s,{default:()=>t});var r=n(6658);function t(){return(0,r.jsx)("div",{className:"w-screen h-screen flex items-center justify-center bg-stone-50"})}}},e=>{var s=s=>e(e.s=s);e.O(0,[773,261,358],()=>s(1596)),_N_E=e.O()}]);
