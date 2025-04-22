@@ -1,12 +1,14 @@
 type NodeClass = 'role' | 'object' | 'object_set' | 'user';
 
-export interface GraphNode {
-  id: string;
-  name: string;
-  class: NodeClass;
-}
+export interface Node {
+    id: string;
+    name: string;
+    class: 'role' | 'object_set' | 'object';
+    layer?: number; // optional for roles
+  }
+  
 
-export interface GraphEdge {
+export interface Edge {
   from: string; // source node id
   to: string;   // destination node id
   weight: number;
@@ -14,6 +16,6 @@ export interface GraphEdge {
 }
 
 export interface GraphData {
-  nodes: GraphNode[];
-  edges: GraphEdge[];
-}
+  nodes: Node[];
+  edges: Edge[];
+} 

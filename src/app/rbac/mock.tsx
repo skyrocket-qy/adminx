@@ -3,12 +3,14 @@ import { GraphData } from "./type";
 export const mockHRBACGraph: GraphData = {
     nodes: [
       // Roles (Layer 1 to 6)
-      { id: "r1", name: "CompanyAdmin", class: "role" },
-      { id: "r2", name: "DivisionAdmin", class: "role" },
-      { id: "r3", name: "DepartmentHead", class: "role" },
+      { id: "r1", name: "Admin", class: "role" },
+      { id: "r2", name: "CEO", class: "role" },
+      { id: "r3", name: "CTO", class: "role" },
       { id: "r4", name: "TeamLead", class: "role" },
       { id: "r5", name: "SeniorStaff", class: "role" },
       { id: "r6", name: "JuniorStaff", class: "role" },
+
+      { id: "r7", name: "PM", class: "role" },
   
       // Object Sets (Layer 7)
       { id: "os1", name: "HRDocuments", class: "object_set" },
