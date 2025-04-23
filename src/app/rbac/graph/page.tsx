@@ -5,22 +5,61 @@ import { useEffect, useRef } from "react";
 
 type TreeNode = {
   name: string;
+  type: string;
   children?: TreeNode[];
 };
 
 const data: TreeNode = {
-  name: "root",
+  name: "CEO",
+  type: "CEO",
   children: [
+    { name: "HR-Documents", type: "object"},
+    { name: "Dev-Resources", type: "object"},
+    { name: "Internal-Wiki", type: "object"},
+    { name: "Employee-contract", type: "object"},
     {
-      name: "child 1",
+      name: "CTO 1",
+      type: "CTO",
       children: [
-        { name: "child 1.1" },
-        { name: "child 1.2", children: [{ name: "child 1.2.1" }] },
+        { name: "HR-Documents", type: "object"},
+        { name: "Dev-Resources", type: "object"},
+        { name: "Internal-Wiki", type: "object"},
+        { name: "Employee-contract", type: "object"},
+        { name: "TeamLead 1", type: "teamlead", children: [{ name: "Senior 1", type: "senior" }, { name: "Junior 1", type: "junior" }] },
+        { name: "TeamLead 2", type: "teamlead", children: [{ name: "Junior 2" , type: "junior"}, { name: "Junior 3" , type: "junior"}, { name: "Junior 4" , type: "junior"}] },
       ],
     },
     {
-      name: "child 2",
-      children: [{ name: "child 2.1" }],
+      name: "CTO 2",
+      type: "CTO",
+      children: [
+        { name: "HR-Documents", type: "object"},
+        { name: "Dev-Resources", type: "object"},
+        { name: "Internal-Wiki", type: "object"},
+        { name: "Employee-contract", type: "object"},
+        { name: "TeamLead 3", type: "teamlead", children: [
+          { name: "HR-Documents", type: "object"},
+          { name: "Dev-Resources", type: "object"},
+          { name: "Employee-contract", type: "object"},
+          { name: "Senior 3", type: "senior" }, 
+          { name: "Senior 4", type: "senior", children: [
+            { name: "Junior 5", type: "junior" , children: [
+              { name: "Dev-Resources", type: "object"},
+            ]}, { name: "Junior 6", type: "junior", children: [
+              { name: "Dev-Resources", type: "object"},
+            ]},
+            { name: "HR-Documents", type: "object"},
+            { name: "Dev-Resources", type: "object"},
+          ] },
+          { name: "Junior 7", type: "junior", children: [
+            { name: "Dev-Resources", type: "object"},
+          ] },
+          ] 
+        },
+        { name: "PM 1", type: "PM", children: [
+          { name: "HR-Documents", type: "object"},
+        ]},
+      ],
     },
   ],
 };
@@ -28,7 +67,7 @@ const data: TreeNode = {
 export default function HRBACTree() {
   const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
-  const dimensions = { width: 1000, height: 900 };
+  const dimensions = { width: 1600, height: 900 };
 
   useEffect(() => {
     const { width, height } = dimensions;
@@ -41,12 +80,91 @@ export default function HRBACTree() {
       .attr("height", height);
     svg.selectAll("*").remove();
 
-    const g = svg.append("g");
+    const g = svg.append("g").attr("transform", `translate(${width / 2}, ${height / 2})`);
 
-    const root = d3.hierarchy<TreeNode>(data);
-    const links = root.links();
-    const nodes = root.descendants();
+    const root = d3.hierarchy(data);
+    
+    const radialPoint = (x: number, y: number) => {
+      return [Math.cos(x - Math.PI / 2) * y, Math.sin(x - Math.PI / 2) * y];
+    };
+    
+    // Draw concentric layers
+    const maxDepth = d3.max(root.descendants(), (d) => d.depth)!;
+    const layerRadiusStep = 80;
+    const treeLayout = d3.tree<TreeNode>().size([2 * Math.PI, maxDepth * layerRadiusStep]);
+    treeLayout(root);
 
+  // add bg color
+  //   const arc = d3.arc()
+  //   .innerRadius((d: number) => (d - 1) * layerRadiusStep)
+  //   .outerRadius((d: number) => d * layerRadiusStep)
+  //   .startAngle(0)
+  //   .endAngle(2 * Math.PI);
+  
+  // g.append("g")
+  //   .attr("class", "layer-bg")
+  //   .selectAll("path")
+  //   .data(d3.range(1, maxDepth + 1))
+  //   .join("path")
+  //   .attr("d", arc as any)
+  //   .attr("fill", (d) => d3.schemePastel1[(d - 1) % d3.schemePastel1.length])
+  //   .attr("opacity", 0.4);
+  
+
+    g.append("g")
+    .selectAll("text")
+    .data(root.descendants())
+    .join("text")
+    .attr("transform", (d) => {
+      const [x, y] = radialPoint(d.x ?? 0, d.y ?? 0);
+      return `translate(${x}, ${y - 10})`; // Adjust the `-10` to move label above node
+    })
+    .attr("text-anchor", "middle")
+    .attr("font-size", "10px")
+    .attr("fill", "#333")
+    .text((d) => d.data.name);
+
+    g.append("g")
+      .attr("class", "layers")
+      .selectAll("circle")
+      .data(d3.range(1, maxDepth + 1))
+      .join("circle")
+      .attr("r", (d) => d * layerRadiusStep)
+      .attr("fill", "none")
+      .attr("stroke", (d) => d3.schemeCategory10[d % 10])
+      .attr("stroke-dasharray", "4 2");
+
+    const link = g
+      .append("g")
+      .attr("fill", "none")
+      .attr("stroke", "#999")
+      .attr("stroke-opacity", 0.6)
+      .attr("stroke-width", 1.5)
+      .selectAll("path")
+      .data(root.links())
+      .join("path")
+      .attr("d", (d) => {
+        const [sx, sy] = radialPoint(d.source.x ?? 0, d.source.y ?? 0);
+        const [tx, ty] = radialPoint(d.target.x ?? 0, d.target.y ?? 0);
+        return `M${sx},${sy}L${tx},${ty}`;
+      });
+    console.log(link == null)
+
+    const node = g
+      .append("g")
+      .selectAll("circle")
+      .data(root.descendants())
+      .join("circle")
+      .attr("transform", (d) => {
+        const [x, y] = radialPoint(d.x ?? 0, d.y ?? 0);
+        return `translate(${x},${y})`;
+      })
+      .attr("r", 5)
+      .attr("fill", (d) => (d.children ? "steelblue" : "lightgray"))
+      .attr("stroke", "#fff")
+      .attr("stroke-width", 1.5);
+
+    // Tooltip
     const tooltip = d3
       .select("body")
       .append("div")
@@ -58,39 +176,6 @@ export default function HRBACTree() {
       .style("padding", "5px")
       .style("border-radius", "5px")
       .style("pointer-events", "none");
-
-    const simulation = d3
-      .forceSimulation<d3.HierarchyNode<TreeNode>>(nodes)
-      .force(
-        "link",
-        d3
-          .forceLink<d3.HierarchyNode<TreeNode>, d3.HierarchyLink<TreeNode>>(links)
-          .id((d) => d.data.name)
-          .distance(50)
-          .strength(1)
-      )
-      .force("charge", d3.forceManyBody().strength(-100))
-      .force("center", d3.forceCenter(width / 2, height / 2));
-
-    g.append("g")
-      .attr("stroke", "#999")
-      .attr("stroke-opacity", 0.6)
-      .selectAll("line")
-      .data(links)
-      .join("line")
-      .attr("stroke-width", 1);
-
-    const node = g
-      .append("g")
-      .attr("stroke", "#fff")
-      .attr("stroke-width", 1.5)
-      .selectAll("circle")
-      .data(nodes)
-      .join("circle")
-      .attr("r", 5)
-      .attr("fill", (d) => (d.children ? "steelblue" : "lightgray"));
-
-    node.append("title").text((d) => d.data.name);
 
     node
       .on("mouseover", (event, d) => {
@@ -104,20 +189,7 @@ export default function HRBACTree() {
         tooltip.style("visibility", "hidden");
       });
 
-    simulation.on("tick", () => {
-      g.selectAll<SVGLineElement, d3.HierarchyLink<TreeNode>>("line")
-        .attr("x1", (d) => d.source.x!)
-        .attr("y1", (d) => d.source.y!)
-        .attr("x2", (d) => d.target.x!)
-        .attr("y2", (d) => d.target.y!);
-
-      node
-        .attr("cx", (d) => d.x!)
-        .attr("cy", (d) => d.y!);
-    });
-
     return () => {
-      simulation.stop();
       tooltip.remove();
     };
   }, [dimensions]);
@@ -127,7 +199,7 @@ export default function HRBACTree() {
       ref={containerRef}
       className="overflow-hidden bg-amber-50 h-full w-full"
     >
-      <svg ref={svgRef} />
+      <svg ref={svgRef}></svg>
     </div>
   );
 }
