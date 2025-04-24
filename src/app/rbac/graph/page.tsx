@@ -6,58 +6,68 @@ import { useEffect, useRef } from "react";
 type TreeNode = {
   name: string;
   type: string;
+  level: number;
   children?: TreeNode[];
 };
 
 const data: TreeNode = {
   name: "CEO",
   type: "CEO",
+  level: 0,
   children: [
-    { name: "HR-Documents", type: "object"},
-    { name: "Dev-Resources", type: "object"},
-    { name: "Internal-Wiki", type: "object"},
-    { name: "Employee-contract", type: "object"},
+    { name: "HR-Documents", type: "object", level: 5 },
+    { name: "Dev-Resources", type: "object", level: 5},
+    { name: "Internal-Wiki", type: "object", level: 5},
+    { name: "Employee-contract", type: "object", level: 5},
     {
       name: "CTO 1",
       type: "CTO",
+      level: 1,
       children: [
-        { name: "HR-Documents", type: "object"},
-        { name: "Dev-Resources", type: "object"},
-        { name: "Internal-Wiki", type: "object"},
-        { name: "Employee-contract", type: "object"},
-        { name: "TeamLead 1", type: "teamlead", children: [{ name: "Senior 1", type: "senior" }, { name: "Junior 1", type: "junior" }] },
-        { name: "TeamLead 2", type: "teamlead", children: [{ name: "Junior 2" , type: "junior"}, { name: "Junior 3" , type: "junior"}, { name: "Junior 4" , type: "junior"}] },
+        { name: "HR-Documents", type: "object", level: 5},
+        { name: "Dev-Resources", type: "object", level: 5},
+        { name: "Internal-Wiki", type: "object", level: 5},
+        { name: "Employee-contract", type: "object", level: 5},
+        { name: "TeamLead 1", type: "teamlead", level: 2, children: [
+          { name: "Senior 1", type: "senior" ,level: 3,}, 
+          { name: "Junior 1", type: "junior" ,level: 4}
+        ] },
+        { name: "TeamLead 2", type: "teamlead", level: 2,children: [
+          { name: "Junior 2" , type: "junior",level: 4, }, 
+          { name: "Junior 3" , type: "junior",level: 4}, 
+          { name: "Junior 4" , type: "junior",level: 4,}] },
       ],
     },
     {
       name: "CTO 2",
       type: "CTO",
+      level: 1,
       children: [
-        { name: "HR-Documents", type: "object"},
-        { name: "Dev-Resources", type: "object"},
-        { name: "Internal-Wiki", type: "object"},
-        { name: "Employee-contract", type: "object"},
-        { name: "TeamLead 3", type: "teamlead", children: [
-          { name: "HR-Documents", type: "object"},
-          { name: "Dev-Resources", type: "object"},
-          { name: "Employee-contract", type: "object"},
-          { name: "Senior 3", type: "senior" }, 
-          { name: "Senior 4", type: "senior", children: [
-            { name: "Junior 5", type: "junior" , children: [
-              { name: "Dev-Resources", type: "object"},
-            ]}, { name: "Junior 6", type: "junior", children: [
-              { name: "Dev-Resources", type: "object"},
+        { name: "HR-Documents", type: "object", level: 5},
+        { name: "Dev-Resources", type: "object", level: 5},
+        { name: "Internal-Wiki", type: "object", level: 5},
+        { name: "Employee-contract", type: "object", level: 5},
+        { name: "TeamLead 3", type: "teamlead",level: 2,children: [
+          { name: "HR-Documents", type: "object", level: 5},
+          { name: "Dev-Resources", type: "object", level: 5},
+          { name: "Employee-contract", type: "object", level: 5},
+          { name: "Senior 3", type: "senior" , level: 3}, 
+          { name: "Senior 4", type: "senior", level: 3,children: [
+            { name: "Junior 5", type: "junior" , level: 4, children: [
+              { name: "Dev-Resources", type: "object", level: 5},
+            ]}, { name: "Junior 6", type: "junior", level: 4, children: [
+              { name: "Dev-Resources", type: "object", level: 5},
             ]},
-            { name: "HR-Documents", type: "object"},
-            { name: "Dev-Resources", type: "object"},
+            { name: "HR-Documents", type: "object", level: 5},
+            { name: "Dev-Resources", type: "object", level: 5},
           ] },
-          { name: "Junior 7", type: "junior", children: [
-            { name: "Dev-Resources", type: "object"},
+          { name: "Junior 7", type: "junior", level: 4, children: [
+            { name: "Dev-Resources", type: "object", level: 5},
           ] },
           ] 
         },
-        { name: "PM 1", type: "PM", children: [
-          { name: "HR-Documents", type: "object"},
+        { name: "PM 1", type: "PM", level: 3, children: [
+          { name: "HR-Documents", type: "object", level: 5},
         ]},
       ],
     },
@@ -84,33 +94,35 @@ export default function HRBACTree() {
 
     const root = d3.hierarchy(data);
     
+    
     const radialPoint = (x: number, y: number) => {
       return [Math.cos(x - Math.PI / 2) * y, Math.sin(x - Math.PI / 2) * y];
     };
     
     // Draw concentric layers
-    const maxDepth = d3.max(root.descendants(), (d) => d.depth)!;
+    const maxDepth = d3.max(root.descendants(), (d) => d.data.level)!;
     const layerRadiusStep = 80;
     const treeLayout = d3.tree<TreeNode>().size([2 * Math.PI, maxDepth * layerRadiusStep]);
     treeLayout(root);
+    root.descendants().forEach((d) => {
+      d.y = d.data.level * layerRadiusStep;
+    });
 
   // add bg color
   g.append("g")
-  .selectAll("path")
-  .data(d3.range(1, maxDepth + 1))
-  .join("path")
-  .attr("d", (d) =>
-    d3.arc()({
-      innerRadius: (d - 1) * layerRadiusStep,
-      outerRadius: d * layerRadiusStep,
-      startAngle: 0,
-      endAngle: 2 * Math.PI,
-    } as d3.DefaultArcObject)
-  )
-  .attr("fill", (d) => d3.schemePastel1[(d - 1) % d3.schemePastel1.length])
-  .attr("opacity", 0.4);
-
-  
+    .selectAll("path")
+    .data(d3.range(1, maxDepth + 1))
+    .join("path")
+    .attr("d", (d) =>
+      d3.arc()({
+        innerRadius: (d - 1) * layerRadiusStep,
+        outerRadius: d * layerRadiusStep,
+        startAngle: 0,
+        endAngle: 2 * Math.PI,
+      } as d3.DefaultArcObject)
+    )
+    .attr("fill", (d) => d3.schemePastel1[(d - 1) % d3.schemePastel1.length])
+    .attr("opacity", 0.4);
 
     g.append("g")
     .selectAll("text")
