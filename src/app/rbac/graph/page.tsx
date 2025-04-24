@@ -95,20 +95,21 @@ export default function HRBACTree() {
     treeLayout(root);
 
   // add bg color
-  //   const arc = d3.arc()
-  //   .innerRadius((d: number) => (d - 1) * layerRadiusStep)
-  //   .outerRadius((d: number) => d * layerRadiusStep)
-  //   .startAngle(0)
-  //   .endAngle(2 * Math.PI);
-  
-  // g.append("g")
-  //   .attr("class", "layer-bg")
-  //   .selectAll("path")
-  //   .data(d3.range(1, maxDepth + 1))
-  //   .join("path")
-  //   .attr("d", arc as any)
-  //   .attr("fill", (d) => d3.schemePastel1[(d - 1) % d3.schemePastel1.length])
-  //   .attr("opacity", 0.4);
+  g.append("g")
+  .selectAll("path")
+  .data(d3.range(1, maxDepth + 1))
+  .join("path")
+  .attr("d", (d) =>
+    d3.arc()({
+      innerRadius: (d - 1) * layerRadiusStep,
+      outerRadius: d * layerRadiusStep,
+      startAngle: 0,
+      endAngle: 2 * Math.PI,
+    } as d3.DefaultArcObject)
+  )
+  .attr("fill", (d) => d3.schemePastel1[(d - 1) % d3.schemePastel1.length])
+  .attr("opacity", 0.4);
+
   
 
     g.append("g")
