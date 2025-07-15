@@ -9,6 +9,7 @@ const LinkBar = () => {
     { href: 'https://www.linkedin.com/in/jimmy-huang-07aa4722a/', src: '/linkedin.png', alt: 'LinkedIn' },
     { href: 'https://leetcode.com/u/rivendinner/', src: '/leetcode.svg', alt: 'LeetCode' },
     { href: 'https://www.hackerrank.com/profile/skyrocketqy81', src: '/hackerrank.png', alt: 'HackerRank' },
+    { href: 'https://medium.com/@skyRocket_QingYun', src: '/medium.png', alt: 'Medium' },
   ];
 
   return (

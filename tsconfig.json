@@ -19,7 +19,9 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "three/webgpu": ["./node_modules/three/build/three.webgpu.js"],
+      "three/tsl": ["./node_modules/three/build/three.tsl.js"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
