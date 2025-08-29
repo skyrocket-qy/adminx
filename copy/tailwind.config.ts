@@ -93,7 +93,42 @@ export default {
 				'matrix-rain': {
 					'0%': { transform: 'translateY(-100vh)' },
 					'100%': { transform: 'translateY(100vh)' }
-				}
+				},
+        'fade-in': {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        'fade-in-down': {
+          '0%': {
+            opacity: '0',
+            transform: 'translateY(-10px)'
+          },
+          '100%': {
+            opacity: '1',
+            transform: 'translateY(0)'
+          },
+        },
+        'fade-in-up': {
+          '0%': {
+            opacity: '0',
+            transform: 'translateY(10px)'
+          },
+          '100%': {
+            opacity: '1',
+            transform: 'translateY(0)'
+          },
+        },
+        'blob': {
+          '0%, 100%': {
+            transform: 'translate(0px, 0px) scale(1)',
+          },
+          '33%': {
+            transform: 'translate(30px, -50px) scale(1.1)',
+          },
+          '66%': {
+            transform: 'translate(-20px, 20px) scale(0.9)',
+          },
+        },
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
@@ -101,8 +136,16 @@ export default {
 				'glow-pulse': 'glow-pulse 2s ease-in-out infinite',
 				'typing': 'typing 2s steps(30) infinite',
 				'float': 'float 3s ease-in-out infinite',
-				'matrix-rain': 'matrix-rain 3s linear infinite'
-			}
+				'matrix-rain': 'matrix-rain 3s linear infinite',
+        'fade-in': 'fade-in 0.5s ease-out',
+        'fade-in-down': 'fade-in-down 0.5s ease-out',
+        'fade-in-up': 'fade-in-up 0.5s ease-out',
+        'blob': 'blob 7s infinite',
+			},
+      animationDelay: {
+        '2000': '2s',
+        '4000': '4s',
+      },
 		}
 	},
 	plugins: [require("tailwindcss-animate")],
