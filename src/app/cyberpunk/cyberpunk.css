@@ -202,3 +202,51 @@
   95% { clip: rect(98px, 9999px, 82px, 0); }
   100% { clip: rect(30px, 9999px, 11px, 0); }
 }
+
+/* Animated Block */
+.animated-block {
+  background-color: #1a1a1a;
+  border: 2px solid var(--cyber-secondary);
+  padding: 2rem;
+  width: 100%;
+  max-width: 600px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 15px var(--cyber-secondary);
+}
+
+.animated-block-h3 {
+  font-size: 1.5rem;
+  color: var(--cyber-primary);
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.animated-block-p {
+  font-size: 1rem;
+  color: var(--cyber-text);
+  margin-bottom: 1.5rem;
+}
+
+.scanner-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--cyber-accent);
+  animation: scan 4s linear infinite;
+  box-shadow: 0 0 10px var(--cyber-accent);
+}
+
+@keyframes scan {
+  0% {
+    top: 0;
+  }
+  50% {
+    top: 100%;
+  }
+  100% {
+    top: 0;
+  }
+}

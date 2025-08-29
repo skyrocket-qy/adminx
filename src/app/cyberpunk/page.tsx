@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import './cyberpunk.css';
+import AnimatedBlock from './components/AnimatedBlock';
 
 const CyberpunkPage: React.FC = () => {
   return (
@@ -11,6 +12,11 @@ const CyberpunkPage: React.FC = () => {
           Welcome to the neon-drenched streets of the future. A world of high-tech and low-life.
         </p>
       </header>
+
+      <section className="cyber-section">
+        <h2 className="cyber-h2">Incoming Transmission</h2>
+        <AnimatedBlock />
+      </section>
 
       <section className="cyber-section">
         <h2 className="cyber-h2">About The World</h2>
