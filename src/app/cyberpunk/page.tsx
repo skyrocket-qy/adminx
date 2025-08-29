@@ -43,13 +43,13 @@ const CyberpunkPage: React.FC = () => {
         <h2 className="cyber-h2">Gallery</h2>
         <div className="gallery-grid">
           <div className="gallery-item">
-            <Image src="https://via.placeholder.com/300x200.png?text=Cyberpunk+City" alt="Cyberpunk City" width={300} height={200} />
+            <Image src="/cyberpunk-city.png" alt="Cyberpunk City" width={300} height={200} />
           </div>
           <div className="gallery-item">
-            <Image src="https://via.placeholder.com/300x200.png?text=Cyborg" alt="Cyborg" width={300} height={200} />
+            <Image src="/cyborg.png" alt="Cyborg" width={300} height={200} />
           </div>
           <div className="gallery-item">
-            <Image src="https://via.placeholder.com/300x200.png?text=Futuristic+Car" alt="Futuristic Car" width={300} height={200} />
+            <Image src="/futuristic-car.png" alt="Futuristic Car" width={300} height={200} />
           </div>
         </div>
       </section>
