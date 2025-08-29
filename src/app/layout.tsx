@@ -47,14 +47,14 @@ export default function RootLayout({
 
   return (
     <html lang="en" className="h-full bg-hover-200">
-      <body className="h-full overflow-hidden">
+      <body className={`h-full ${pathname === '/cyberpunk' ? '' : 'overflow-hidden'}`}>
         <div className={`h-6 ${showHeader ? 'translate-y-0' : '-translate-y-full'}
           fixed top-0 left-0 w-full bg-white shadow z-50 transition-transform duration-500`}
         >
           <Header />
         </div>
         <div className="flex h-full bg-pink-100">
-          <main className="w-full overflow-hidden h-full">
+          <main className={`w-full h-full ${pathname === '/cyberpunk' ? '' : 'overflow-hidden'}`}>
             {children}
           </main>
           <div className={`w-10 h-[95%] rounded-lg justify-center fixed right-0 top-10 shadow
