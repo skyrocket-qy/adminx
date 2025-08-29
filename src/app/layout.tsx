@@ -53,7 +53,7 @@ export default function RootLayout({
         >
           <Header />
         </div>
-        <div className="flex h-full bg-pink-100">
+        <div className={`flex h-full ${pathname === '/cyberpunk' ? '' : 'bg-pink-100'}`}>
           <main className={`w-full h-full ${pathname === '/cyberpunk' ? '' : 'overflow-hidden'}`}>
             {children}
           </main>
