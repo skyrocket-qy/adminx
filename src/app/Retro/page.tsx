@@ -1,12 +1,18 @@
 'use client'
-import Header from "./components/Header";
-import HeroSection from "./components/HeroSection";
+
+import React from 'react';
+import Header from './components/Header';
+import Card from './components/Card';
 
 const RetroPage = () => {
   return (
-    <div>
+    <div className="min-h-screen bg-gray-200 font-mono">
       <Header />
-      <HeroSection />
+      <main className="container mx-auto p-4">
+        <div className="flex justify-center items-center h-full mt-32">
+          <Card />
+        </div>
+      </main>
     </div>
   );
 };
