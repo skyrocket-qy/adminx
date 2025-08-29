@@ -2,10 +2,12 @@ import React from 'react';
 import Image from 'next/image';
 import './cyberpunk.css';
 import AnimatedBlock from './components/AnimatedBlock';
+import ParticleAnimation from './components/ParticleAnimation';
 
 const CyberpunkPage: React.FC = () => {
   return (
     <div className="cyber-body">
+      <ParticleAnimation />
       <header className="cyber-header">
         <h1 className="cyber-h1 glitch" data-text="Cyberpunk">Cyberpunk</h1>
         <p className="cyber-p">

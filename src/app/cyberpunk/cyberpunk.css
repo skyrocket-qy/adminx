@@ -8,7 +8,7 @@
 }
 
 .cyber-body {
-  background-color: var(--cyber-bg);
+  background-color: transparent;
   color: var(--cyber-text);
   font-family: 'Courier New', Courier, monospace;
   display: flex;
