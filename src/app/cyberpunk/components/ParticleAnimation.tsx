@@ -13,8 +13,13 @@ const ParticleAnimation: React.FC = () => {
     if (!ctx) return;
 
     let animationFrameId: number;
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+
+    const setCanvasDimensions = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = document.body.scrollHeight;
+    };
+
+    setCanvasDimensions();
 
     const characters = ['M', 'W', 'K', 'N', 'C', 'X', 'O', ':', ';', '.', ','];
     const colors = ['#00ff00', '#ff00ff', '#00ffff', '#ffff00'];
@@ -53,7 +58,7 @@ const ParticleAnimation: React.FC = () => {
     }
 
     let particles: Particle[] = [];
-    const numberOfParticles = 100;
+    const numberOfParticles = 200; // Increased for a larger canvas
 
     function init() {
       particles = [];
@@ -79,15 +84,18 @@ const ParticleAnimation: React.FC = () => {
     animate();
 
     const handleResize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      setCanvasDimensions();
       init();
     };
+
+    const resizeObserver = new ResizeObserver(handleResize);
+    resizeObserver.observe(document.body);
 
     window.addEventListener('resize', handleResize);
 
     return () => {
       window.removeEventListener('resize', handleResize);
+      resizeObserver.disconnect();
       cancelAnimationFrame(animationFrameId);
     };
   }, []);
