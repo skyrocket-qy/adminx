@@ -17,6 +17,7 @@ const Header: React.FC = () => {
       { href: "/blog", label: "Blog" },
       { href: "/admin", label: "Admin" },
       { href: "/rbac", label: "RBAC" },
+      { href: "/cyberpunk", label: "Cyberpunk" },
     ].map(({ href, label }) => (
       <Link
         key={href}
