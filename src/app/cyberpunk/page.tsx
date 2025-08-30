@@ -3,6 +3,7 @@ import Image from 'next/image';
 import './cyberpunk.css';
 import AnimatedBlock from './components/AnimatedBlock';
 import ParticleAnimation from './components/ParticleAnimation';
+import CodeAnimation from './components/CodeAnimation';
 
 const CyberpunkPage: React.FC = () => {
   return (
@@ -51,13 +52,17 @@ const CyberpunkPage: React.FC = () => {
         <h2 className="cyber-h2">Gallery</h2>
         <div className="gallery-grid">
           <div className="gallery-item">
-            <Image src="/placeholder1.png" alt="Placeholder Image 1" width={300} height={200} />
+            <Image src="/1.png" alt="Cyberpunk Image 1" width={300} height={200} />
+            <p className="gallery-caption">Cyberpunk Image 1</p>
           </div>
           <div className="gallery-item">
-            <Image src="/placeholder2.png" alt="Placeholder Image 2" width={300} height={200} />
+            <Image src="/2.png" alt="Cyberpunk Image 2" width={300} height={200} />
+            <p className="gallery-caption">Cyberpunk Image 2</p>
+            <CodeAnimation />
           </div>
           <div className="gallery-item">
-            <Image src="/placeholder3.png" alt="Placeholder Image 3" width={300} height={200} />
+            <Image src="/3.png" alt="Cyberpunk Image 3" width={300} height={200} />
+            <p className="gallery-caption">Cyberpunk Image 3</p>
           </div>
         </div>
       </section>
