@@ -1,0 +1,43 @@
+:root {
+  --retro-bg: #2E1A47;
+  --retro-pink: #FF00FF;
+  --retro-cyan: #00FFFF;
+  --retro-yellow: #FFFF00;
+  --retro-purple: #9E7BFF;
+  --retro-text: #FFFFFF;
+}
+
+.retro-body {
+  background-color: var(--retro-bg);
+  color: var(--retro-text);
+  font-family: var(--font-vt323), monospace;
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 24px, rgba(255, 255, 255, 0.05) 24px, rgba(255, 255, 255, 0.05) 25px),
+    repeating-linear-gradient(90deg, transparent, transparent 24px, rgba(255, 255, 255, 0.05) 24px, rgba(255, 255, 255, 0.05) 25px);
+  background-size: 25px 25px;
+}
+
+.retro-text-pink {
+  color: var(--retro-pink);
+  text-shadow: 0 0 5px var(--retro-pink);
+}
+
+.retro-text-cyan {
+  color: var(--retro-cyan);
+  text-shadow: 0 0 5px var(--retro-cyan);
+}
+
+.retro-text-yellow {
+  color: var(--retro-yellow);
+  text-shadow: 0 0 5px var(--retro-yellow);
+}
+
+.retro-text-purple {
+  color: var(--retro-purple);
+  text-shadow: 0 0 5px var(--retro-purple);
+}
+
+.retro-box {
+  border: 2px solid var(--retro-purple);
+  padding: 1rem 2rem;
+}
