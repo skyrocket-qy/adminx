@@ -4,8 +4,7 @@ import React, { useState, useEffect } from 'react';
 import './AnimatedCodeBlock.css';
 import { vt323 } from '@/global/fonts';
 
-const codeToType = `
-// Objective: Change UserOnboarding to use a state machine for steps
+const codeToType = `// Objective: Change UserOnboarding to use a state machine for steps
 
 class UserOnboarding {
   constructor(user) {
@@ -38,8 +37,7 @@ const newUser = { name: "David", id: "usr_123" };
 const onboardingProcess = new UserOnboarding(newUser);
 
 onboardingProcess.nextStep();
-// onboardingProcess.legacyNotification(); // Commented out
-`;
+// onboardingProcess.legacyNotification(); // Commented out`;
 
 const AnimatedCodeBlock = () => {
   const [displayedCode, setDisplayedCode] = useState('');
@@ -59,7 +57,10 @@ const AnimatedCodeBlock = () => {
       }, 2000); // Wait 2 seconds before repeating
       return () => clearTimeout(timeoutId);
     }
-  }, [codeIndex]);
+  }, [codeIndex, codeToType.length]);
+
+  const lineCount = displayedCode.split('\n').length;
+  const lineNumbers = Array.from({ length: lineCount }, (_, i) => i + 1).join('\n');
 
   return (
     <div className={`code-block-container ${vt323.className}`}>
@@ -68,11 +69,14 @@ const AnimatedCodeBlock = () => {
         <div className="code-block-header-dot yellow"></div>
         <div className="code-block-header-dot green"></div>
       </div>
-      <pre className="code-block-content">
-        <code>
-          {displayedCode}
-        </code>
-      </pre>
+      <div className="code-block-content">
+        <pre className="line-numbers">{lineNumbers}</pre>
+        <pre className="code">
+          <code>
+            {displayedCode}
+          </code>
+        </pre>
+      </div>
     </div>
   );
 };

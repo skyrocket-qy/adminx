@@ -1,12 +1,12 @@
 .code-block-container {
   background-color: #2E1A47;
-  border: 2px solid #9E7BFF;
+  border: 2px dotted #9E7BFF;
   border-radius: 8px;
   padding: 16px;
-  width: 80%;
-  max-width: 800px;
+  width: max-content;
+  max-width: 90%;
   margin: 20px auto;
-  box-shadow: 0 0 15px #9E7BFF;
+  box-shadow: 0 0 25px #9E7BFF;
 }
 
 .code-block-header {
@@ -29,11 +29,24 @@
 .code-block-header-dot.green { background-color: #27c93f; }
 
 .code-block-content {
-  height: 400px;
+  height: 600px;
   overflow-y: auto;
   font-family: 'VT323', monospace;
   white-space: pre-wrap;
   color: #FFFFFF;
+  font-size: 18px;
+  display: flex;
+}
+
+.line-numbers {
+  padding-right: 16px;
+  text-align: right;
+  color: #9E7BFF;
+  user-select: none;
+}
+
+.code {
+  flex-grow: 1;
 }
 
 .code-block-content .token.keyword { color: #FF00FF; }
