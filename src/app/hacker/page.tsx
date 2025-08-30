@@ -7,6 +7,7 @@ import SystemStats from "./components/SystemStats";
 import AnimatedBlock from "../cyberpunk/components/AnimatedBlock";
 import CodeAnimation from "../cyberpunk/components/CodeAnimation";
 import ParticleAnimation from "../cyberpunk/components/ParticleAnimation";
+import HackingProgressBar from "./components/HackingProgressBar";
 import './hacker.css';
 import '../cyberpunk/cyberpunk.css';
 
@@ -21,6 +22,11 @@ const HackerPage = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
           <AnimatedBlock />
           <AnimatedBlock />
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+            <HackingProgressBar label="Bypassing Firewall..." duration={2500} />
+            <HackingProgressBar label="Decrypting Files..." duration={4000} />
+            <HackingProgressBar label="Accessing Mainframe..." duration={5500} />
         </div>
         <CodeAnimation />
       </div>
