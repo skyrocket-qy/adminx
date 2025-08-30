@@ -12,7 +12,16 @@ import { useState } from 'react';
 
 const links = [
   { name: 'Home', href: '/admin', icon: HomeIcon, count: 1 },
-  { name: 'tuple', href: '/admin/tuple', icon: PuzzlePieceIcon, count: 1 },
+  {
+    name: 'tuple',
+    href: '/admin/tuple',
+    icon: PuzzlePieceIcon,
+    count: 2,
+    subLinks: [
+      { name: 'graph', href: '/admin/tuple/graph', count: 0 },
+      { name: 'tree', href: '/admin/tuple/tree', count: 0 },
+    ],
+  },
   {
     name: 'rbac',
     href: '/admin/rbac',
