@@ -4,7 +4,7 @@
   border-radius: 8px;
   padding: 16px;
   width: 800px;
-  height: 500px;
+  height: 600px;
   margin: 20px auto;
   box-shadow:
     0 0 2px #fff,
@@ -62,7 +62,7 @@
 .code-block-header-dot.green { background-color: #27c93f; }
 
 .code-block-content {
-  height: 400px;
+  height: 600px; 
   font-family: 'VT323', monospace;
   white-space: pre-wrap;
   color: #FFFFFF;
