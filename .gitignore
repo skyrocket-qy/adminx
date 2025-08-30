@@ -1,6 +1,7 @@
 # Next.js
 .next
 /out
+out
 
 # Node
 node_modules
