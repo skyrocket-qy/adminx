@@ -4,40 +4,28 @@ import React, { useState, useEffect } from 'react';
 import './AnimatedCodeBlock.css';
 import { vt323 } from '@/global/fonts';
 
-const codeToType = `// Objective: Change UserOnboarding to use a state machine for steps
+const codeToType = `// Objective: Use a state machine for steps
 
 class UserOnboarding {
   constructor(user) {
     this.user = user;
-    this.steps = [
-      'Welcome',
-      'Profile Setup',
-      'Connect Socials',
-      'Done'
-    ];
+    this.steps = ['Welcome', 'Profile Setup', 'Done'];
     this.currentStep = 0;
   }
 
   async nextStep() {
     if (this.currentStep < this.steps.length - 1) {
       this.currentStep++;
-      // TODO: Trigger analytics
       return this.steps[this.currentStep];
     }
     return "done";
-  }
-
-  // old method - to be removed
-  legacyNotification() {
-    alert("Welcome aboard, " + this.user.name);
   }
 }
 
 const newUser = { name: "David", id: "usr_123" };
 const onboardingProcess = new UserOnboarding(newUser);
 
-onboardingProcess.nextStep();
-// onboardingProcess.legacyNotification(); // Commented out`;
+onboardingProcess.nextStep();`;
 
 const AnimatedCodeBlock = () => {
   const [displayedCode, setDisplayedCode] = useState('');
