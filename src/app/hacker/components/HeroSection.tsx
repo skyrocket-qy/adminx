@@ -1,5 +1,8 @@
 'use client'
 import { useEffect, useState } from "react";
+import MatrixBackground from "./MatrixBackground";
+import GlitchText from "./GlitchText";
+import AsciiArt from "./AsciiArt";
 
 const HeroSection = () => {
   const [text, setText] = useState("");
@@ -26,23 +29,17 @@ const HeroSection = () => {
 
   return (
     <main className="relative min-h-screen pt-20 pb-16 px-6 flex flex-col items-center justify-center bg-black text-green-500 font-mono">
-      {/* Matrix background */}
-      <div
-        className="absolute inset-0 z-0 opacity-30"
-        style={{
-          backgroundImage: "url('https://www.transparenttextures.com/patterns/diagmonds.png')",
-          backgroundRepeat: "repeat",
-        }}
-      />
+      <MatrixBackground />
+      <AsciiArt />
       <div className="absolute inset-0 z-10 bg-black/50" />
 
       {/* Hero title */}
       <div className="text-center mb-12 z-20">
-        <h1 className="text-4xl md:text-6xl font-bold mb-6">
+        <GlitchText className="text-4xl md:text-6xl font-bold mb-6">
           <span className="text-green-400">&gt; </span>
           {text}
           <span className="animate-ping">_</span>
-        </h1>
+        </GlitchText>
         <p className="text-lg text-gray-400 max-w-2xl mx-auto">
           Welcome to the digital underground.
         </p>
