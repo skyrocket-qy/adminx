@@ -17,7 +17,7 @@ const LogDisplay = () => {
     { message: "Download complete. Covering tracks...", status: 'success' },
     { message: "Deleting server logs... ERROR: Permission denied.", status: 'error' },
     { message: "Disconnecting from mainframe.", status: 'info' },
-  ];
+  ] as const;
 
   useEffect(() => {
     const interval = setInterval(() => {

@@ -8,7 +8,7 @@ const Header = () => {
         <div className="flex items-center gap-3">
           <Wrench className="w-8 h-8 text-yellow-500" />
           <span className="text-2xl font-bold text-white font-mono uppercase">
-            Mechanic's Bay
+            Mechanic&apos;s Bay
           </span>
         </div>
 

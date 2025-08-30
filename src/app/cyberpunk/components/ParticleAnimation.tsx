@@ -48,6 +48,7 @@ const ParticleAnimation: React.FC = () => {
       }
 
       update() {
+        if (!canvas) return;
         this.y += this.speed;
         if (this.y > canvas.height) {
           this.y = 0;
@@ -61,6 +62,7 @@ const ParticleAnimation: React.FC = () => {
     const numberOfParticles = 200; // Increased for a larger canvas
 
     function init() {
+      if (!canvas) return;
       particles = [];
       for (let i = 0; i < numberOfParticles; i++) {
         const x = Math.random() * canvas.width;
@@ -72,7 +74,7 @@ const ParticleAnimation: React.FC = () => {
     }
 
     function animate() {
-      if (ctx) {
+      if (ctx && canvas) {
         ctx.fillStyle = 'rgba(10, 10, 10, 0.1)';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         particles.forEach(particle => particle.update());
