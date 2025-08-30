@@ -53,13 +53,16 @@ const CyberpunkPage: React.FC = () => {
         <div className="gallery-grid">
           <div className="gallery-item">
             <Image src="/1.png" alt="Cyberpunk Image 1" width={300} height={200} />
+            <p className="gallery-caption">Cyberpunk Image 1</p>
           </div>
           <div className="gallery-item">
             <Image src="/2.png" alt="Cyberpunk Image 2" width={300} height={200} />
+            <p className="gallery-caption">Cyberpunk Image 2</p>
             <CodeAnimation />
           </div>
           <div className="gallery-item">
             <Image src="/3.png" alt="Cyberpunk Image 3" width={300} height={200} />
+            <p className="gallery-caption">Cyberpunk Image 3</p>
           </div>
         </div>
       </section>
