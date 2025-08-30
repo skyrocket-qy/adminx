@@ -2,6 +2,8 @@
 import Header from "./components/Header";
 import HeroSection from "./components/HeroSection";
 import FeatureCards from "./components/FeatureCards";
+import Testimonials from "./components/Testimonials";
+import CTASection from "./components/CTASection";
 import Footer from "./components/Footer";
 
 const GlassmorphismPage = () => {
@@ -10,6 +12,8 @@ const GlassmorphismPage = () => {
       <Header />
       <HeroSection />
       <FeatureCards />
+      <Testimonials />
+      <CTASection />
       <Footer />
     </div>
   );
