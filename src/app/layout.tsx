@@ -4,7 +4,6 @@ import Header from '@/app/components/header';
 import LinkBar from '@/app/components/LinkBar';
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
-import { vt323 } from '@/global/fonts';
 
 export default function RootLayout({
   children,
@@ -47,14 +46,14 @@ export default function RootLayout({
   }, [pathname]);
 
   return (
-    <html lang="en" className={`h-full bg-hover-200 ${vt323.className}`}>
+    <html lang="en" className="h-full bg-hover-200">
       <body className={`h-full ${pathname === '/cyberpunk' ? '' : 'overflow-hidden'}`}>
         <div className={`h-6 ${showHeader ? 'translate-y-0' : '-translate-y-full'}
           fixed top-0 left-0 w-full bg-white shadow z-50 transition-transform duration-500`}
         >
           <Header />
         </div>
-        <div className={`flex h-full ${pathname === '/' || pathname === '/cyberpunk' ? '' : 'bg-pink-100'}`}>
+        <div className={`flex h-full ${pathname === '/cyberpunk' ? '' : 'bg-pink-100'}`}>
           <main className={`w-full h-full ${pathname === '/cyberpunk' ? '' : 'overflow-hidden'}`}>
             {children}
           </main>

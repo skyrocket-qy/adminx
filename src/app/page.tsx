@@ -1,10 +1,11 @@
 'use client';
 
 import './retro-futuristic.css';
+import { vt323 } from '@/global/fonts';
 
 export default function Home() {
   return (
-    <div className="retro-body w-screen h-screen flex items-center justify-center text-4xl">
+    <div className={`retro-body w-screen h-screen flex items-center justify-center text-4xl ${vt323.className}`}>
       <div className="text-center">
         <div className="retro-box mb-8">
           <p className="retro-text-pink text-8xl">Hi</p>
