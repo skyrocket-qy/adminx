@@ -13,17 +13,21 @@ export default function CheckBox() {
     const [triggerShake, setTriggerShake] = useState(false);
 
     useEffect(() => {
-    const timer = setTimeout(() => {
-        console.log("Query input:", checkInput);
-        try{
-            const out = parseTuple(checkInput);
+        if (checkInput.length === 0) {
             setParseError(null);
-        }catch(e: any){
-            console.error(e);
-            setParseError(e.message || "Invalid query syntax");
-            setTriggerShake(true);
-            setTimeout(() => setTriggerShake(false), 500); 
+            return;
         }
+        const timer = setTimeout(() => {
+            console.log("Query input:", checkInput);
+            try{
+                const out = parseTuple(checkInput);
+                setParseError(null);
+            }catch(e: any){
+                console.error(e);
+                setParseError(e.message || "Invalid query syntax");
+                setTriggerShake(true);
+                setTimeout(() => setTriggerShake(false), 500);
+            }
         }, 1000);
         return () => clearTimeout(timer);
     }, [checkInput]);

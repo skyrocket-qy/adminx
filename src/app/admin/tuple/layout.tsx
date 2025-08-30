@@ -1,4 +1,4 @@
-
+import Link from 'next/link';
 import { UserAvatarMenu } from '@/app/admin/header';
 import { Button } from "@/components/ui/button"
 import  CheckBox  from "./check";
@@ -10,9 +10,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <div className='w-full h-full'>
         <div className='w-full h-10 flex ml-4 mt-3'>
             <div>
-                <Button className='mr-2  bg-violet-500 w-20'>Data</Button>
-                <Button className='mr-2  bg-emerald-500 w-20'>Tree</Button>
-                <Button className=' bg-amber-500 w-20'>Graph</Button>
+                <Link href="/admin/tuple">
+                  <Button className='mr-2  bg-violet-500 w-20'>Data</Button>
+                </Link>
+                <Button className='mr-2  bg-emerald-500 w-20' disabled>Tree</Button>
+                <Link href="/admin/tuple/graph">
+                  <Button className=' bg-amber-500 w-20'>Graph</Button>
+                </Link>
             </div>
             <div className='ml-2'>
                 <CheckBox />
