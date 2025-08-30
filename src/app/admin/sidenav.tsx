@@ -14,7 +14,7 @@ export default function SideNav() {
       <div className="overflow-y-auto bg-violet-50">
         <NavLinks />
       </div>
-      <div className="mt-auto h-20 bg-violet-50">
+      {/* <div className="mt-auto h-20 bg-violet-50">
         <form
           action={async () => {
             localStorage.removeItem('session');
@@ -28,7 +28,7 @@ export default function SideNav() {
             <div className="hidden md:block text-sm font-medium">Sign Out</div>
           </button>
         </form>
-      </div>
+      </div> */}
     </div>
   );
 }

@@ -3,6 +3,7 @@ import {
   UserGroupIcon,
   HomeIcon,
   DocumentDuplicateIcon,
+  	PuzzlePieceIcon,
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -11,6 +12,18 @@ import { useState } from 'react';
 
 const links = [
   { name: 'Home', href: '/admin', icon: HomeIcon, count: 1 },
+  { name: 'tuple', href: '/admin/tuple', icon: PuzzlePieceIcon, count: 1 },
+  {
+    name: 'rbac',
+    href: '/admin/rbac',
+    icon: DocumentDuplicateIcon,
+    count: 3, 
+    subLinks: [
+      { name: 'user', href: '/admin/rbac/user', count: 0 },
+      { name: 'role', href: '/admin/rbac/role', count: 0 },
+      { name: 'resource', href: '/admin/rbac/resource', count: 0 },
+    ],
+  },
   {
     name: 'role',
     href: '/admin/role',
