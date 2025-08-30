@@ -42,9 +42,10 @@ const Graph: React.FC<GraphProps> = ({ data }) => {
       svg.selectAll("*").remove();
 
       const simulation = d3.forceSimulation(Array.from(nodes.values()))
-        .force('link', d3.forceLink(links).id((d: any) => d.id).distance(200))
-        .force('charge', d3.forceManyBody().strength(-300))
-        .force('center', d3.forceCenter(width / 2, height / 2));
+        .force('link', d3.forceLink(links).id((d: any) => d.id).distance(250))
+        .force('charge', d3.forceManyBody().strength(-500))
+        .force('center', d3.forceCenter(width / 2, height / 2))
+        .force('collide', d3.forceCollide().radius(40));
 
       const link = svg.append('g')
         .attr('stroke', '#999')
@@ -63,6 +64,9 @@ const Graph: React.FC<GraphProps> = ({ data }) => {
         .attr("text-anchor", "middle")
         .style("fill", "#555")
         .style("font-size", "10px")
+        .style("paint-order", "stroke")
+        .style("stroke", "white")
+        .style("stroke-width", "3px")
         .text(d => d.relation);
 
       const node = svg.append('g')
@@ -84,6 +88,9 @@ const Graph: React.FC<GraphProps> = ({ data }) => {
         .attr("text-anchor", "middle")
         .style("fill", "#333")
         .style("font-size", "12px")
+        .style("paint-order", "stroke")
+        .style("stroke", "white")
+        .style("stroke-width", "3px")
         .text(d => d.name);
 
       simulation.on('tick', () => {
