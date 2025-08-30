@@ -13,7 +13,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <Link href="/admin/tuple">
                   <Button className='mr-2  bg-violet-500 w-20'>Data</Button>
                 </Link>
-                <Button className='mr-2  bg-emerald-500 w-20' disabled>Tree</Button>
+                <Link href="/admin/tuple/tree">
+                  <Button className='mr-2  bg-emerald-500 w-20'>Tree</Button>
+                </Link>
                 <Link href="/admin/tuple/graph">
                   <Button className=' bg-amber-500 w-20'>Graph</Button>
                 </Link>
