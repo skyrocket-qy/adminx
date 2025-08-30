@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import './AnimatedCodeBlock.css';
 import { vt323 } from '@/global/fonts';
 
@@ -27,28 +27,77 @@ const onboardingProcess = new UserOnboarding(newUser);
 
 onboardingProcess.nextStep();`;
 
+const tokenColors = {
+  keyword: 'token keyword',
+  string: 'token string',
+  function: 'token function',
+  comment: 'token comment',
+  number: 'token number',
+  operator: 'token operator',
+  punctuation: 'token punctuation',
+  className: 'token class-name',
+  default: '',
+};
+
+const highlightSyntax = (code) => {
+  const tokens = [];
+  const keywordRegex = /\b(class|constructor|const|let|var|async|if|return)\b/g;
+  const stringRegex = /'[^']*'/g;
+  const functionRegex = /\b[a-zA-Z_]\w*(?=\()/g;
+  const commentRegex = /\/\/.*/g;
+  const numberRegex = /\b\d+\b/g;
+  const operatorRegex = /[=<>+\-*{}]/g;
+  const punctuationRegex = /[.,;()\[\]]/g;
+  const classNameRegex = /\b[A-Z]\w*\b/g;
+
+  const getClassName = (char, index) => {
+    // This is a simplified approach. A real syntax highlighter is much more complex.
+    if (code.substring(index).match(commentRegex)?.index === 0) return tokenColors.comment;
+    if (code.substring(index).match(keywordRegex)?.index === 0) return tokenColors.keyword;
+    if (code.substring(index).match(stringRegex)?.index === 0) return tokenColors.string;
+    if (code.substring(index).match(functionRegex)?.index === 0) return tokenColors.function;
+    if (code.substring(index).match(numberRegex)?.index === 0) return tokenColors.number;
+    if (code.substring(index).match(classNameRegex)?.index === 0) return tokenColors.className;
+    if (char.match(operatorRegex)) return tokenColors.operator;
+    if (char.match(punctuationRegex)) return tokenColors.punctuation;
+    return tokenColors.default;
+  };
+
+  for (let i = 0; i < code.length; i++) {
+    const char = code[i];
+    const className = getClassName(char, i);
+    tokens.push({ char, className });
+  }
+  return tokens;
+};
+
+
 const AnimatedCodeBlock = () => {
-  const [displayedCode, setDisplayedCode] = useState('');
-  const [codeIndex, setCodeIndex] = useState(0);
+  const [displayedChars, setDisplayedChars] = useState([]);
+  const [charIndex, setCharIndex] = useState(0);
+
+  const styledCode = useMemo(() => highlightSyntax(codeToType), []);
 
   useEffect(() => {
-    if (codeIndex < codeToType.length) {
+    if (charIndex < styledCode.length) {
       const timeoutId = setTimeout(() => {
-        setDisplayedCode((prev) => prev + codeToType.charAt(codeIndex));
-        setCodeIndex((prev) => prev + 1);
-      }, 50); // Typing speed
+        setDisplayedChars((prev) => [...prev, styledCode[charIndex]]);
+        setCharIndex((prev) => prev + 1);
+      }, 25); // Faster typing speed
       return () => clearTimeout(timeoutId);
     } else {
       const timeoutId = setTimeout(() => {
-        setDisplayedCode('');
-        setCodeIndex(0);
+        setDisplayedChars([]);
+        setCharIndex(0);
       }, 2000); // Wait 2 seconds before repeating
       return () => clearTimeout(timeoutId);
     }
-  }, [codeIndex, codeToType.length]);
+  }, [charIndex, styledCode]);
 
-  const lineCount = displayedCode.split('\n').length;
-  const lineNumbers = Array.from({ length: lineCount }, (_, i) => i + 1).join('\n');
+  const lineNumbers = useMemo(() => {
+    const lines = codeToType.split('\n');
+    return Array.from({ length: lines.length }, (_, i) => i + 1).join('\n');
+  }, []);
 
   return (
     <div className={`code-block-container ${vt323.className}`}>
@@ -61,7 +110,11 @@ const AnimatedCodeBlock = () => {
         <pre className="line-numbers">{lineNumbers}</pre>
         <pre className="code">
           <code>
-            {displayedCode}
+            {displayedChars.map((char, index) => (
+              <span key={index} className={char.className}>
+                {char.char}
+              </span>
+            ))}
           </code>
         </pre>
       </div>

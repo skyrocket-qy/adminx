@@ -6,7 +6,7 @@ import AnimatedCodeBlock from '@/app/components/AnimatedCodeBlock';
 
 export default function Home() {
   return (
-    <div className={`retro-body w-screen min-h-screen flex flex-col items-center justify-center text-4xl py-24 ${vt323.className}`}>
+    <div className={`retro-body w-screen h-screen flex flex-col items-center justify-center text-4xl ${vt323.className}`}>
       <div className="text-center">
         <div className="retro-box mb-8">
           <p className="retro-text-pink text-8xl">Hi</p>
