@@ -6,22 +6,29 @@ import AnimatedCodeBlock from '@/app/components/AnimatedCodeBlock';
 
 export default function Home() {
   return (
-    <div className={`w-full min-h-screen flex flex-col items-center pt-24 text-4xl ${vt323.className}`}>
-      <div className="text-center mb-10">
-        <div className="retro-box mb-8">
-          <p className="retro-text-pink text-8xl">Hi</p>
-        </div>
-        <div className="mb-2">
-          <span className="retro-text-cyan">I am </span>
-          <span className="retro-text-yellow">Jimmy</span>
-        </div>
-        <p className="retro-text-purple">
-          Welcome to my playground
-        </p>
-      </div>
-      <div className=''>
-        <AnimatedCodeBlock />
-      </div>
-    </div>
+    // <div className={`w-full min-h-screen flex flex-col items-center pt-24 text-4xl ${vt323.className}`}>
+    //   <div className="text-center mb-10">
+    //     <div className="retro-box mb-8">
+    //       <p className="retro-text-pink text-8xl">Hi</p>
+    //     </div>
+    //     <div className="mb-2">
+    //       <span className="retro-text-cyan">I am </span>
+    //       <span className="retro-text-yellow">Jimmy</span>
+    //     </div>
+    //     <p className="retro-text-purple">
+    //       Welcome to my playground
+    //     </p>
+    //   </div>
+    //   <div className=''>
+    //     <AnimatedCodeBlock />
+    //   </div>
+    // </div>
+
+    <canvas
+      id="myCanvas"
+      width={480}
+      height={480}
+      style={{ border: '1px solid #000' }}
+    />
   );
 }
