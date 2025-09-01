@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef, useEffect } from 'react';
+import { drawGrid } from "./BasicCanvasBlock"
 
 // Props for our specialized header block
 interface HeaderCanvasBlockProps {
@@ -21,26 +22,14 @@ const drawHeader = (
   title: string,
   colors: { bg: string, line: string } = { bg: '#2E1A47', line: '#333' }
 ) => {
-  // --- Step 1: Draw the basic grid (reusing the logic) ---
-  context.clearRect(0, 0, width, height);
-  context.fillStyle = colors.bg;
-  context.fillRect(0, 0, width, height);
-  context.strokeStyle = colors.line;
-  context.lineWidth = BORDER_SIZE;
-
-  for (let x = 0; x <= width; x += CELL_SIZE) {
-    for (let y = 0; y <= height; y += CELL_SIZE) {
-      context.strokeRect(x, y, BLOCK_SIZE, BLOCK_SIZE);
-    }
-  }
-
-  // --- Step 2: Add the specialized text drawing ---
-  const fontSize = Math.min(width / 12, 48);
-  context.font = `bold ${fontSize}px "Inter", sans-serif`;
-  context.fillStyle = 'white';
-  context.textAlign = 'center';
-  context.textBaseline = 'middle';
-  context.fillText(title, width / 2, height / 2);
+    drawGrid(context, width, height, colors);
+    // --- Step 2: Add the specialized text drawing ---
+    const fontSize = Math.min(width / 12, 48);
+    context.font = `bold ${fontSize}px "Inter", sans-serif`;
+    context.fillStyle = 'white';
+    context.textAlign = 'center';
+    context.textBaseline = 'middle';
+    context.fillText(title, width / 2, height / 2);
 };
 
 /**

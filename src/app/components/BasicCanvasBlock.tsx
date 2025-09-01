@@ -12,7 +12,7 @@ const BLOCK_SIZE = 15;
 const BORDER_SIZE = 1;
 const CELL_SIZE = BLOCK_SIZE + BORDER_SIZE;
 
-const drawGrid = (
+export const drawGrid = (
   context: CanvasRenderingContext2D, 
   width: number, 
   height: number,
