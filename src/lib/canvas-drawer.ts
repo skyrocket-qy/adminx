@@ -546,6 +546,7 @@ declare global {
         binaryIndexedTreeAnimationId: number;
         swissTableAnimationId: number;
         topologicalSortAnimationId: number;
+        stickManAnimationId: number;
     }
 }
 
@@ -1157,5 +1158,295 @@ export const drawTopologicalSort = async (context: CanvasRenderingContext2D, wid
   if (window.topologicalSortAnimationId) {
       cancelAnimationFrame(window.topologicalSortAnimationId);
   }
+  runAnimation();
+};
+
+/**
+ * Renders and animates a stick man performing a sequence with various mythological weapons.
+ * This version is refactored for modularity and scalability.
+ *
+ * @param context The 2D rendering context of the canvas.
+ * @param width The width of the canvas.
+ * @param height The height of the canvas.
+ */
+export const drawStickMan = async (context: CanvasRenderingContext2D, width: number, height: number) => {
+  // --- Core Types and Interfaces ---
+  interface Joint { x: number; y: number; }
+  interface Stickman {
+    head: Joint; neck: Joint;
+    shoulders: { left: Joint; right: Joint; };
+    elbows: { left: Joint; right: Joint; };
+    hands: { left: Joint; right: Joint; };
+    hips: { center: Joint; };
+    knees: { left: Joint; right: Joint; };
+    feet: { left: Joint; right: Joint; };
+  }
+  type Pose = { [key in keyof Omit<Stickman, 'head' | 'neck' | 'hips'>]: { [side in 'left' | 'right']: number } } & { torsoAngle: number };
+  
+  // A dictionary of all weapon names
+  const WEAPON_NAMES = ['Donghuang Bell', 'Xuanyuan Sword', 'Pangu Axe', 'Demon-Refining Pot', 'Haotian Pagoda', 'Fuxi Zither', 'Shennong Cauldron', 'Kongtong Seal', 'Kunlun Mirror', 'Nuwa Stone'] as const;
+  type WeaponName = typeof WEAPON_NAMES[number] | 'none';
+
+  // The comprehensive interface for a weapon
+  interface Weapon {
+    name: WeaponName;
+    pose: Pose;
+    visuals: { color: string; blur: number; };
+    particleEffect: { count: number; };
+    // Each weapon has its own drawing logic
+    draw: (stickman: Stickman, pose: Pose) => void;
+  }
+
+  // --- Animation State ---
+  let stickman: Stickman;
+  let currentPose: Pose;
+  let currentWeapon: Weapon | null = null;
+  let particles: {x: number, y: number, vx: number, vy: number, life: number, color: string}[] = [];
+
+  // --- Helper Functions ---
+  const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+  const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+
+  // --- Pose Definitions ---
+  const idlePose: Pose = {
+    torsoAngle: -Math.PI / 2, shoulders: { left: Math.PI / 6, right: -Math.PI / 6 },
+    elbows: { left: Math.PI / 4, right: -Math.PI / 4 }, hands: { left: 0, right: 0 },
+    knees: { left: Math.PI / 12, right: -Math.PI / 12 }, feet: { left: Math.PI / 8, right: -Math.PI / 8 },
+  };
+  const swordPose: Pose = { ...idlePose, shoulders: { left: Math.PI / 4, right: -Math.PI / 1.2}, elbows: { left: Math.PI/4, right: -Math.PI / 1.5 }};
+  const axePose: Pose = { ...idlePose, torsoAngle: -Math.PI/2.3, shoulders: { left: -Math.PI / 1.8, right: -Math.PI / 2.5}, elbows: { left: -Math.PI/2, right: -Math.PI / 2.2 }};
+  const potPose: Pose = { ...idlePose, shoulders: { left: Math.PI/3, right: -Math.PI/2.2}, elbows: { left: Math.PI/2, right: -Math.PI/3}};
+  const pagodaPose: Pose = { ...idlePose, shoulders: {left: Math.PI/4, right: -Math.PI/6}, elbows: {left: Math.PI/2, right: -Math.PI/4}};
+  const zitherPose: Pose = { ...idlePose, torsoAngle: -Math.PI/1.8, shoulders: {left: -Math.PI/2.5, right: -Math.PI/2.2}, elbows: {left: -Math.PI/1.5, right: -Math.PI/1.8}, knees: {left: -Math.PI/2.5, right: -Math.PI/2.5}, feet:{left: 0, right: 0}};
+  const sealPose: Pose = { ...idlePose, shoulders: {left: Math.PI/6, right: -Math.PI/1.5}, elbows: {left: Math.PI/4, right: -Math.PI/1.2}};
+
+  // --- The Central Weapon Registry ---
+  // All weapon-specific data is encapsulated here.
+  const weaponRegistry: Record<Exclude<WeaponName, 'none'>, Weapon> = {
+    'Donghuang Bell': {
+      name: 'Donghuang Bell', pose: idlePose,
+      visuals: { color: '#FFD700', blur: 20 }, particleEffect: { count: 40 },
+      draw: (s) => {
+        const bellX = s.head.x + 100, bellY = s.head.y - 50, bellH = 80, bellW = 60;
+        context.moveTo(bellX - bellW/2, bellY - bellH/2);
+        context.bezierCurveTo(bellX - bellW, bellY, bellX + bellW, bellY, bellX + bellW/2, bellY - bellH/2);
+        context.lineTo(bellX - bellW/2, bellY - bellH/2);
+      }
+    },
+    'Xuanyuan Sword': {
+      name: 'Xuanyuan Sword', pose: swordPose,
+      visuals: { color: '#FBBF24', blur: 15 }, particleEffect: { count: 30 },
+      draw: (s, p) => {
+        const h = s.hands.right, a = p.elbows.right + p.shoulders.right + p.torsoAngle+Math.PI/2, l = height*0.25;
+        context.moveTo(h.x, h.y); context.lineTo(h.x + Math.cos(a) * l, h.y + Math.sin(a) * l);
+        const g = 20;
+        context.moveTo(h.x - Math.cos(a + Math.PI/2)*g, h.y - Math.sin(a + Math.PI/2)*g);
+        context.lineTo(h.x + Math.cos(a + Math.PI/2)*g, h.y + Math.sin(a + Math.PI/2)*g);
+      }
+    },
+    'Pangu Axe': {
+        name: 'Pangu Axe', pose: axePose,
+        visuals: { color: '#A9A9A9', blur: 15 }, particleEffect: { count: 30 },
+        draw: (s, p) => {
+            const h = s.hands.right, a = p.elbows.right + p.shoulders.right + p.torsoAngle+Math.PI/2, l = height*0.2;
+            const handleEndX = h.x + Math.cos(a)*l, handleEndY = h.y + Math.sin(a)*l;
+            context.moveTo(h.x, h.y); context.lineTo(handleEndX, handleEndY);
+            const headSize = 40;
+            context.moveTo(handleEndX + Math.cos(a + Math.PI/2)*headSize, handleEndY + Math.sin(a + Math.PI/2)*headSize);
+            context.arc(handleEndX, handleEndY, headSize, a - Math.PI/2, a + Math.PI/2);
+            context.closePath();
+        }
+    },
+    'Demon-Refining Pot': {
+        name: 'Demon-Refining Pot', pose: potPose,
+        visuals: { color: '#8A2BE2', blur: 12 }, particleEffect: { count: 40 },
+        draw: (s) => {
+            const h = s.hands.left, size = 30;
+            context.arc(h.x, h.y - size, size, Math.PI * 0.8, Math.PI * 2.2);
+            context.arc(h.x, h.y - size * 2.2, size * 0.6, Math.PI * 0.8, Math.PI * 2.2);
+        }
+    },
+    'Haotian Pagoda': {
+        name: 'Haotian Pagoda', pose: pagodaPose,
+        visuals: { color: '#F0E68C', blur: 18 }, particleEffect: { count: 30 },
+        draw: (s) => {
+            const h = s.hands.left, s_size=15, layers=4;
+            let currentY = h.y;
+            for(let i=0; i<layers; i++){
+                let w = s_size * (layers - i);
+                context.moveTo(h.x-w, currentY); context.lineTo(h.x+w, currentY);
+                currentY -= s_size;
+            }
+        }
+    },
+    'Fuxi Zither': {
+        name: 'Fuxi Zither', pose: zitherPose,
+        visuals: { color: '#32CD32', blur: 10 }, particleEffect: { count: 25 },
+        draw: (s) => {
+            const p = s.hips.center, w = 120, h = 60;
+            context.rect(p.x - w/2, p.y + 40, w, h);
+        }
+    },
+    'Shennong Cauldron': {
+        name: 'Shennong Cauldron', pose: idlePose,
+        visuals: { color: '#CD853F', blur: 8 }, particleEffect: { count: 20 },
+        draw: (s) => {
+            const p = s.feet.right, w=60, h=50;
+            context.arc(p.x + 80, height-h, w/2, Math.PI, 0);
+            context.moveTo(p.x + 80 - w/2, height-h); context.lineTo(p.x+80 - w/2, height-10);
+            context.moveTo(p.x + 80 + w/2, height-h); context.lineTo(p.x+80 + w/2, height-10);
+        }
+    },
+    'Kongtong Seal': {
+        name: 'Kongtong Seal', pose: sealPose,
+        visuals: { color: '#4682B4', blur: 15 }, particleEffect: { count: 35 },
+        draw: (s) => {
+            const h = s.hands.right, size=30;
+            context.rect(h.x - size/2, h.y - size, size, size);
+        }
+    },
+    'Kunlun Mirror': {
+        name: 'Kunlun Mirror', pose: potPose,
+        visuals: { color: '#AFEEEE', blur: 25 }, particleEffect: { count: 40 },
+        draw: (s) => {
+            const h = s.hands.left, r=40;
+            context.arc(h.x, h.y, r, 0, 2*Math.PI);
+        }
+    },
+    'Nuwa Stone': {
+        name: 'Nuwa Stone', pose: potPose,
+        visuals: { color: '#FF69B4', blur: 20 }, particleEffect: { count: 50 },
+        draw: (s) => {
+            const h = s.hands.left, r=25;
+            context.arc(h.x, h.y, r, 0, 2*Math.PI);
+        }
+    }
+  };
+
+  // --- Core Drawing & Animation Functions ---
+  const calculateStickman = (pose: Pose) => {
+    const groundY = height * 0.9; const torsoLength = height * 0.2; const limbLength = torsoLength * 0.8; const headRadius = height * 0.04;
+    const hips = { center: { x: width / 2, y: groundY - torsoLength * 1.5 } };
+    const neck = { x: hips.center.x + Math.cos(pose.torsoAngle) * torsoLength, y: hips.center.y + Math.sin(pose.torsoAngle) * torsoLength };
+    const s_left = { x: neck.x + Math.cos(pose.shoulders.left + pose.torsoAngle + Math.PI/2) * 20, y: neck.y + Math.sin(pose.shoulders.left + pose.torsoAngle+Math.PI/2) * 20 };
+    const s_right = { x: neck.x + Math.cos(pose.shoulders.right + pose.torsoAngle+Math.PI/2) * 20, y: neck.y + Math.sin(pose.shoulders.right + pose.torsoAngle+Math.PI/2) * 20 };
+    const e_left = { x: s_left.x + Math.cos(pose.elbows.left + pose.shoulders.left + pose.torsoAngle+Math.PI/2) * limbLength, y: s_left.y + Math.sin(pose.elbows.left + pose.shoulders.left + pose.torsoAngle+Math.PI/2) * limbLength };
+    const e_right = { x: s_right.x + Math.cos(pose.elbows.right + pose.shoulders.right+ pose.torsoAngle+Math.PI/2) * limbLength, y: s_right.y + Math.sin(pose.elbows.right + pose.shoulders.right + pose.torsoAngle+Math.PI/2) * limbLength };
+    stickman = {
+        hips: { center: hips.center }, neck: neck, head: { x: neck.x, y: neck.y - headRadius },
+        shoulders: { left: s_left, right: s_right }, elbows: { left: e_left, right: e_right },
+        hands: {
+            left: { x: e_left.x + Math.cos(pose.hands.left + pose.elbows.left + pose.shoulders.left + pose.torsoAngle+Math.PI/2) * limbLength, y: e_left.y + Math.sin(pose.hands.left + pose.elbows.left + pose.shoulders.left + pose.torsoAngle+Math.PI/2) * limbLength },
+            right: { x: e_right.x + Math.cos(pose.hands.right + pose.elbows.right + pose.shoulders.right + pose.torsoAngle+Math.PI/2) * limbLength, y: e_right.y + Math.sin(pose.hands.right + pose.elbows.right + pose.shoulders.right + pose.torsoAngle+Math.PI/2) * limbLength }
+        },
+        knees: {
+            left: { x: hips.center.x + Math.cos(pose.knees.left - Math.PI/1.5) * limbLength, y: hips.center.y + Math.sin(pose.knees.left - Math.PI/1.5) * limbLength },
+            right: { x: hips.center.x + Math.cos(pose.knees.right - Math.PI/2.5) * limbLength, y: hips.center.y + Math.sin(pose.knees.right - Math.PI/2.5) * limbLength }
+        },
+        feet: {
+            left: { x: hips.center.x + Math.cos(pose.feet.left + pose.knees.left - Math.PI/1.5) * limbLength * 1.2, y: hips.center.y + Math.sin(pose.feet.left + pose.knees.left - Math.PI/1.5) * limbLength * 1.2 },
+            right: { x: hips.center.x + Math.cos(pose.feet.right + pose.knees.right - Math.PI/2.5) * limbLength * 1.2, y: hips.center.y + Math.sin(pose.feet.right + pose.knees.right - Math.PI/2.5) * limbLength * 1.2 }
+        }
+    };
+  };
+  const drawStickman = () => {
+    context.strokeStyle = 'white'; context.lineWidth = 4; context.beginPath();
+    context.moveTo(stickman.hips.center.x, stickman.hips.center.y); context.lineTo(stickman.neck.x, stickman.neck.y);
+    context.moveTo(stickman.neck.x, stickman.neck.y); context.lineTo(stickman.shoulders.left.x, stickman.shoulders.left.y); context.lineTo(stickman.elbows.left.x, stickman.elbows.left.y); context.lineTo(stickman.hands.left.x, stickman.hands.left.y);
+    context.moveTo(stickman.neck.x, stickman.neck.y); context.lineTo(stickman.shoulders.right.x, stickman.shoulders.right.y); context.lineTo(stickman.elbows.right.x, stickman.elbows.right.y); context.lineTo(stickman.hands.right.x, stickman.hands.right.y);
+    context.moveTo(stickman.hips.center.x, stickman.hips.center.y); context.lineTo(stickman.knees.left.x, stickman.knees.left.y); context.lineTo(stickman.feet.left.x, stickman.feet.left.y);
+    context.moveTo(stickman.hips.center.x, stickman.hips.center.y); context.lineTo(stickman.knees.right.x, stickman.knees.right.y); context.lineTo(stickman.feet.right.x, stickman.feet.right.y);
+    context.stroke();
+    context.beginPath(); context.arc(stickman.head.x, stickman.head.y, height * 0.04, 0, 2 * Math.PI); context.fillStyle = '#111827'; context.fill(); context.stroke();
+  };
+  const createParticles = (x:number, y:number, count:number, color:string) => {
+      for(let i=0; i<count; i++) particles.push({ x, y, color, life: 1, vx: (Math.random() - 0.5) * 4, vy: (Math.random() - 0.5) * 4 });
+  }
+  const drawParticles = () => {
+      for(let i = particles.length - 1; i >= 0; i--){
+          const p = particles[i]; context.fillStyle = p.color; context.globalAlpha = p.life; context.beginPath();
+          context.arc(p.x, p.y, 3, 0, 2 * Math.PI); context.fill();
+          p.life -= 0.03; p.x += p.vx; p.y += p.vy;
+          if(p.life <= 0) particles.splice(i, 1);
+      }
+      context.globalAlpha = 1;
+  }
+  const drawWeapon = () => {
+    if (!currentWeapon || !stickman) return;
+    context.lineWidth = 8;
+    context.strokeStyle = currentWeapon.visuals.color;
+    context.shadowColor = currentWeapon.visuals.color;
+    context.shadowBlur = currentWeapon.visuals.blur;
+    context.beginPath();
+    currentWeapon.draw(stickman, currentPose);
+    context.stroke();
+    context.shadowBlur = 0;
+  };
+  const drawScene = (message: string) => {
+    context.clearRect(0, 0, width, height);
+    context.fillStyle = '#111827'; context.fillRect(0, 0, width, height);
+    if (stickman) { drawWeapon(); drawStickman(); }
+    drawParticles();
+    context.fillStyle = 'rgba(255, 255, 255, 0.9)';
+    context.font = `bold 22px "Inter", sans-serif`;
+    context.textAlign = 'center';
+    context.fillText(message, width / 2, 40);
+  };
+  const animateToPose = (targetPose: Pose, duration: number) => {
+    const startPose = { ...currentPose }; const startTime = Date.now();
+    return new Promise<void>(resolve => {
+        const step = () => {
+            const elapsed = Date.now() - startTime; const progress = Math.min(elapsed / duration, 1);
+            (Object.keys(targetPose) as Array<keyof Pose>).forEach(key => {
+                if (key === 'torsoAngle') { (currentPose as any)[key] = lerp((startPose as any)[key], (targetPose as any)[key], progress); } 
+                else {
+                    (currentPose as any)[key].left = lerp((startPose as any)[key].left, (targetPose as any)[key].left, progress);
+                    (currentPose as any)[key].right = lerp((startPose as any)[key].right, (targetPose as any)[key].right, progress);
+                }
+            });
+            calculateStickman(currentPose);
+            if (progress < 1) { requestAnimationFrame(step); } else { resolve(); }
+        };
+        requestAnimationFrame(step);
+    });
+  };
+
+  // --- Main Animation Script ---
+  const runAnimation = async () => {
+    currentPose = JSON.parse(JSON.stringify(idlePose));
+    calculateStickman(currentPose);
+    let message = "Mythical Weapon Demonstration";
+    
+    const animationLoop = () => {
+        drawScene(message);
+        animationFrameId = requestAnimationFrame(animationLoop);
+    };
+    let animationFrameId = requestAnimationFrame(animationLoop);
+
+    for (const weaponName of WEAPON_NAMES) {
+        await sleep(1500);
+        
+        const weaponData = weaponRegistry[weaponName];
+        currentWeapon = weaponData;
+        message = `Summoning: ${weaponData.name}`;
+        
+        await animateToPose(weaponData.pose, 500);
+        
+        // Trigger particles based on a consistent hand position
+        const particleOrigin = weaponData.name === 'Shennong Cauldron' ? {x: stickman.feet.right.x + 80, y: height-60} : stickman.hands.left;
+        createParticles(particleOrigin.x, particleOrigin.y, weaponData.particleEffect.count, weaponData.visuals.color);
+    }
+    
+    await sleep(2000);
+    message = "Demonstration Complete";
+    currentWeapon = null;
+    await animateToPose(idlePose, 500);
+
+    await sleep(2000);
+    cancelAnimationFrame(animationFrameId);
+    drawScene("Demonstration Complete");
+  };
+
+  if (window.stickManAnimationId) { cancelAnimationFrame(window.stickManAnimationId); }
   runAnimation();
 };
