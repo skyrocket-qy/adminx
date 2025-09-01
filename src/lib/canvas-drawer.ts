@@ -1,6 +1,6 @@
 // This file acts as a central library for all our canvas drawing logic.
 
-const BLOCK_SIZE = 11;
+const BLOCK_SIZE = 3;
 const BORDER_SIZE = 1;
 const CELL_SIZE = BLOCK_SIZE + BORDER_SIZE;
 
