@@ -547,6 +547,8 @@ declare global {
         swissTableAnimationId: number;
         topologicalSortAnimationId: number;
         stickManAnimationId: number;
+        goGmpAnimationId: number;
+        goGcTriColorAnimationId: number;
     }
 }
 
@@ -1449,4 +1451,278 @@ export const drawStickMan = async (context: CanvasRenderingContext2D, width: num
 
   if (window.stickManAnimationId) { cancelAnimationFrame(window.stickManAnimationId); }
   runAnimation();
+};
+
+/**
+ * Visualizes the Go GMP (Goroutine, Machine, Processor) scheduler model.
+ *
+ * @param context The 2D rendering context of the canvas.
+ * @param width The width of the canvas.
+ * @param height The height of the canvas.
+ */
+export const drawGoGMP = async (context: CanvasRenderingContext2D, width: number, height: number) => {
+    // --- State & Types ---
+    interface Goroutine { id: number; x: number; y: number; targetX: number; targetY: number; color: string; state: 'runnable' | 'running' | 'syscall'; }
+    interface Processor { id: number; x: number; y: number; boundM: number | null; runningG: number | null; }
+    interface Machine { id: number; x: number; y: number; targetX: number; targetY: number; }
+
+    // Master list of all goroutines for rendering
+    let allGoroutines: Goroutine[] = [];
+    let processors: Processor[] = [];
+    let machines: Machine[] = [];
+    // The actual queue of runnable goroutines
+    let globalRunQueue: Goroutine[] = [];
+
+    const P_COUNT = 3;
+    const M_COUNT = 4;
+    const G_COUNT = 12;
+
+    const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+    // --- Layout ---
+    const pWidth = 100, pHeight = 80;
+    const mSize = 30;
+    const gSize = 20;
+    const pStartY = height * 0.4;
+    const pStartX = (width - P_COUNT * pWidth * 1.5) / 2;
+    const mStartY = height * 0.2;
+    const queueY = height * 0.8;
+    
+    const init = () => {
+        processors = [];
+        machines = [];
+        allGoroutines = [];
+        globalRunQueue = [];
+        for (let i = 0; i < P_COUNT; i++) processors.push({ id: i, x: pStartX + i * pWidth * 1.5, y: pStartY, boundM: null, runningG: null });
+        for (let i = 0; i < M_COUNT; i++) machines.push({ id: i, x: 50 + i * (mSize + 20), y: mStartY, targetX: 50 + i * (mSize + 20), targetY: mStartY });
+        for (let i = 0; i < G_COUNT; i++) {
+            const g: Goroutine = { id: i, x: width/2, y: -gSize, targetX: 0, targetY: 0, color: `hsl(${i * 30}, 70%, 50%)`, state: 'runnable' };
+            allGoroutines.push(g);
+            globalRunQueue.push(g);
+        }
+        positionGoroutinesInQueue();
+    };
+    
+    const positionGoroutinesInQueue = () => {
+      globalRunQueue.forEach((g, i) => {
+        g.targetX = width / 2 - (globalRunQueue.length * (gSize + 5) / 2) + i * (gSize + 5);
+        g.targetY = queueY;
+      });
+    }
+
+    // --- Drawing ---
+    const drawP = (p: Processor) => {
+      context.strokeStyle = '#888'; context.strokeRect(p.x, p.y, pWidth, pHeight);
+      context.font = '14px "Inter"'; context.fillStyle = 'white'; context.textAlign = 'center';
+      context.fillText(`P ${p.id}`, p.x + pWidth/2, p.y + 15);
+    };
+    const drawM = (m: Machine) => {
+      context.fillStyle = '#38BDF8'; context.beginPath(); context.arc(m.x, m.y, mSize/2, 0, 2*Math.PI); context.fill();
+      context.font = 'bold 14px "Inter"'; context.fillStyle = 'black'; context.textAlign = 'center';
+      context.fillText(`M ${m.id}`, m.x, m.y);
+    };
+    const drawG = (g: Goroutine) => {
+      context.fillStyle = g.color; context.beginPath(); context.arc(g.x, g.y, gSize/2, 0, 2*Math.PI); context.fill();
+      context.font = 'bold 12px "Inter"'; context.fillStyle = 'black'; context.textAlign = 'center';
+      context.fillText(`G${g.id}`, g.x, g.y);
+    };
+    const drawScene = (message: string) => {
+        context.clearRect(0,0,width,height); context.fillStyle = '#111827'; context.fillRect(0,0,width,height);
+        context.font = 'bold 20px "Inter"'; context.fillStyle = 'white'; context.textAlign = 'center'; context.fillText(message, width/2, 40);
+        context.font = '16px "Inter"'; context.fillText("Global Run Queue", width/2, queueY - 30);
+        processors.forEach(drawP); machines.forEach(drawM); allGoroutines.forEach(drawG);
+    };
+    
+    // --- Animation ---
+    const animationLoop = () => {
+        let changed = false;
+        // Animate all objects from the master lists
+        [...machines, ...allGoroutines].forEach(o => {
+            const dx = o.targetX - o.x; const dy = o.targetY - o.y;
+            if(Math.abs(dx) > 0.5 || Math.abs(dy) > 0.5){
+                o.x += dx * 0.1; o.y += dy * 0.1; changed = true;
+            } else {
+                o.x = o.targetX;
+                o.y = o.targetY;
+            }
+        });
+        drawScene(message);
+        if(changed) requestAnimationFrame(animationLoop); else resolveAnimation();
+    };
+
+    let message = ""; let resolveAnimation: () => void;
+    const animate = () => {
+      requestAnimationFrame(animationLoop);
+      return new Promise<void>(resolve => resolveAnimation = resolve);
+    }
+    
+    // --- Main Script ---
+    const runAnimation = async () => {
+        init();
+        await animate();
+
+        message = "Scheduler starts. M's look for available P's.";
+        await sleep(1500);
+        
+        const m0 = machines[0]; const p0 = processors[0]; p0.boundM = m0.id;
+        m0.targetX = p0.x + pWidth/2; m0.targetY = p0.y - mSize;
+        await animate(); await sleep(500);
+
+        message = `M${m0.id} is bound to P${p0.id}. It takes a Goroutine from the global queue.`;
+        const g0 = globalRunQueue.shift()!; p0.runningG = g0.id; positionGoroutinesInQueue();
+        g0.targetX = p0.x + pWidth/2; g0.targetY = p0.y + pHeight/2;
+        await animate(); await sleep(1000);
+
+        message = `G${g0.id} is now running on M${m0.id}/P${p0.id}.`;
+        await sleep(2000);
+        
+        message = `Another M (M1) binds to P1 and takes G1.`;
+        const m1 = machines[1]; const p1 = processors[1]; p1.boundM = m1.id;
+        m1.targetX = p1.x + pWidth/2; m1.targetY = p1.y - mSize;
+        const g1 = globalRunQueue.shift()!; p1.runningG = g1.id; positionGoroutinesInQueue();
+        g1.targetX = p1.x + pWidth/2; g1.targetY = p1.y + pHeight/2;
+        await animate(); await sleep(1000);
+        
+        message = `G${g0.id} makes a blocking syscall. M${m0.id} separates from P${p0.id}.`;
+        g0.state = 'syscall';
+        m0.targetY = p0.y + pHeight + 50;
+        g0.targetY = m0.targetY + mSize;
+        await animate(); await sleep(1000);
+        
+        message = `A new M (M2) is acquired to run on P${p0.id}.`;
+        p0.boundM = 2;
+        const m2 = machines[2]; m2.targetX = p0.x + pWidth/2; m2.targetY = p0.y - mSize;
+        await animate(); await sleep(1000);
+        
+        message = `M${m2.id} takes a new goroutine (G2) for P${p0.id}.`;
+        const g2 = globalRunQueue.shift()!; p0.runningG = g2.id; positionGoroutinesInQueue();
+        g2.targetX = p0.x + pWidth/2; g2.targetY = p0.y + pHeight/2;
+        await animate(); await sleep(2000);
+
+        message = "Animation Complete!";
+    };
+
+    if (window.goGmpAnimationId) cancelAnimationFrame(window.goGmpAnimationId);
+    runAnimation();
+};
+
+/**
+ * Visualizes Go's Tri-color Mark-and-Sweep Garbage Collection algorithm.
+ *
+ * @param context The 2D rendering context of the canvas.
+ * @param width The width of the canvas.
+ * @param height The height of the canvas.
+ */
+export const drawGoGcTriColorMark = async (context: CanvasRenderingContext2D, width: number, height: number) => {
+    // --- State & Types ---
+    interface HeapObject { id: number; x: number; y: number; color: 'white' | 'gray' | 'black'; pointers: number[]; }
+    let objects: HeapObject[] = [];
+    const OBJ_COUNT = 20;
+    const roots = [0, 1];
+
+    const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+    // --- Layout & Drawing ---
+    const objRadius = Math.min(width, height) / 30;
+    const init = () => {
+        objects = [];
+        for (let i = 0; i < OBJ_COUNT; i++) {
+            objects.push({ id: i, x: Math.random() * (width*0.8) + width*0.1, y: Math.random() * (height*0.7) + height*0.15, color: 'white', pointers: [] });
+        }
+        for (let i = 0; i < OBJ_COUNT * 1.5; i++) {
+            const from = Math.floor(Math.random() * OBJ_COUNT);
+            const to = Math.floor(Math.random() * OBJ_COUNT);
+            if (from !== to && !objects[from].pointers.includes(to)) objects[from].pointers.push(to);
+        }
+    };
+    
+    const drawObj = (o: HeapObject) => {
+        const colorMap = { white: '#DDD', gray: '#888', black: '#333' };
+        context.fillStyle = colorMap[o.color]; context.beginPath(); context.arc(o.x, o.y, objRadius, 0, 2*Math.PI); context.fill();
+        context.font = 'bold 12px "Inter"'; context.fillStyle = o.color === 'black' ? 'white' : 'black'; context.textAlign = 'center';
+        context.fillText(o.id.toString(), o.x, o.y);
+    };
+    const drawPointer = (from: HeapObject, to: HeapObject) => {
+        context.beginPath(); context.moveTo(from.x, from.y);
+        const angle = Math.atan2(to.y - from.y, to.x - from.x);
+        context.lineTo(to.x - objRadius * Math.cos(angle), to.y - objRadius * Math.sin(angle));
+        context.strokeStyle = 'rgba(255,255,255,0.3)'; context.lineWidth = 2; context.stroke();
+    };
+    const drawScene = (message: string) => {
+        context.clearRect(0,0,width,height); context.fillStyle = '#111827'; context.fillRect(0,0,width,height);
+        context.font = 'bold 20px "Inter"'; context.fillStyle = 'white'; context.textAlign = 'center';
+        context.fillText("Go GC: Tri-Color Mark & Sweep", width/2, 40);
+        context.font = '16px "Inter"'; context.fillText(message, width/2, 70);
+        
+        objects.forEach(fromObj => {
+            fromObj.pointers.forEach(toId => {
+                const toObj = objects.find(o => o.id === toId);
+                if (toObj) {
+                    drawPointer(fromObj, toObj);
+                }
+            });
+        });
+
+        objects.forEach(drawObj);
+    };
+
+    // --- Main Script ---
+    const runAnimation = async () => {
+        init();
+        drawScene("Initial heap state. All objects are WHITE.");
+        await sleep(2000);
+        
+        let graySet = new Set<number>();
+        roots.forEach(r => { 
+            const rootObj = objects.find(o => o.id === r);
+            if (rootObj) {
+                rootObj.color = 'gray'; 
+                graySet.add(r); 
+            }
+        });
+        drawScene("GC starts. Roots are colored GRAY.");
+        await sleep(2000);
+
+        while (graySet.size > 0) {
+            const currentId = graySet.values().next().value;
+            // FIX: Check for undefined to satisfy TypeScript's strict checks.
+            // This should not happen in practice due to the while loop condition.
+            if (currentId === undefined) break;
+            
+            graySet.delete(currentId);
+            const currentObj = objects.find(o => o.id === currentId);
+
+            if (!currentObj) continue;
+
+            drawScene(`Scanning GRAY object ${currentId}...`);
+            await sleep(1000);
+
+            for (const childId of currentObj.pointers) {
+                const childObj = objects.find(o => o.id === childId);
+                if (childObj && childObj.color === 'white') {
+                    childObj.color = 'gray';
+                    graySet.add(childId);
+                    drawScene(`Object ${childId} is reachable. Color it GRAY.`);
+                    await sleep(800);
+                }
+            }
+            currentObj.color = 'black';
+            drawScene(`Finished scanning ${currentId}. Color it BLACK.`);
+            await sleep(1000);
+        }
+
+        drawScene("Mark phase complete. No more GRAY objects.");
+        await sleep(2000);
+        
+        drawScene("Sweep phase begins. All WHITE objects are garbage.");
+        await sleep(1500);
+        objects = objects.filter(o => o.color !== 'white');
+        drawScene("Sweep complete. Garbage collected.");
+        await sleep(3000);
+
+        drawScene("Animation Complete!");
+    };
+    
+    if (window.goGcTriColorAnimationId) cancelAnimationFrame(window.goGcTriColorAnimationId);
+    runAnimation();
 };
