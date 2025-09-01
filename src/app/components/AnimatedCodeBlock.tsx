@@ -100,13 +100,13 @@ const AnimatedCodeBlock = () => {
   }, []);
 
   return (
-    <div className={`code-block-container ${vt323.className}`}>
+    <div className={`h-full code-block-container ${vt323.className}`}>
       <div className="code-block-header">
         <div className="code-block-header-dot red"></div>
         <div className="code-block-header-dot yellow"></div>
         <div className="code-block-header-dot green"></div>
       </div>
-      <div className="code-block-content">
+      <div className="code-block-content h-full">
         <pre className="line-numbers">{lineNumbers}</pre>
         <pre className="code">
           <code>
