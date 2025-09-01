@@ -2,7 +2,7 @@
 
 import { useRef, useEffect } from 'react';
 // 1. Import the specialized header drawing function
-import { drawHeader } from '@/lib/canvas-drawer'; 
+import { drawHeaderWithBlockText } from '@/lib/canvas-drawer'; 
 
 interface HeaderCanvasBlockProps {
   title: string;
@@ -25,7 +25,7 @@ export default function HeaderCanvasBlock({ title, backgroundColor, lineColor }:
       canvas.height = height;
 
       // 2. Call the imported function, providing the extra `title` argument
-      drawHeader(context, width, height, title, { 
+      drawHeaderWithBlockText(context, width, height, title, { 
         bg: backgroundColor || '#2E1A47',
         line: lineColor || '#333'
       });
