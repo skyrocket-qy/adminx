@@ -1,9 +1,10 @@
 'use client'; // Directive to mark this as a Client Component in Next.js
 
+import AnimatedCodeBlock from '@/app/components/AnimatedCodeBlock';
 import { useRef, useEffect } from 'react';
 
 // Define constants for our grid
-const BLOCK_SIZE = 11;
+const BLOCK_SIZE = 15;
 const BORDER_SIZE = 1;
 const CELL_SIZE = BLOCK_SIZE + BORDER_SIZE; // Total size for one cell (12px)
 
@@ -58,11 +59,15 @@ export default function Home() {
   }, []);
 
   return (
-    <main>
+    <main className="relative isolate grid min-h-screen place-items-center">
+      {/* The canvas with -z-10 will now be contained by the parent */}
       <canvas
         ref={canvasRef}
-        style={{ display: 'block' }}
+        className="absolute inset-0 -z-10"
       />
+      
+      {/* Your content remains on top */}
+      <AnimatedCodeBlock />
     </main>
   );
 }
