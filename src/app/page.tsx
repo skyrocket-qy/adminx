@@ -1,32 +1,43 @@
-// app/page.tsx
-
 'use client';
 
 import AnimatedCodeBlock from '@/app/components/AnimatedCodeBlock';
-import CanvasBlock from './CanvasBlock'; // Import the new component
+// Import our new, specialized components
+import BasicCanvasBlock from '@/app/components/BasicCanvasBlock';
+import HeaderCanvasBlock from '@/app/components/HeaderCanvasBlock';
 
 export default function Home() {
   return (
-    <main className="flex h-full flex-col overflow-hidden bg-[#2E1A47]">
+    // Use h-screen to ensure the container fits the viewport exactly
+    <main className="flex h-screen flex-col overflow-hidden">
       
-      <div className="flex-1 h-[25%]">
-        <CanvasBlock backgroundColor="#1E3A8A" lineColor="#3B82F6" displayText="Skyrocket's playground"/>
+      {/* Top Row: Use the specialized HeaderCanvasBlock */}
+      {/* Remove flex-1 and set an explicit height */}
+      <div className="h-[25%]">
+        <HeaderCanvasBlock
+          title="Skyrocket's playground"
+          backgroundColor="#1E3A8A" 
+          lineColor="#3B82F6"
+        />
       </div>
 
+      {/* Middle Row: Content height is determined by AnimatedCodeBlock */}
       <div className="flex">
+        {/* Left Canvas: Just needs the basic block */}
         <div className="flex-1">
-          <CanvasBlock backgroundColor="#4C1D95" lineColor="#A78BFA" />
+          <BasicCanvasBlock backgroundColor="#4C1D95" lineColor="#A78BFA" />
         </div>
         
         <AnimatedCodeBlock />
         
+        {/* Right Canvas: Just needs the basic block */}
         <div className="flex-1">
-          <CanvasBlock />
+          <BasicCanvasBlock />
         </div>
       </div>
 
+      {/* Bottom Row: `flex-1` makes it fill all remaining vertical space */}
       <div className="flex-1">
-        <CanvasBlock backgroundColor="#064E3B" lineColor="#34D399" />
+        <BasicCanvasBlock backgroundColor="#064E3B" lineColor="#34D399" />
       </div>
 
     </main>
