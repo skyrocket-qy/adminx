@@ -53,8 +53,11 @@ export default function RootLayout({
         >
           <Header />
         </div>
-        <div className={`flex h-full ${pathname === '/cyberpunk' ? '' : 'bg-pink-100'}`}>
-          <main className={`w-full h-full ${pathname === '/' ? 'overflow-auto retro-body' : (pathname === '/cyberpunk' ? 'overflow-auto' : 'overflow-hidden')}`}>
+        <div className={`flex h-full ${pathname === '/' ? '' : 'bg-pink-100'}`}>
+          <main className={`w-full h-full ${pathname === '/' ? 
+            'overflow-auto' : 
+            (pathname === '/cyberpunk' ? 'overflow-auto' : 'overflow-hidden')}`}
+          >
             {children}
           </main>
           <div className={`w-10 h-[95%] rounded-lg justify-center fixed right-0 top-10 shadow
