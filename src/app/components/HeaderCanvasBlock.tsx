@@ -39,13 +39,12 @@ export function HeaderCanvasBlock({ title, backgroundColor, lineColor }: HeaderC
 }
 
 interface DrawCanvasBlockProps {
-  title: string;
   backgroundColor?: string;
   lineColor?: string;
   drawFunc: (context: CanvasRenderingContext2D, width: number, height: number) => void;
 }
 
-export function DrawCanvasBlock({ title, backgroundColor, lineColor, drawFunc }: DrawCanvasBlockProps) {
+export function DrawCanvasBlock({backgroundColor, lineColor, drawFunc }: DrawCanvasBlockProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -69,7 +68,7 @@ export function DrawCanvasBlock({ title, backgroundColor, lineColor, drawFunc }:
 
     resizeObserver.observe(canvas);
     return () => resizeObserver.disconnect();
-  }, [title, backgroundColor, lineColor]);
+  }, [backgroundColor, lineColor]);
 
   return <canvas ref={canvasRef} className="h-full w-full" />;
 }

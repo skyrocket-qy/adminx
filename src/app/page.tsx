@@ -32,6 +32,7 @@ export default function Home() {
       </header>
 
       <BouncingCanvas boundaryRef={constrainedAreaRef} />
+      <BouncingCanvas boundaryRef={constrainedAreaRef} />
       <div className="flex">
         <AnimatedCodeBlock />
       </div>
