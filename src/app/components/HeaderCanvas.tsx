@@ -442,7 +442,7 @@ export default function AsciiLogo({ config = {} }) {
         className="block w-full h-full pixelated-img"
       />
       <h1 className="absolute bottom-10 md:bottom-20 text-purple-50 bg-[#1D0245] p-2">
-        An Asynchronous Coding Agent
+        Welcome! dive everywhere to enjoy this world
       </h1>
     </div>
   );

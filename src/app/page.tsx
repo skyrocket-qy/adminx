@@ -30,7 +30,7 @@ export default function Home() {
         <AsciiLogo/>
         {/* <h1 className="cyber-h1 glitch" data-text="Yo">Hi</h1> */}
         <p className="cyber-p">
-          Welcome to my playground, explore everywhere to know about this world
+          Welcome! dive everywhere to enjoy this world
         </p>
       </header>
       <BouncingCanvas 
