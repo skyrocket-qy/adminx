@@ -61,7 +61,7 @@ export default function RootLayout({
             {children}
           </main>
           <div className={`w-10 h-[95%] rounded-lg justify-center fixed right-0 top-10 shadow
-            transition-transform duration-500 z-40 ${pathname === '/' ? 'bg-emerald-400' : ''}
+            transition-transform duration-500 z-40 ${pathname === '/' ? 'bg-[#3FBFBF]' : ''}
             ${showHeader ? 'translate-x-0' : 'translate-x-full'}`}
           >
             <LinkBar />

@@ -4,22 +4,21 @@ import React, { useState, useEffect, useMemo } from 'react';
 import "./AnimatedCodeBlock.css"
 
 // The Go-like code snippet to be animated.
-const codeToType = `// About Me
-
-currentJob := Job{
-  title: "Backend engineer",
-  company: "美商時豪",
-  period: "2025/6 ~ Now",
-}
-
-const (
+const codeToType = 
+`const (
   name = "HUANG, QING YUN (黃青雲)"
+  nickName = "Jimmy"
   email = "skyrocketqy81@gmail.com"
   militaryService = "Completed (2020/01)"
   education = "Master"
 )
 
 var (
+  currentJob = Job{
+    title: "Backend engineer",
+    company: "美商時豪",
+    period: "2025/6 ~ Now",
+  }
   jobExperience: "4 years",
   role = "Backend Engineer",
   interests = "Full-stack Development",

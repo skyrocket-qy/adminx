@@ -26,9 +26,6 @@ export default function Home() {
   return (
     <div className="cyber-body">
       <ParticleAnimation />
-      <header className="cyber-header mb-15">
-        <AsciiLogo/>
-      </header>
       <BouncingCanvas 
         boundaryRef={constrainedAreaRef} drawFunc={drawBfs}
         backgroundColor="#0369a1" initialPosition={{x: 20, y: 40}}
@@ -53,6 +50,9 @@ export default function Home() {
         boundaryRef={constrainedAreaRef} drawFunc={drawBinaryIndexTree} 
         initialPosition={{x: 1700, y: 100}}
       />
+      <header className="cyber-header mb-15">
+        <AsciiLogo/>
+      </header>
       <div className="flex">
         <AnimatedCodeBlock />
       </div>

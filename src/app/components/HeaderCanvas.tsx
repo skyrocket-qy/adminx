@@ -476,8 +476,8 @@ export default function AsciiLogo({ config = {} }) {
         ref={canvasRef}
         className="block w-full h-full pixelated-img"
       />
-      <h1 className="absolute bottom-10 md:bottom-20 text-purple-50 bg-[#1D0245] p-2">
-        Welcome! dive everywhere to enjoy this world
+      <h1 className="absolute bottom-10 md:bottom-20 rounded-xl  text-purple-200 bg-[#1D0245] p-1">
+        Welcome! dive into everywhere to enjoy this world
       </h1>
     </div>
   );

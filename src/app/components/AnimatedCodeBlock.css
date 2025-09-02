@@ -1,5 +1,5 @@
 .code-block-container {
-  background-color: #2E1A47;
+  background-color: #131313;
   border: 1px solid #9E7BFF;
   border-radius: 8px;
   padding: 16px;
@@ -7,10 +7,10 @@
   height: 640px;
   margin: 1px auto;
   box-shadow:
-    0 0 2px #fff,
-    0 0 5px #fff,
-    0 0 10px #fff,
-    0 0 20px #FF00FF;
+    0 0 2px #810571,
+    0 0 5px #240caf,
+    0 0 10px #08e01a,
+    0 0 20px #fff;
   position: relative;
 }
 
@@ -61,7 +61,7 @@
   height: 600px; 
   font-family: 'VT323', monospace;
   white-space: pre-wrap;
-  color: #FFFFFF;
+  color: #3FBFBF;
   font-size: 18px;
   display: flex;
 }
@@ -69,7 +69,7 @@
 .line-numbers {
   padding-right: 16px;
   text-align: right;
-  color: #9E7BFF;
+  color: #71678d;
   user-select: none;
 }
 
@@ -93,11 +93,11 @@
 }
 
 /* Syntax Highlighting Colors */
-.token.keyword { color: #FF00FF; }
-.token.string { color: #FFFF00; }
+.token.keyword { color: #9E7BFF; }
+.token.string { color: #EFB080; }
 .token.function { color: #00FFFF; }
 .token.comment { color: #9E7BFF; }
 .token.number { color: #00FFFF; }
-.token.operator { color: #FF00FF; }
+.token.operator { color: #FFFFFF; }
 .token.punctuation { color: #FFFFFF; }
-.token.class-name { color: #00FFFF; }
+.token.class-name { color: #569cd6; }
