@@ -451,7 +451,7 @@ export const drawUnionFind = async (context: CanvasRenderingContext2D, width: nu
 
   // --- Animation Logic ---
   const visualizeFind = async (startNodeId: number) => {
-    let path = [];
+    const path = [];
     let current = startNodeId;
     while (parent[current] !== current) {
       path.push(current);

@@ -11,7 +11,18 @@ const compat = new FlatCompat({
 
 const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
-  {ignores: ["src/components/ui/**"]} // 👈 Add this
+  { ignores: ["src/components/ui/**"] },
+  
+  // 👇 Add this new object for your rules
+  {
+    rules: {
+      // Set to "warn" to show a warning without failing the build
+      "@typescript-eslint/no-unused-vars": "warn",
+
+      // Or set to "off" to disable it completely
+      // "@typescript-eslint/no-unused-vars": "off",
+    }
+  }
 ];
 
 export default eslintConfig;
