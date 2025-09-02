@@ -4,28 +4,25 @@ import React, { useState, useEffect, useMemo } from 'react';
 import './AnimatedCodeBlock.css';
 import { vt323 } from '@/global/fonts';
 
-const codeToType = `// Objective: Use a state machine for steps
+const codeToType = `// Introduction: About Me
 
-class UserOnboarding {
-  constructor(user) {
-    this.user = user;
-    this.steps = ['Welcome', 'Profile Setup', 'Done'];
-    this.currentStep = 0;
-  }
+const personalInfo = {
+  name: "HUANG, QING YUN (黃青雲)",
+  email: "rivendinner@gmail.com",
+  gender: "Male",
+  age: 32,
+  militaryService: "Completed (2020/01)",
+  role: "Backend Engineer",
+  interests: "Full-stack Development",
+  primaryLanguage: "Go",
+  otherLanguages: ["Python", "JavaScript/TypeScript", "C++"],
+  frontendFamiliarity: "React",
+  experienceAreas: ["AWS", "microservices", "DevOps practices"],
+  attitude: "Proactive learning, adaptable, collaborative",
+};
 
-  async nextStep() {
-    if (this.currentStep < this.steps.length - 1) {
-      this.currentStep++;
-      return this.steps[this.currentStep];
-    }
-    return "done";
-  }
-}
-
-const newUser = { name: "David", id: "usr_123" };
-const onboardingProcess = new UserOnboarding(newUser);
-
-onboardingProcess.nextStep();`;
+console.log(introduction);
+`;
 
 const tokenColors = {
   keyword: 'token keyword',
@@ -39,7 +36,7 @@ const tokenColors = {
   default: '',
 };
 
-const highlightSyntax = (code) => {
+const highlightSyntax = (code: string) => {
   const tokens = [];
   const keywordRegex = /\b(class|constructor|const|let|var|async|if|return)\b/g;
   const stringRegex = /'[^']*'/g;
@@ -50,7 +47,7 @@ const highlightSyntax = (code) => {
   const punctuationRegex = /[.,;()\[\]]/g;
   const classNameRegex = /\b[A-Z]\w*\b/g;
 
-  const getClassName = (char, index) => {
+  const getClassName = (char: string, index: number) => {
     // This is a simplified approach. A real syntax highlighter is much more complex.
     if (code.substring(index).match(commentRegex)?.index === 0) return tokenColors.comment;
     if (code.substring(index).match(keywordRegex)?.index === 0) return tokenColors.keyword;
@@ -73,7 +70,7 @@ const highlightSyntax = (code) => {
 
 
 const AnimatedCodeBlock = () => {
-  const [displayedChars, setDisplayedChars] = useState([]);
+  const [displayedChars, setDisplayedChars] = useState<{ char: string; className: string; }[]>([]);
   const [charIndex, setCharIndex] = useState(0);
 
   const styledCode = useMemo(() => highlightSyntax(codeToType), []);
