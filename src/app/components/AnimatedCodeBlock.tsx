@@ -54,7 +54,7 @@ const highlightSyntax = (code: string): Array<{ char: string; className: string 
     { type: 'comment' as TokenType, pattern: /^\/\/.*/ },
     { type: 'string' as TokenType, pattern: /^"[^"]*"/ },
     { type: 'keyword' as TokenType, pattern: /^\b(const|var|string)\b/ },
-    { type: 'className' as TokenType, pattern: /^\b[A-Z]\w*\b/ },
+    { type: 'className' as TokenType, pattern: /^\b[A-Z]\w*(?=\s*{)/ },
     { type: 'number' as TokenType, pattern: /^\b\d+(\.\d+)?\b/ },
     { type: 'operator' as TokenType, pattern: /^(:=|[:={}\[\]])/ },
     { type: 'punctuation' as TokenType, pattern: /^[(),]/ },

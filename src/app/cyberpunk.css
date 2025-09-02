@@ -15,7 +15,7 @@
   flex-direction: column;
   align-items: center;
   padding: 2rem;
-  text-shadow: 0 0 5px var(--cyber-primary), 0 0 10px var(--cyber-primary);
+  /* text-shadow: 0 0 5px var(--cyber-primary), 0 0 10px var(--cyber-primary); */
 }
 
 .cyber-h1 {
@@ -272,7 +272,7 @@
 
 .code-animation-block code {
   color: var(--cyber-secondary);
-  text-shadow: 0 0 5px var(--cyber-secondary);
+  /* text-shadow: 0 0 5px var(--cyber-secondary); */
 }
 
 .code-animation-block code::after {
