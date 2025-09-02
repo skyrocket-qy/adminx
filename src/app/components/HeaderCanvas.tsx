@@ -315,8 +315,9 @@ export default function AsciiLogo({ config = {} }) {
     const canvas = canvasRef.current;
     if (!ctx || !canvas) return;
 
-    ctx.fillStyle = mergedConfig.backgroundColor;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    // ctx.fillStyle = mergedConfig.backgroundColor;
+    // ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     ctx.font = `${mergedConfig.fontWeight} ${mergedConfig.fontSize}px ${mergedConfig.fontFamily}`;
     ctx.textAlign = "left";
