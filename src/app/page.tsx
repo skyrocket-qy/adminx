@@ -20,7 +20,7 @@ import './cyberpunk.css';
 //   } from '@/lib/canvas-drawer'; 
 
 export default function Home() {
-  const constrainedAreaRef = useRef(null);
+  const constrainedAreaRef = useRef<HTMLElement | null>(null);
   return (
     <div className="cyber-body">
       <ParticleAnimation />
@@ -47,16 +47,16 @@ export default function Home() {
  * @param {React.RefObject<HTMLElement>} [props.boundaryRef] - A ref to the element that defines the boundaries for the canvas. If not provided, the window will be used as the boundary.
  */
 interface BouncingCanvasProps {
-  boundaryRef?: React.RefObject<HTMLElement>;
+  boundaryRef?: React.RefObject<HTMLElement | null>;
 }
 
 const BouncingCanvas = ({ boundaryRef }: BouncingCanvasProps) => {
-    const canvasRef = useRef(null);
+    const canvasRef = useRef<HTMLCanvasElement | null>(null);
     // Use refs for animation state to avoid re-renders on every frame.
     const position = useRef({ x: 100, y: 100 });
     const velocity = useRef({ dx: 2, dy: 2 });
     const dragInfo = useRef({ isDragging: false, startX: 0, startY: 0 });
-    const animationFrameId = useRef(null);
+    const animationFrameId = useRef<number | null>(null);
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -111,7 +111,7 @@ const BouncingCanvas = ({ boundaryRef }: BouncingCanvasProps) => {
             animationFrameId.current = requestAnimationFrame(animate);
         };
 
-        const onPointerDown = (e) => {
+        const onPointerDown = (e: PointerEvent) => {
             dragInfo.current.isDragging = true;
             canvas.style.cursor = 'grabbing';
             // Calculate offset from the element's top-left corner
@@ -121,7 +121,7 @@ const BouncingCanvas = ({ boundaryRef }: BouncingCanvasProps) => {
             velocity.current = { dx: 0, dy: 0 };
         };
 
-        const onPointerMove = (e) => {
+        const onPointerMove = (e: PointerEvent) => {
             if (dragInfo.current.isDragging) {
                 const bounds = getBoundary();
                 let newX = e.clientX - dragInfo.current.startX;
