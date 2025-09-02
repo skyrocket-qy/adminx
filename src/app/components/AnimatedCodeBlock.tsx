@@ -33,6 +33,8 @@ var (
 `;
 
 // Maps token types to their specific CSS class names.
+type TokenType = keyof typeof tokenClassNames;
+
 const tokenClassNames = {
   keyword: 'keyword',
   string: 'string',
@@ -50,19 +52,19 @@ const tokenClassNames = {
  * @param {string} code The code to highlight.
  * @returns {Array<{char: string, className: string | undefined}>} An array of characters with their corresponding CSS classes.
  */
-const highlightSyntax = (code) => {
+const highlightSyntax = (code: string): Array<{ char: string; className: string | undefined }> => {
   const tokens = [];
   let cursor = 0;
 
   const tokenPatterns = [
-    { type: 'comment', pattern: /^\/\/.*/ },
-    { type: 'string', pattern: /^"[^"]*"/ },
-    { type: 'keyword', pattern: /^\b(const|var|string)\b/ },
-    { type: 'className', pattern: /^\b[A-Z]\w*\b/ },
-    { type: 'number', pattern: /^\b\d+(\.\d+)?\b/ },
-    { type: 'operator', pattern: /^(:=|[:={}\[\]])/ },
-    { type: 'punctuation', pattern: /^[(),]/ },
-    { type: 'default', pattern: /^\s+|^./ },
+    { type: 'comment' as TokenType, pattern: /^\/\/.*/ },
+    { type: 'string' as TokenType, pattern: /^"[^"]*"/ },
+    { type: 'keyword' as TokenType, pattern: /^\b(const|var|string)\b/ },
+    { type: 'className' as TokenType, pattern: /^\b[A-Z]\w*\b/ },
+    { type: 'number' as TokenType, pattern: /^\b\d+(\.\d+)?\b/ },
+    { type: 'operator' as TokenType, pattern: /^(:=|[:={}\[\]])/ },
+    { type: 'punctuation' as TokenType, pattern: /^[(),]/ },
+    { type: 'default' as TokenType, pattern: /^\s+|^./ },
   ];
 
   while (cursor < code.length) {
@@ -92,7 +94,7 @@ const highlightSyntax = (code) => {
 };
 
 const AnimatedCodeBlock = () => {
-  const [displayedChars, setDisplayedChars] = useState([]);
+  const [displayedChars, setDisplayedChars] = useState<{ char: string; className: string | undefined }[]>([]);
   const [charIndex, setCharIndex] = useState(0);
 
   const styledCode = useMemo(() => highlightSyntax(codeToType), []);
