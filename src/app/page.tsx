@@ -37,10 +37,10 @@ export default function Home() {
         boundaryRef={constrainedAreaRef} drawFunc={drawStickMan} 
         backgroundColor="#be185d" initialPosition={{x: 800, y: 450}}
       />
-      <BouncingCanvas 
+      {/* <BouncingCanvas 
         boundaryRef={constrainedAreaRef} drawFunc={drawDp} 
-        backgroundColor="#be185d" initialPosition={{x: 1500, y: 850}}
-      />
+        backgroundColor="#0369a1" initialPosition={{x: 1500, y: 850}}
+      /> */}
       <BouncingCanvas 
         boundaryRef={constrainedAreaRef} drawFunc={drawGoGcTriColorMark} 
         backgroundColor="#be185d" initialPosition={{x: 300, y: 850}}
@@ -51,7 +51,7 @@ export default function Home() {
       />
       <BouncingCanvas 
         boundaryRef={constrainedAreaRef} drawFunc={drawBinaryIndexTree} 
-        backgroundColor="#be185d" initialPosition={{x: 1800, y: 100}}
+        initialPosition={{x: 1700, y: 100}}
       />
       <div className="flex">
         <AnimatedCodeBlock />

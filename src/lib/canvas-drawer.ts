@@ -271,8 +271,8 @@ export const drawDp = (context: CanvasRenderingContext2D, width: number, height:
     }
 
     // --- Drawing ---
+    context.fillStyle = '#black';
     context.clearRect(0, 0, width, height);
-    drawBasicGrid(context, width, height);
 
     // Draw labels for arrays
     context.font = `${fontSize * 1.2}px "Inter", sans-serif`;
@@ -308,7 +308,7 @@ export const drawDp = (context: CanvasRenderingContext2D, width: number, height:
             // Draw cell value
             context.font = `bold ${fontSize}px "Inter", sans-serif`;
             context.fillStyle = 'white';
-            // context.fillText(dp[row][col].toString(), x, y);
+            context.fillText(dp[row][col].toString(), x, y);
 
             // Draw cell borders
             context.strokeStyle = 'rgba(255, 255, 255, 0.2)';
@@ -328,7 +328,7 @@ export const drawDp = (context: CanvasRenderingContext2D, width: number, height:
         const finalX = leftMargin + (n + 0.5) * cellWidth;
         const finalY = topMargin + (m + 0.5) * cellHeight;
         context.fillStyle = '#22C55E'; // Green
-        // context.fillText(dp[m][n].toString(), finalX, finalY);
+        context.fillText(dp[m][n].toString(), finalX, finalY);
         cancelAnimationFrame(animationFrameId);
     } else {
         animationFrameId = requestAnimationFrame(animate);
@@ -575,8 +575,9 @@ export const drawBinaryIndexTree = async (context: CanvasRenderingContext2D, wid
   const bitY = height / 2 + boxSize;
   const fontSize = boxSize * 0.4;
 
-  const drawArrays = (message: string, highlights: any = {}) => {
-      context.clearRect(0, 0, width, height);
+  const drawArrays = (message: string, highlights: any = {}) => { 
+      context.fillStyle = '#1A202C';
+      context.fillRect(0, 0, width, height);
       
       // Draw message
       context.fillStyle = 'rgba(255, 255, 255, 0.8)';
