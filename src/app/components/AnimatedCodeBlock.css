@@ -79,8 +79,24 @@
 
 .code {
   flex-grow: 1;
+  position: relative; /* Needed for cursor positioning */
 }
 
+/* Blinking cursor effect */
+.code::after {
+  content: '_';
+  position: absolute;
+  animation: blink 1s step-end infinite;
+  color: #00FFFF; /* Cursor color */
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Syntax Highlighting Colors */
 .token.keyword { color: #FF00FF; }
 .token.string { color: #FFFF00; }
 .token.function { color: #00FFFF; }
