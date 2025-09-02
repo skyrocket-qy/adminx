@@ -50,7 +50,7 @@ export default function Home() {
         backgroundColor="#be185d" initialPosition={{x: 1200, y: 250}}
       />
       <BouncingCanvas 
-        boundaryRef={constrainedAreaRef} drawFunc={drawTopologicalSort} 
+        boundaryRef={constrainedAreaRef} drawFunc={drawBinaryIndexTree} 
         backgroundColor="#be185d" initialPosition={{x: 1800, y: 100}}
       />
       <div className="flex">

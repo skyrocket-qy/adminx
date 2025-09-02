@@ -120,7 +120,7 @@ const drawNode = (context: CanvasRenderingContext2D, node: TreeNode, color: stri
   context.font = `${node.radius * 0.8}px "Inter", sans-serif`;
   context.textAlign = 'center';
   context.textBaseline = 'middle';
-  context.fillText(node.id, node.x, node.y);
+  // context.fillText(node.id, node.x, node.y);
 };
 
 // Helper function to draw an edge between two nodes
@@ -284,13 +284,13 @@ export const drawDp = (context: CanvasRenderingContext2D, width: number, height:
         const x = leftMargin - cellWidth / 2;
         const y = topMargin + (k + 1.5) * cellHeight;
         context.fillStyle = (k === i - 1) ? '#F97316' : 'white';
-        context.fillText(arr1[k], x, y);
+        // context.fillText(arr1[k], x, y);
     }
     for (let k = 0; k < n; k++) {
         const x = leftMargin + (k + 1.5) * cellWidth;
         const y = topMargin - cellHeight / 2;
         context.fillStyle = (k === j - 1 && i <= m) ? '#F97316' : 'white';
-        context.fillText(arr2[k], x, y);
+        // context.fillText(arr2[k], x, y);
     }
 
     // Draw DP table
@@ -308,7 +308,7 @@ export const drawDp = (context: CanvasRenderingContext2D, width: number, height:
             // Draw cell value
             context.font = `bold ${fontSize}px "Inter", sans-serif`;
             context.fillStyle = 'white';
-            context.fillText(dp[row][col].toString(), x, y);
+            // context.fillText(dp[row][col].toString(), x, y);
 
             // Draw cell borders
             context.strokeStyle = 'rgba(255, 255, 255, 0.2)';
@@ -328,7 +328,7 @@ export const drawDp = (context: CanvasRenderingContext2D, width: number, height:
         const finalX = leftMargin + (n + 0.5) * cellWidth;
         const finalY = topMargin + (m + 0.5) * cellHeight;
         context.fillStyle = '#22C55E'; // Green
-        context.fillText(dp[m][n].toString(), finalX, finalY);
+        // context.fillText(dp[m][n].toString(), finalX, finalY);
         cancelAnimationFrame(animationFrameId);
     } else {
         animationFrameId = requestAnimationFrame(animate);
@@ -401,7 +401,7 @@ export const drawUnionFind = async (context: CanvasRenderingContext2D, width: nu
     context.font = `bold ${node.radius * 0.8}px "Inter", sans-serif`;
     context.textAlign = 'center';
     context.textBaseline = 'middle';
-    context.fillText(node.id.toString(), node.x, node.y);
+    // context.fillText(node.id.toString(), node.x, node.y);
   };
   
   const drawEdge = (fromNode: UFNode, toNode: UFNode, color: string, isBold: boolean) => {
@@ -426,7 +426,7 @@ export const drawUnionFind = async (context: CanvasRenderingContext2D, width: nu
       context.fillStyle = 'rgba(255, 255, 255, 0.8)';
       context.font = `bold 18px "Inter", sans-serif`;
       context.textAlign = 'center';
-      context.fillText(message, width / 2, 30);
+      // context.fillText(message, width / 2, 30);
   };
 
   // --- Core Union-Find Logic ---
@@ -552,7 +552,6 @@ declare global {
     }
 }
 
-
 /**
  * Renders and animates a sequence of Binary Indexed Tree operations,
  * demonstrating updates and prefix sum queries.
@@ -583,13 +582,13 @@ export const drawBinaryIndexTree = async (context: CanvasRenderingContext2D, wid
       context.fillStyle = 'rgba(255, 255, 255, 0.8)';
       context.font = `bold 18px "Inter", sans-serif`;
       context.textAlign = 'center';
-      context.fillText(message, width / 2, 60);
+      // context.fillText(message, width / 2, 60);
 
       // Draw array labels
       context.font = `bold ${fontSize * 1.2}px "Inter", sans-serif`;
       context.textAlign = 'left';
-      context.fillText("Array:", startX - boxSize, arrY + boxSize / 2);
-      context.fillText("BIT:", startX - boxSize, bitY + boxSize / 2);
+      // context.fillText("Array:", startX - boxSize, arrY + boxSize / 2);
+      // context.fillText("BIT:", startX - boxSize, bitY + boxSize / 2);
       
       // Draw array boxes
       for (let i = 0; i < n; i++) {
@@ -602,9 +601,9 @@ export const drawBinaryIndexTree = async (context: CanvasRenderingContext2D, wid
           context.font = `bold ${fontSize}px "Inter", sans-serif`;
           context.textAlign = 'center';
           context.textBaseline = 'middle';
-          context.fillText(nums[i].toString(), x + boxSize / 2, arrY + boxSize / 2);
+          // context.fillText(nums[i].toString(), x + boxSize / 2, arrY + boxSize / 2);
           context.font = `${fontSize * 0.7}px "Inter", sans-serif`;
-          context.fillText(`idx ${i}`, x + boxSize / 2, arrY + boxSize * 1.25);
+          // context.fillText(`idx ${i}`, x + boxSize / 2, arrY + boxSize * 1.25);
       }
 
       // Draw BIT boxes
@@ -618,9 +617,9 @@ export const drawBinaryIndexTree = async (context: CanvasRenderingContext2D, wid
           context.font = `bold ${fontSize}px "Inter", sans-serif`;
           context.textAlign = 'center';
           context.textBaseline = 'middle';
-          context.fillText(bit[i].toString(), x + boxSize / 2, bitY + boxSize / 2);
+          // context.fillText(bit[i].toString(), x + boxSize / 2, bitY + boxSize / 2);
           context.font = `${fontSize * 0.7}px "Inter", sans-serif`;
-          context.fillText(`idx ${i}`, x + boxSize / 2, bitY + boxSize * 1.25);
+          // context.fillText(`idx ${i}`, x + boxSize / 2, bitY + boxSize * 1.25);
       }
   };
 
@@ -779,11 +778,11 @@ export const drawSwissTable = async (context: CanvasRenderingContext2D, width: n
     context.font = `bold ${fontSize}px "Inter", sans-serif`;
     context.textAlign = 'left';
     context.textBaseline = 'middle';
-    context.fillText(player.name, player.x + 15, player.y + boxHeight / 2);
+    // context.fillText(player.name, player.x + 15, player.y + boxHeight / 2);
 
     context.font = `bold ${fontSize * 1.2}px "Inter", sans-serif`;
     context.textAlign = 'right';
-    context.fillText(player.score.toString(), player.x + boxWidth - 15, player.y + boxHeight / 2);
+    // context.fillText(player.score.toString(), player.x + boxWidth - 15, player.y + boxHeight / 2);
   };
 
   const drawMatchupLine = (p1: Player, p2: Player) => {
@@ -807,7 +806,7 @@ export const drawSwissTable = async (context: CanvasRenderingContext2D, width: n
       context.fillStyle = 'rgba(255, 255, 255, 0.8)';
       context.font = `bold 24px "Inter", sans-serif`;
       context.textAlign = 'center';
-      context.fillText(message, width / 2, startY / 2);
+      // context.fillText(message, width / 2, startY / 2);
   };
 
   // --- Animation Loop ---
@@ -985,10 +984,10 @@ export const drawTopologicalSort = async (context: CanvasRenderingContext2D, wid
     context.font = `bold ${node.radius * 0.7}px "Inter", sans-serif`;
     context.textAlign = 'center';
     context.textBaseline = 'middle';
-    context.fillText(node.label, node.x, node.y);
+    // context.fillText(node.label, node.x, node.y);
     
     context.font = ` ${node.radius * 0.5}px "Inter", sans-serif`;
-    context.fillText(`${node.inDegree}`, node.x, node.y + node.radius * 1.5);
+    // context.fillText(`${node.inDegree}`, node.x, node.y + node.radius * 1.5);
   };
   
   const drawEdge = (u: number, v: number, isHighlight: boolean) => {
@@ -1026,7 +1025,7 @@ export const drawTopologicalSort = async (context: CanvasRenderingContext2D, wid
     context.font = `16px "Inter", sans-serif`;
     context.textAlign = 'left';
     context.textBaseline = 'middle';
-    context.fillText(title, box.x + 10, box.y - 15);
+    // context.fillText(title, box.x + 10, box.y - 15);
   };
 
   const drawScene = (message: string, highlightEdges: number[][] = []) => {
@@ -1052,7 +1051,7 @@ export const drawTopologicalSort = async (context: CanvasRenderingContext2D, wid
     context.fillStyle = 'rgba(255, 255, 255, 0.9)';
     context.font = `bold 20px "Inter", sans-serif`;
     context.textAlign = 'center';
-    context.fillText(message, width / 2, layout.sorted.y - 40);
+    // context.fillText(message, width / 2, layout.sorted.y - 40);
   };
 
   // --- Animation Loop ---
@@ -1392,7 +1391,7 @@ export const drawStickMan = async (context: CanvasRenderingContext2D, width: num
     context.fillStyle = 'rgba(255, 255, 255, 0.9)';
     context.font = `bold 22px "Inter", sans-serif`;
     context.textAlign = 'center';
-    context.fillText(message, width / 2, 40);
+    // context.fillText(message, width / 2, 40);
   };
   const animateToPose = (targetPose: Pose, duration: number) => {
     const startPose = { ...currentPose }; const startTime = Date.now();
@@ -1514,22 +1513,23 @@ export const drawGoGMP = async (context: CanvasRenderingContext2D, width: number
     const drawP = (p: Processor) => {
       context.strokeStyle = '#888'; context.strokeRect(p.x, p.y, pWidth, pHeight);
       context.font = '14px "Inter"'; context.fillStyle = 'white'; context.textAlign = 'center';
-      context.fillText(`P ${p.id}`, p.x + pWidth/2, p.y + 15);
+      // context.fillText(`P ${p.id}`, p.x + pWidth/2, p.y + 15);
     };
     const drawM = (m: Machine) => {
       context.fillStyle = '#38BDF8'; context.beginPath(); context.arc(m.x, m.y, mSize/2, 0, 2*Math.PI); context.fill();
       context.font = 'bold 14px "Inter"'; context.fillStyle = 'black'; context.textAlign = 'center';
-      context.fillText(`M ${m.id}`, m.x, m.y);
+      // context.fillText(`M ${m.id}`, m.x, m.y);
     };
     const drawG = (g: Goroutine) => {
       context.fillStyle = g.color; context.beginPath(); context.arc(g.x, g.y, gSize/2, 0, 2*Math.PI); context.fill();
       context.font = 'bold 12px "Inter"'; context.fillStyle = 'black'; context.textAlign = 'center';
-      context.fillText(`G${g.id}`, g.x, g.y);
+      // context.fillText(`G${g.id}`, g.x, g.y);
     };
     const drawScene = (message: string) => {
         context.clearRect(0,0,width,height); context.fillStyle = '#111827'; context.fillRect(0,0,width,height);
-        context.font = 'bold 20px "Inter"'; context.fillStyle = 'white'; context.textAlign = 'center'; context.fillText(message, width/2, 40);
-        context.font = '16px "Inter"'; context.fillText("Global Run Queue", width/2, queueY - 30);
+        context.font = 'bold 20px "Inter"'; context.fillStyle = 'white'; context.textAlign = 'center'; 
+        // context.fillText(message, width/2, 40);
+        context.font = '16px "Inter"';         // context.fillText("Global Run Queue", width/2, queueY - 30);
         processors.forEach(drawP); machines.forEach(drawM); allGoroutines.forEach(drawG);
     };
     
@@ -1640,7 +1640,7 @@ export const drawGoGcTriColorMark = async (context: CanvasRenderingContext2D, wi
         const colorMap = { white: '#DDD', gray: '#888', black: '#333' };
         context.fillStyle = colorMap[o.color]; context.beginPath(); context.arc(o.x, o.y, objRadius, 0, 2*Math.PI); context.fill();
         context.font = 'bold 12px "Inter"'; context.fillStyle = o.color === 'black' ? 'white' : 'black'; context.textAlign = 'center';
-        context.fillText(o.id.toString(), o.x, o.y);
+        // context.fillText(o.id.toString(), o.x, o.y);
     };
     const drawPointer = (from: HeapObject, to: HeapObject) => {
         context.beginPath(); context.moveTo(from.x, from.y);
@@ -1651,8 +1651,9 @@ export const drawGoGcTriColorMark = async (context: CanvasRenderingContext2D, wi
     const drawScene = (message: string) => {
         context.clearRect(0,0,width,height); context.fillStyle = '#111827'; context.fillRect(0,0,width,height);
         context.font = 'bold 20px "Inter"'; context.fillStyle = 'white'; context.textAlign = 'center';
-        context.fillText("Go GC: Tri-Color Mark & Sweep", width/2, 40);
-        context.font = '16px "Inter"'; context.fillText(message, width/2, 70);
+        // context.fillText("Go GC: Tri-Color Mark & Sweep", width/2, 40);
+        context.font = '16px "Inter"'; 
+        // context.fillText(message, width/2, 70);
         
         objects.forEach(fromObj => {
             fromObj.pointers.forEach(toId => {
