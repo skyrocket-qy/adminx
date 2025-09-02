@@ -16,7 +16,7 @@ const Header: React.FC = () => {
       { href: "/about/info", label: "About"},
       { href: "/blog", label: "Blog" },
       { href: "/admin", label: "Admin" },
-      { href: "/cyberpunk", label: "Cyberpunk" },
+      // { href: "/cyberpunk", label: "Cyberpunk" },
       { href: "/Animated", label: "Animated" },
       { href: "/auth", label: "Auth" },
       { href: "/glass", label: "Glass" },
