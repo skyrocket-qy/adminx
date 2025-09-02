@@ -28,10 +28,6 @@ export default function Home() {
       <ParticleAnimation />
       <header className="cyber-header">
         <AsciiLogo/>
-        {/* <h1 className="cyber-h1 glitch" data-text="Yo">Hi</h1> */}
-        <p className="cyber-p">
-          Welcome! dive everywhere to enjoy this world
-        </p>
       </header>
       <BouncingCanvas 
         boundaryRef={constrainedAreaRef} drawFunc={drawBfs}
@@ -39,7 +35,23 @@ export default function Home() {
       />
       <BouncingCanvas 
         boundaryRef={constrainedAreaRef} drawFunc={drawStickMan} 
-        backgroundColor="#be185d" initialPosition={{x: 300, y: 150}}
+        backgroundColor="#be185d" initialPosition={{x: 800, y: 450}}
+      />
+      <BouncingCanvas 
+        boundaryRef={constrainedAreaRef} drawFunc={drawDp} 
+        backgroundColor="#be185d" initialPosition={{x: 1500, y: 850}}
+      />
+      <BouncingCanvas 
+        boundaryRef={constrainedAreaRef} drawFunc={drawGoGcTriColorMark} 
+        backgroundColor="#be185d" initialPosition={{x: 300, y: 850}}
+      />
+      <BouncingCanvas 
+        boundaryRef={constrainedAreaRef} drawFunc={drawGoGMP} 
+        backgroundColor="#be185d" initialPosition={{x: 1200, y: 250}}
+      />
+      <BouncingCanvas 
+        boundaryRef={constrainedAreaRef} drawFunc={drawTopologicalSort} 
+        backgroundColor="#be185d" initialPosition={{x: 1800, y: 100}}
       />
       <div className="flex">
         <AnimatedCodeBlock />
