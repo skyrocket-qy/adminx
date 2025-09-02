@@ -23,16 +23,16 @@ interface BouncingCanvasProps {
  * @param {string} [props.backgroundColor] - The background color of the canvas.
  * @param {{x: number, y: number}} [props.initialPosition] - The starting position of the canvas, relative to its boundary's top-left corner.
  */
-export const BouncingCanvas = ({ boundaryRef, drawFunc, backgroundColor, initialPosition }) => {
-    const canvasRef = useRef(null);
+export const BouncingCanvas: React.FC<BouncingCanvasProps> = ({ boundaryRef, drawFunc, backgroundColor, initialPosition }) => {
+    const canvasRef = useRef<HTMLCanvasElement>(null);
     // Use refs for animation state to avoid re-renders on every frame.
-    const position = useRef({ x: 100, y: 100 });
-    const velocity = useRef({ dx: 2, dy: 2 });
-    const dragInfo = useRef({ isDragging: false, startX: 0, startY: 0 });
-    const animationFrameId = useRef(null);
+    const position = useRef<{ x: number; y: number }>({ x: 100, y: 100 });
+    const velocity = useRef<{ dx: number; dy: number }>({ dx: 2, dy: 2 });
+    const dragInfo = useRef<{ isDragging: boolean; startX: number; startY: number }>({ isDragging: false, startX: 0, startY: 0 });
+    const animationFrameId = useRef<number | null>(null);
 
     // The default drawing function if none is provided
-    const defaultDrawFunc = (ctx, width, height) => {
+    const defaultDrawFunc = (ctx: CanvasRenderingContext2D, width: number, height: number) => {
         ctx.fillStyle = 'white';
         ctx.font = 'bold 20px Inter, sans-serif';
         ctx.textAlign = 'center';
@@ -77,23 +77,23 @@ export const BouncingCanvas = ({ boundaryRef, drawFunc, backgroundColor, initial
                 let nextY = position.current.y + velocity.current.dy;
 
                 // Wall collision detection against the defined boundary
-                if (nextX + canvas.width > bounds.right || nextX < bounds.left) {
+                if (nextX + canvas!.width > bounds.right || nextX < bounds.left) {
                     velocity.current.dx *= -1;
                 }
-                if (nextY + canvas.height > bounds.bottom || nextY < bounds.top) {
+                if (nextY + canvas!.height > bounds.bottom || nextY < bounds.top) {
                     velocity.current.dy *= -1;
                 }
 
                 position.current.x += velocity.current.dx;
                 position.current.y += velocity.current.dy;
             }
-            canvas.style.transform = `translate(${position.current.x}px, ${position.current.y}px)`;
+            canvas!.style.transform = `translate(${position.current.x}px, ${position.current.y}px)`;
             animationFrameId.current = requestAnimationFrame(animate);
         };
 
-        const onPointerDown = (e) => {
+        const onPointerDown = (e: PointerEvent) => {
             dragInfo.current.isDragging = true;
-            canvas.style.cursor = 'grabbing';
+            canvas!.style.cursor = 'grabbing';
             // Calculate offset from the element's top-left corner
             dragInfo.current.startX = e.clientX - position.current.x;
             dragInfo.current.startY = e.clientY - position.current.y;
@@ -101,22 +101,22 @@ export const BouncingCanvas = ({ boundaryRef, drawFunc, backgroundColor, initial
             velocity.current = { dx: 0, dy: 0 };
         };
 
-        const onPointerMove = (e) => {
+        const onPointerMove = (e: PointerEvent) => {
             if (dragInfo.current.isDragging) {
                 const bounds = getBoundary();
                 let newX = e.clientX - dragInfo.current.startX;
                 let newY = e.clientY - dragInfo.current.startY;
 
                 // Clamp the position to stay within the boundaries while dragging
-                position.current.x = Math.max(bounds.left, Math.min(newX, bounds.right - canvas.width));
-                position.current.y = Math.max(bounds.top, Math.min(newY, bounds.bottom - canvas.height));
+                position.current.x = Math.max(bounds.left, Math.min(newX, bounds.right - canvas!.width));
+                position.current.y = Math.max(bounds.top, Math.min(newY, bounds.bottom - canvas!.height));
             }
         };
 
         const onPointerUp = () => {
             if (dragInfo.current.isDragging) {
                 dragInfo.current.isDragging = false;
-                canvas.style.cursor = 'grab';
+                canvas!.style.cursor = 'grab';
                 // Give it a random push on release to resume bouncing
                 velocity.current.dx = (Math.random() - 0.5) * 8;
                 velocity.current.dy = (Math.random() - 0.5) * 8;
@@ -134,11 +134,11 @@ export const BouncingCanvas = ({ boundaryRef, drawFunc, backgroundColor, initial
         } else {
             // Default to the center if no position is provided
             position.current = {
-                x: initialBounds.left + initialBounds.width / 2 - canvas.width / 2,
-                y: initialBounds.top + initialBounds.height / 3 - canvas.height / 2,
+                x: initialBounds.left + initialBounds.width / 2 - canvas!.width / 2,
+                y: initialBounds.top + initialBounds.height / 3 - canvas!.height / 2,
             };
         }
-        canvas.style.transform = `translate(${position.current.x}px, ${position.current.y}px)`;
+        canvas!.style.transform = `translate(${position.current.x}px, ${position.current.y}px)`;
 
         // Attach event listeners
         canvas.addEventListener('pointerdown', onPointerDown);
