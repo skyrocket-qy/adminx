@@ -4,24 +4,32 @@ import React, { useState, useEffect, useMemo } from 'react';
 import './AnimatedCodeBlock.css';
 import { vt323 } from '@/global/fonts';
 
-const codeToType = `// Introduction: About Me
+const codeToType = `// About Me
 
-const personalInfo = {
-  name: "HUANG, QING YUN (黃青雲)",
-  email: "rivendinner@gmail.com",
-  gender: "Male",
-  age: 32,
-  militaryService: "Completed (2020/01)",
-  role: "Backend Engineer",
-  interests: "Full-stack Development",
-  primaryLanguage: "Go",
-  otherLanguages: ["Python", "JavaScript/TypeScript", "C++"],
-  frontendFamiliarity: "React",
-  experienceAreas: ["AWS", "microservices", "DevOps practices"],
-  attitude: "Proactive learning, adaptable, collaborative",
-};
+currentJob := Job{
+  title: "Backend engineer",
+  company: "美商時豪“,
+  period: "2025/6 ~ Now",
+}
 
-console.log(introduction);
+const (
+  name = "HUANG, QING YUN (黃青雲)"
+  gender = "Male"
+  email = "skyrocketqy81@gmail.com"
+  projectUrl = "https://github.com/skyrocket-qy"
+  militaryService = "Completed (2020/01)"
+  education = "Master"
+)
+
+var (
+  jobExperience: "4 years"
+  role = "Backend Engineer"
+  interests = "Full-stack Development"
+  age = 32
+  frontendFamiliarity = "React"
+  attitude = "Proactive learning, adaptable, collaborative"
+  Languages = []string{"Go", "Python", "JavaScript/TypeScript", "C++"}
+)
 `;
 
 const tokenColors = {
@@ -44,7 +52,7 @@ const highlightSyntax = (code: string) => {
   const commentRegex = /\/\/.*/g;
   const numberRegex = /\b\d+\b/g;
   const operatorRegex = /[=<>+\-*{}]/g;
-  const punctuationRegex = /[.,;()\[\]]/g;
+  const punctuationRegex = /[.,;()[\]]/g;
   const classNameRegex = /\b[A-Z]\w*\b/g;
 
   const getClassName = (char: string, index: number) => {
