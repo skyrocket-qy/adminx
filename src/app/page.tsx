@@ -26,7 +26,7 @@ export default function Home() {
   return (
     <div className="cyber-body">
       <ParticleAnimation />
-      <header className="cyber-header">
+      <header className="cyber-header mb-15">
         <AsciiLogo/>
       </header>
       <BouncingCanvas 

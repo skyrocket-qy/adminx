@@ -14,9 +14,7 @@ currentJob := Job{
 
 const (
   name = "HUANG, QING YUN (黃青雲)"
-  gender = "Male"
   email = "skyrocketqy81@gmail.com"
-  projectUrl = "https://github.com/skyrocket-qy"
   militaryService = "Completed (2020/01)"
   education = "Master"
 )
@@ -25,12 +23,8 @@ var (
   jobExperience: "4 years",
   role = "Backend Engineer",
   interests = "Full-stack Development",
-  age = 32,
-  frontendFamiliarity = "React",
-  attitude = "Proactive learning, adaptable, collaborative",
-  Languages = []string{"Go", "Python", "JavaScript/TypeScript", "C++"},
-)
-`;
+  Languages = []string{"Go", "Python", "JavaScript/TypeScript", "React"},
+)`;
 
 // Maps token types to their specific CSS class names.
 type TokenType = keyof typeof tokenClassNames;
