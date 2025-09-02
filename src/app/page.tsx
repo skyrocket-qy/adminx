@@ -20,6 +20,7 @@ import './cyberpunk.css';
 //   } from '@/lib/canvas-drawer'; 
 
 export default function Home() {
+  const constrainedAreaRef = useRef(null);
   return (
     <div className="cyber-body">
       <ParticleAnimation />
@@ -30,7 +31,7 @@ export default function Home() {
         </p>
       </header>
 
-      <BouncingCanvas />
+      <BouncingCanvas boundaryRef={constrainedAreaRef} />
       <div className="flex">
         <AnimatedCodeBlock />
       </div>
@@ -39,13 +40,23 @@ export default function Home() {
   );
 }
 
-const BouncingCanvas = () => {
-    const canvasRef = useRef<HTMLCanvasElement>(null);
+
+/**
+ * A draggable and bouncing canvas component.
+ * @param {object} props - The component props.
+ * @param {React.RefObject<HTMLElement>} [props.boundaryRef] - A ref to the element that defines the boundaries for the canvas. If not provided, the window will be used as the boundary.
+ */
+interface BouncingCanvasProps {
+  boundaryRef?: React.RefObject<HTMLElement>;
+}
+
+const BouncingCanvas = ({ boundaryRef }: BouncingCanvasProps) => {
+    const canvasRef = useRef(null);
     // Use refs for animation state to avoid re-renders on every frame.
     const position = useRef({ x: 100, y: 100 });
     const velocity = useRef({ dx: 2, dy: 2 });
     const dragInfo = useRef({ isDragging: false, startX: 0, startY: 0 });
-    const animationFrameId = useRef<number | null>(null);
+    const animationFrameId = useRef(null);
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -53,7 +64,22 @@ const BouncingCanvas = () => {
         const ctx = canvas.getContext('2d');
         if (!ctx) return;
 
-        // Draw content on the canvas
+        // Helper function to get the bounding rectangle of the container or the window.
+        const getBoundary = () => {
+            if (boundaryRef && boundaryRef.current) {
+                return boundaryRef.current.getBoundingClientRect();
+            }
+            return {
+                top: 0,
+                left: 0,
+                right: window.innerWidth,
+                bottom: window.innerHeight,
+                width: window.innerWidth,
+                height: window.innerHeight,
+            };
+        };
+
+        // Draw initial content on the canvas
         ctx.fillStyle = 'white';
         ctx.font = 'bold 20px Inter, sans-serif';
         ctx.textAlign = 'center';
@@ -64,36 +90,46 @@ const BouncingCanvas = () => {
 
         // Animation loop
         const animate = () => {
-            if (dragInfo.current.isDragging) {
-                // Dragging logic is handled by pointermove
-            } else {
-                position.current.x += velocity.current.dx;
-                position.current.y += velocity.current.dy;
+            if (!dragInfo.current.isDragging) {
+                const bounds = getBoundary();
+                
+                let nextX = position.current.x + velocity.current.dx;
+                let nextY = position.current.y + velocity.current.dy;
 
-                // Wall collision detection
-                if (position.current.x + canvas.width > window.innerWidth || position.current.x < 0) {
+                // Wall collision detection against the defined boundary
+                if (nextX + canvas.width > bounds.right || nextX < bounds.left) {
                     velocity.current.dx *= -1;
                 }
-                if (position.current.y + canvas.height > window.innerHeight || position.current.y < 0) {
+                if (nextY + canvas.height > bounds.bottom || nextY < bounds.top) {
                     velocity.current.dy *= -1;
                 }
+
+                position.current.x += velocity.current.dx;
+                position.current.y += velocity.current.dy;
             }
             canvas.style.transform = `translate(${position.current.x}px, ${position.current.y}px)`;
             animationFrameId.current = requestAnimationFrame(animate);
         };
 
-        const onPointerDown = (e: PointerEvent) => {
+        const onPointerDown = (e) => {
             dragInfo.current.isDragging = true;
             canvas.style.cursor = 'grabbing';
+            // Calculate offset from the element's top-left corner
             dragInfo.current.startX = e.clientX - position.current.x;
             dragInfo.current.startY = e.clientY - position.current.y;
+            // Stop bouncing when grabbed
             velocity.current = { dx: 0, dy: 0 };
         };
 
-        const onPointerMove = (e: PointerEvent) => {
+        const onPointerMove = (e) => {
             if (dragInfo.current.isDragging) {
-                position.current.x = e.clientX - dragInfo.current.startX;
-                position.current.y = e.clientY - dragInfo.current.startY;
+                const bounds = getBoundary();
+                let newX = e.clientX - dragInfo.current.startX;
+                let newY = e.clientY - dragInfo.current.startY;
+
+                // Clamp the position to stay within the boundaries while dragging
+                position.current.x = Math.max(bounds.left, Math.min(newX, bounds.right - canvas.width));
+                position.current.y = Math.max(bounds.top, Math.min(newY, bounds.bottom - canvas.height));
             }
         };
 
@@ -101,16 +137,17 @@ const BouncingCanvas = () => {
             if (dragInfo.current.isDragging) {
                 dragInfo.current.isDragging = false;
                 canvas.style.cursor = 'grab';
-                // Give it a random push on release
+                // Give it a random push on release to resume bouncing
                 velocity.current.dx = (Math.random() - 0.5) * 8;
                 velocity.current.dy = (Math.random() - 0.5) * 8;
             }
         };
         
-        // Initialize position to the center of the screen
+        // Initialize position to be inside the boundary
+        const initialBounds = getBoundary();
         position.current = {
-            x: window.innerWidth / 2 - canvas.width / 2,
-            y: window.innerHeight / 3 - canvas.height / 2,
+            x: initialBounds.left + initialBounds.width / 2 - canvas.width / 2,
+            y: initialBounds.top + initialBounds.height / 3 - canvas.height / 2,
         };
         canvas.style.transform = `translate(${position.current.x}px, ${position.current.y}px)`;
 
@@ -130,7 +167,7 @@ const BouncingCanvas = () => {
             window.removeEventListener('pointermove', onPointerMove);
             window.removeEventListener('pointerup', onPointerUp);
         };
-    }, []); // Empty dependency array ensures this runs only once
+    }, [boundaryRef]); // Re-run effect if the boundaryRef changes
 
     return (
         <canvas
@@ -139,7 +176,8 @@ const BouncingCanvas = () => {
             height="120"
             style={{
                 position: 'absolute',
-                top: 0, left: 0,
+                top: 0,
+                left: 0,
                 backgroundColor: '#4f46e5',
                 boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1)',
                 borderRadius: '0.75rem',
