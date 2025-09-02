@@ -1,8 +1,17 @@
+/*
 "use client";
 
 import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 import { Tuple } from '@/app/admin/tuple/columns';
+
+interface HierarchyNodeData {
+  id: string;
+  name: string;
+  children?: HierarchyNodeData[];
+  x: number;
+  y: number;
+}
 
 interface TreeProps {
   data: Tuple[];
@@ -14,7 +23,7 @@ const Tree: React.FC<TreeProps> = ({ data, rootNodeId }) => {
 
   useEffect(() => {
     if (data && ref.current && rootNodeId) {
-      const nodes = new Map<string, any>();
+      const nodes = new Map<string, HierarchyNodeData>();
       const childrenMap = new Map<string, string[]>();
 
       data.forEach(d => {
@@ -22,10 +31,10 @@ const Tree: React.FC<TreeProps> = ({ data, rootNodeId }) => {
         const targetId = `${d.sbjNs}:${d.sbjId}`;
 
         if (!nodes.has(sourceId)) {
-          nodes.set(sourceId, { id: sourceId, name: sourceId, children: [] });
+          nodes.set(sourceId, { id: sourceId, name: sourceId, children: [], x: 0, y: 0 });
         }
         if (!nodes.has(targetId)) {
-          nodes.set(targetId, { id: targetId, name: targetId, children: [] });
+          nodes.set(targetId, { id: targetId, name: targetId, children: [], x: 0, y: 0 });
         }
 
         if (!childrenMap.has(sourceId)) {
@@ -34,7 +43,7 @@ const Tree: React.FC<TreeProps> = ({ data, rootNodeId }) => {
         childrenMap.get(sourceId)!.push(targetId);
       });
 
-      const buildHierarchy = (id: string): any => {
+      const buildHierarchy = (id: string): HierarchyNodeData | null => {
         const node = nodes.get(id);
         if (!node) return null;
 
@@ -57,9 +66,9 @@ const Tree: React.FC<TreeProps> = ({ data, rootNodeId }) => {
 
       svg.selectAll("*").remove();
 
-      const root = d3.hierarchy(hierarchicalData);
-      const treeLayout = d3.tree().size([height, width - 200]);
-      treeLayout(root);
+      const root = d3.hierarchy<HierarchyNodeData>(hierarchicalData);
+      const treeLayout = d3.tree<HierarchyNodeData>().size([height, width - 200]);
+      treeLayout(root as d3.HierarchyPointNode<HierarchyNodeData>);
 
       const g = svg.append('g').attr('transform', 'translate(100,0)');
 
@@ -67,9 +76,9 @@ const Tree: React.FC<TreeProps> = ({ data, rootNodeId }) => {
         .data(root.links())
         .enter().append('path')
         .attr('class', 'link')
-        .attr('d', d3.linkHorizontal()
-          .x(d => (d as any).y)
-          .y(d => (d as any).x))
+        .attr('d', d3.linkHorizontal<d3.HierarchyPointLink<HierarchyNodeData>, HierarchyNodeData>()
+          .x(d => d.y!)
+          .y(d => d.x!))
         .attr('fill', 'none')
         .attr('stroke', '#ccc')
         .attr('stroke-width', 2);
@@ -78,7 +87,7 @@ const Tree: React.FC<TreeProps> = ({ data, rootNodeId }) => {
         .data(root.descendants())
         .enter().append('g')
         .attr('class', 'node')
-        .attr('transform', d => `translate(${(d as any).y},${(d as any).x})`);
+        .attr('transform', d => `translate(${d.y},${d.x})`);
 
       node.append('circle')
         .attr('r', 10)
@@ -88,7 +97,7 @@ const Tree: React.FC<TreeProps> = ({ data, rootNodeId }) => {
         .attr('dy', '0.31em')
         .attr('x', d => d.children ? -15 : 15)
         .attr('text-anchor', d => d.children ? 'end' : 'start')
-        .text(d => (d.data as any).name)
+        .text(d => d.data.name)
         .style('font-size', '12px');
     }
   }, [data, rootNodeId]);
@@ -99,3 +108,4 @@ const Tree: React.FC<TreeProps> = ({ data, rootNodeId }) => {
 };
 
 export default Tree;
+*/

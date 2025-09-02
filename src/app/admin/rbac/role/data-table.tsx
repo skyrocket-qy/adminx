@@ -91,9 +91,13 @@ export function DataTable<TData, TValue>({
         try{
             const ast = parseQueryStringToAST(queryInput);
             setParseError(null);
-        }catch(e: any){
+        }catch(e: unknown){
             console.error(e);
-            setParseError(e.message || "Invalid query syntax");
+            if (e instanceof Error) {
+                setParseError(e.message || "Invalid query syntax");
+            } else {
+                setParseError("An unknown error occurred");
+            }
             setTriggerShake(true);
             setTimeout(() => setTriggerShake(false), 500); 
         }

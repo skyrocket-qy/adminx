@@ -8,6 +8,45 @@ import {
   useMemo,
 } from "react";
 
+interface LogoGridCell {
+  char: string;
+  isSlotEmpty: boolean;
+  logoGridR: number;
+  logoGridC: number;
+  canvasX: number;
+  canvasY: number;
+  isTargetedForReturn: boolean;
+}
+
+interface EjectedPiece {
+  char: string;
+  originalLogoGridR: number;
+  originalLogoGridC: number;
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  color: string;
+  isTargetedForPickup: boolean;
+}
+
+interface RobotState {
+  gridC: number;
+  gridR: number;
+  char: string;
+  color: string;
+  state: "IDLE" | "MOVING_TO_PICKUP" | "AT_PIECE" | "MOVING_TO_SLOT" | "AT_SLOT";
+  targetPiece: EjectedPiece | null;
+  targetSlot: LogoGridCell | null;
+  carryingPieceData: {
+    char: string;
+    originalLogoGridR: number;
+    originalLogoGridC: number;
+  } | null;
+  moveTimer: number;
+  actionTimer: number;
+}
+
 export default function AsciiLogo({ config = {} }) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
@@ -21,9 +60,9 @@ export default function AsciiLogo({ config = {} }) {
   const charHeight = useRef(0);
   const offsetX = useRef(0);
   const offsetY = useRef(0);
-  const logoGrid = useRef<any[]>([]);
-  const ejectedPieces = useRef<any[]>([]);
-  const robot = useRef<any>(null);
+  const logoGrid = useRef<LogoGridCell[]>([]);
+  const ejectedPieces = useRef<EjectedPiece[]>([]);
+  const robot = useRef<RobotState | null>(null);
 
   const paused = useRef(false);
   const hidden = useRef(false);
@@ -259,11 +298,7 @@ export default function AsciiLogo({ config = {} }) {
             (p) => p !== r.targetPiece
           );
           r.targetPiece = null;
-          r.targetSlot = logoGrid.current.find(
-            (slot) =>
-              slot.logoGridR === r.carryingPieceData.originalLogoGridR &&
-              slot.logoGridC === r.carryingPieceData.originalLogoGridC
-          );
+          r.targetSlot = logoGrid.current.find( (slot) => r.carryingPieceData && slot.logoGridR === r.carryingPieceData.originalLogoGridR && slot.logoGridC === r.carryingPieceData.originalLogoGridC ) || null;
           r.state = "MOVING_TO_SLOT";
         }
         break;

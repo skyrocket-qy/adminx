@@ -1,47 +1,5 @@
-'use client';
-import { client } from "@/services/connect/client";
-import { notFound } from "next/navigation";
-// import {PermissionEditor} from "./PermissionEditor";
-import { useState } from "react";
-
-interface Props {
-  params: Promise<{ id: string }>;
-}
-
-export default async function RoleDetailPage({ params }: Props) {
-  const { id } = await params;
-
-  if (!id) {
-    notFound();
-  }
-
-  // Fetch role details & permissions from your API
-  const role = await getRoleWithPermissions(id); // server fetch
-
-  if (!role) {
-    notFound();
-  }
-
-  return (
-    <div>
-      <h1>Role: {role.name}</h1>
-      <PermissionEditor
-        roleId={role.id}
-        permissions={role.permissions}
-      />
-    </div>
-  );
-}
-
-// Example server fetch
-async function getRoleWithPermissions(id: string) {
-  const out  = client.get
-  const res = await fetch(`${process.env.API_URL}/roles/${id}`, {
-    cache: "no-store",
-  });
-  if (!res.ok) return null;
-  return res.json();
-}
+/*
+import React, { useState } from "react";
 
 interface PermissionEditorProps {
   roleId: string;
@@ -98,7 +56,7 @@ export function PermissionEditor({
           {Object.entries(resources).map(([resourceId, perms]) => (
             <div key={resourceId} className="pl-4">
               <strong>{resourceId}</strong>
-              {["read", "write", "delete"].map((p) => (
+              :["read", "write", "delete"].map((p) => (
                 <label key={p} className="ml-2">
                   <input
                     type="checkbox"
@@ -124,3 +82,4 @@ export function PermissionEditor({
     </div>
   );
 }
+*/

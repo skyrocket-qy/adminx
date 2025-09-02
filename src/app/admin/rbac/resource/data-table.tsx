@@ -26,7 +26,7 @@ import * as React from "react"
 import { CreateUserDrawer } from "./drawer"
 import { Input } from "@/components/ui/input"
 import { client } from "@/services/connect/rbac/client";
-import { User } from "./columns";
+import { Resource } from "./columns";
 import { parseQueryStringToAST } from "@/lib/ast";
 import clsx from "clsx"; // optional: helps manage conditional class names
 import { ArrowUpDown } from "lucide-react"
@@ -91,9 +91,13 @@ export function DataTable<TData, TValue>({
         try{
             const ast = parseQueryStringToAST(queryInput);
             setParseError(null);
-        }catch(e: any){
+        }catch(e: unknown){
             console.error(e);
-            setParseError(e.message || "Invalid query syntax");
+            if (e instanceof Error) {
+                setParseError(e.message || "Invalid query syntax");
+            } else {
+                setParseError("An unknown error occurred");
+            }
             setTriggerShake(true);
             setTimeout(() => setTriggerShake(false), 500); 
         }
@@ -145,7 +149,7 @@ export function DataTable<TData, TValue>({
                 className=" mr-1 bg-black"
                 disabled={table.getFilteredSelectedRowModel().rows.length === 0}
                 onClick={async () => {
-                    const selected = table.getFilteredSelectedRowModel().rows as { original: User }[]
+                    const selected = table.getFilteredSelectedRowModel().rows as { original: Resource }[]
                     try {
                         const out = await client.deleteUser({
                         });

@@ -575,7 +575,7 @@ export const drawBinaryIndexTree = async (context: CanvasRenderingContext2D, wid
   const bitY = height / 2 + boxSize;
   const fontSize = boxSize * 0.4;
 
-  const drawArrays = (message: string, highlights: any = {}) => { 
+  const drawArrays = (message: string, highlights: { arr?: number[]; bit?: number[]; } = {}) => { 
       context.fillStyle = '#1A202C';
       context.fillRect(0, 0, width, height);
       
@@ -916,10 +916,10 @@ export const drawTopologicalSort = async (context: CanvasRenderingContext2D, wid
   }
 
   let nodes: TopoNode[] = [];
-  let adj: Map<number, number[]> = new Map();
-  let inDegree: Map<number, number> = new Map();
-  let queue: number[] = [];
-  let sortedList: number[] = [];
+  const adj: Map<number, number[]> = new Map();
+  const inDegree: Map<number, number> = new Map();
+  const queue: number[] = [];
+  const sortedList: number[] = [];
   
   const graph = {
     nodes: [
@@ -1203,7 +1203,7 @@ export const drawStickMan = async (context: CanvasRenderingContext2D, width: num
   let stickman: Stickman;
   let currentPose: Pose;
   let currentWeapon: Weapon | null = null;
-  let particles: {x: number, y: number, vx: number, vy: number, life: number, color: string}[] = [];
+  const particles: {x: number, y: number, vx: number, vy: number, life: number, color: string}[] = [];
 
   // --- Helper Functions ---
   const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
@@ -1275,7 +1275,7 @@ export const drawStickMan = async (context: CanvasRenderingContext2D, width: num
             const h = s.hands.left, s_size=15, layers=4;
             let currentY = h.y;
             for(let i=0; i<layers; i++){
-                let w = s_size * (layers - i);
+                const w = s_size * (layers - i);
                 context.moveTo(h.x-w, currentY); context.lineTo(h.x+w, currentY);
                 currentY -= s_size;
             }
@@ -1285,7 +1285,7 @@ export const drawStickMan = async (context: CanvasRenderingContext2D, width: num
         name: 'Fuxi Zither', pose: zitherPose,
         visuals: { color: '#32CD32', blur: 10 }, particleEffect: { count: 25 },
         draw: (s) => {
-            const p = s.hips.center, w = 120, h = 60;
+            const p = s.hips.center; const w = 120; const h = 60;
             context.rect(p.x - w/2, p.y + 40, w, h);
         }
     },
@@ -1399,11 +1399,21 @@ export const drawStickMan = async (context: CanvasRenderingContext2D, width: num
     return new Promise<void>(resolve => {
         const step = () => {
             const elapsed = Date.now() - startTime; const progress = Math.min(elapsed / duration, 1);
-            (Object.keys(targetPose) as Array<keyof Pose>).forEach(key => {
-                if (key === 'torsoAngle') { (currentPose as any)[key] = lerp((startPose as any)[key], (targetPose as any)[key], progress); } 
-                else {
-                    (currentPose as any)[key].left = lerp((startPose as any)[key].left, (targetPose as any)[key].left, progress);
-                    (currentPose as any)[key].right = lerp((startPose as any)[key].right, (targetPose as any)[key].right, progress);
+            (Object.keys(targetPose) as Array<keyof Pose>).forEach((key: keyof Pose) => {
+                if (key === 'torsoAngle') {
+                    currentPose[key] = lerp(startPose[key], targetPose[key], progress);
+                } else {
+                    // Type assertion to handle the nested structure
+                    (currentPose[key] as { left: number; right: number }).left = lerp(
+                        (startPose[key] as { left: number; right: number }).left,
+                        (targetPose[key] as { left: number; right: number }).left,
+                        progress
+                    );
+                    (currentPose[key] as { left: number; right: number }).right = lerp(
+                        (startPose[key] as { left: number; right: number }).right,
+                        (targetPose[key] as { left: number; right: number }).right,
+                        progress
+                    );
                 }
             });
             calculateStickman(currentPose);
@@ -1674,7 +1684,7 @@ export const drawGoGcTriColorMark = async (context: CanvasRenderingContext2D, wi
         drawScene("Initial heap state. All objects are WHITE.");
         await sleep(2000);
         
-        let graySet = new Set<number>();
+        const graySet = new Set<number>();
         roots.forEach(r => { 
             const rootObj = objects.find(o => o.id === r);
             if (rootObj) {

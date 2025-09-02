@@ -22,9 +22,13 @@ export default function CheckBox() {
             try{
                 const out = parseTuple(checkInput);
                 setParseError(null);
-            }catch(e: any){
+            }catch(e: unknown){
                 console.error(e);
-                setParseError(e.message || "Invalid query syntax");
+                if (e instanceof Error) {
+                    setParseError(e.message || "Invalid query syntax");
+                } else {
+                    setParseError("An unknown error occurred");
+                }
                 setTriggerShake(true);
                 setTimeout(() => setTriggerShake(false), 500);
             }
@@ -42,8 +46,12 @@ export default function CheckBox() {
                 setCheckRes("denied");
             }
             setTimeout(() => setCheckRes(""), 1500); 
-        }catch(e: any){
-            toast.error("failed to check");
+        }catch(e: unknown){
+            if (e instanceof Error) {
+                toast.error(`Failed to check: ${e.message}`);
+            } else {
+                toast.error("Failed to check: An unknown error occurred");
+            }
         }
     };
 

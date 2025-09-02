@@ -73,8 +73,8 @@ export const BouncingCanvas: React.FC<BouncingCanvasProps> = ({ boundaryRef, dra
             if (!dragInfo.current.isDragging) {
                 const bounds = getBoundary();
                 
-                let nextX = position.current.x + velocity.current.dx;
-                let nextY = position.current.y + velocity.current.dy;
+                const nextX = position.current.x + velocity.current.dx;
+                const nextY = position.current.y + velocity.current.dy;
 
                 // Wall collision detection against the defined boundary
                 if (nextX + canvas!.width > bounds.right || nextX < bounds.left) {
@@ -104,8 +104,8 @@ export const BouncingCanvas: React.FC<BouncingCanvasProps> = ({ boundaryRef, dra
         const onPointerMove = (e: PointerEvent) => {
             if (dragInfo.current.isDragging) {
                 const bounds = getBoundary();
-                let newX = e.clientX - dragInfo.current.startX;
-                let newY = e.clientY - dragInfo.current.startY;
+                const newX = e.clientX - dragInfo.current.startX;
+                const newY = e.clientY - dragInfo.current.startY;
 
                 // Clamp the position to stay within the boundaries while dragging
                 position.current.x = Math.max(bounds.left, Math.min(newX, bounds.right - canvas!.width));

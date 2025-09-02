@@ -1,7 +1,7 @@
 "use client"
 
 import { Tuple } from "@/app/admin/tuple/columns";
-import Tree from "./Tree";
+// import Tree from "./Tree";
 import { useEffect, useState } from "react";
 // import { client } from "@/services/connect/client";
 // import { protoTuple } from "@/lib/protos/authzpb/v1/authz_pb";
@@ -89,7 +89,7 @@ export default function TreePage() {
         </select>
       </div>
       <div id="tree-container" className="h-full w-full">
-        {rootNode && <Tree data={data} rootNodeId={rootNode} />}
+        {/* {rootNode && <Tree data={data} rootNodeId={rootNode} />} */}
       </div>
     </div>
   );
