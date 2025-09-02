@@ -25,10 +25,10 @@ export default function Home() {
   const constrainedAreaRef = useRef<HTMLElement | null>(null);
   return (
     <div className="cyber-body">
-      <AsciiLogo/>
       <ParticleAnimation />
       <header className="cyber-header">
-        <h1 className="cyber-h1 glitch" data-text="Yo">Hi</h1>
+        <AsciiLogo/>
+        {/* <h1 className="cyber-h1 glitch" data-text="Yo">Hi</h1> */}
         <p className="cyber-p">
           Welcome to my playground, explore everywhere to know about this world
         </p>
