@@ -471,7 +471,7 @@ export default function AsciiLogo({ config = {} }) {
   }, []);
 
   return (
-    <div className="relative flex justify-center align-center mt-4 md:mt-0">
+    <div className="relative flex justify-center align-center">
       <canvas
         ref={canvasRef}
         className="block w-full h-full pixelated-img"
