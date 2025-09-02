@@ -7,17 +7,17 @@ import './cyberpunk.css';
 // Import our new, specialized components
 // import BasicCanvasBlock from '@/app/components/BasicCanvasBlock';
 // import {HeaderCanvasBlock , DrawCanvasBlock} from '@/app/components/HeaderCanvasBlock';
-// import { drawHeaderWithBlockText,
-//    drawBfs, 
-//    drawStickMan, 
-//    drawUnionFind,
-//    drawDp,
-//    drawGoGcTriColorMark,
-//    drawGoGMP,
-//    drawBinaryIndexTree,
-//    drawSwissTable,
-//    drawTopologicalSort
-//   } from '@/lib/canvas-drawer'; 
+import { drawHeaderWithBlockText,
+   drawBfs, 
+   drawStickMan, 
+   drawUnionFind,
+   drawDp,
+   drawGoGcTriColorMark,
+   drawGoGMP,
+   drawBinaryIndexTree,
+   drawSwissTable,
+   drawTopologicalSort
+  } from '@/lib/canvas-drawer'; 
 
 export default function Home() {
   const constrainedAreaRef = useRef<HTMLElement | null>(null);
@@ -31,8 +31,7 @@ export default function Home() {
         </p>
       </header>
 
-      <BouncingCanvas boundaryRef={constrainedAreaRef} />
-      <BouncingCanvas boundaryRef={constrainedAreaRef} />
+      <BouncingCanvas boundaryRef={constrainedAreaRef} drawFunc={drawBfs} backgroundColor="#be185d" />
       <div className="flex">
         <AnimatedCodeBlock />
       </div>
@@ -41,29 +40,42 @@ export default function Home() {
   );
 }
 
-
 /**
- * A draggable and bouncing canvas component.
+ * A draggable and bouncing canvas component with customizable drawing logic.
  * @param {object} props - The component props.
  * @param {React.RefObject<HTMLElement>} [props.boundaryRef] - A ref to the element that defines the boundaries for the canvas. If not provided, the window will be used as the boundary.
+ * @param {(context: CanvasRenderingContext2D, width: number, height: number) => void} [props.drawFunc] - A function to draw the content on the canvas.
+ * @param {string} [props.backgroundColor] - The background color of the canvas.
  */
-interface BouncingCanvasProps {
-  boundaryRef?: React.RefObject<HTMLElement | null>;
-}
-
-const BouncingCanvas = ({ boundaryRef }: BouncingCanvasProps) => {
-    const canvasRef = useRef<HTMLCanvasElement | null>(null);
+const BouncingCanvas = ({ boundaryRef, drawFunc, backgroundColor }) => {
+    const canvasRef = useRef(null);
     // Use refs for animation state to avoid re-renders on every frame.
     const position = useRef({ x: 100, y: 100 });
     const velocity = useRef({ dx: 2, dy: 2 });
     const dragInfo = useRef({ isDragging: false, startX: 0, startY: 0 });
-    const animationFrameId = useRef<number | null>(null);
+    const animationFrameId = useRef(null);
+
+    // The default drawing function if none is provided
+    const defaultDrawFunc = (ctx, width, height) => {
+        ctx.fillStyle = 'white';
+        ctx.font = 'bold 20px Inter, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('Drag Me!', width / 2, height / 2);
+        ctx.font = '14px Inter, sans-serif';
+        ctx.fillText('🚀', width / 2, height / 2 + 25);
+    };
+
+    const currentDrawFunc = drawFunc || defaultDrawFunc;
 
     useEffect(() => {
         const canvas = canvasRef.current;
         if (!canvas) return;
         const ctx = canvas.getContext('2d');
         if (!ctx) return;
+
+        // Draw the content using the provided or default function
+        currentDrawFunc(ctx, canvas.width, canvas.height);
 
         // Helper function to get the bounding rectangle of the container or the window.
         const getBoundary = () => {
@@ -79,15 +91,6 @@ const BouncingCanvas = ({ boundaryRef }: BouncingCanvasProps) => {
                 height: window.innerHeight,
             };
         };
-
-        // Draw initial content on the canvas
-        ctx.fillStyle = 'white';
-        ctx.font = 'bold 20px Inter, sans-serif';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText('Drag Me!', canvas.width / 2, canvas.height / 2);
-        ctx.font = '14px Inter, sans-serif';
-        ctx.fillText('🚀', canvas.width / 2, canvas.height / 2 + 25);
 
         // Animation loop
         const animate = () => {
@@ -112,7 +115,7 @@ const BouncingCanvas = ({ boundaryRef }: BouncingCanvasProps) => {
             animationFrameId.current = requestAnimationFrame(animate);
         };
 
-        const onPointerDown = (e: PointerEvent) => {
+        const onPointerDown = (e) => {
             dragInfo.current.isDragging = true;
             canvas.style.cursor = 'grabbing';
             // Calculate offset from the element's top-left corner
@@ -122,7 +125,7 @@ const BouncingCanvas = ({ boundaryRef }: BouncingCanvasProps) => {
             velocity.current = { dx: 0, dy: 0 };
         };
 
-        const onPointerMove = (e: PointerEvent) => {
+        const onPointerMove = (e) => {
             if (dragInfo.current.isDragging) {
                 const bounds = getBoundary();
                 let newX = e.clientX - dragInfo.current.startX;
@@ -168,7 +171,7 @@ const BouncingCanvas = ({ boundaryRef }: BouncingCanvasProps) => {
             window.removeEventListener('pointermove', onPointerMove);
             window.removeEventListener('pointerup', onPointerUp);
         };
-    }, [boundaryRef]); // Re-run effect if the boundaryRef changes
+    }, [boundaryRef, currentDrawFunc]); // Re-run effect if boundary or draw function changes
 
     return (
         <canvas
@@ -179,7 +182,7 @@ const BouncingCanvas = ({ boundaryRef }: BouncingCanvasProps) => {
                 position: 'absolute',
                 top: 0,
                 left: 0,
-                backgroundColor: '#4f46e5',
+                backgroundColor: backgroundColor || '#4f46e5', // Use prop or default
                 boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1)',
                 borderRadius: '0.75rem',
                 cursor: 'grab',
