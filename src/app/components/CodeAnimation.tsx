@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import '../cyberpunk.css';
+import '@/app/cyberpunk/cyberpunk.css';
 
 const codeText = `
 const cyberpunk = () => {

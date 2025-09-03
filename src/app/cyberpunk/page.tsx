@@ -1,9 +1,9 @@
 import React from 'react';
 import Image from 'next/image';
 import './cyberpunk.css';
-import AnimatedBlock from './components/AnimatedBlock';
-import ParticleAnimation from './components/ParticleAnimation';
-import CodeAnimation from './components/CodeAnimation';
+import AnimatedBlock from '@/app/components/AnimatedBlock';
+import ParticleAnimation from '@/app/components/ParticleAnimation';
+import CodeAnimation from '@/app/components/CodeAnimation';
 
 const CyberpunkPage: React.FC = () => {
   return (
