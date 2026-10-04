@@ -68,7 +68,7 @@ export function DrawCanvasBlock({backgroundColor, lineColor, drawFunc }: DrawCan
 
     resizeObserver.observe(canvas);
     return () => resizeObserver.disconnect();
-  }, [backgroundColor, lineColor]);
+  }, [backgroundColor, lineColor, drawFunc]);
 
   return <canvas ref={canvasRef} className="h-full w-full" />;
 }

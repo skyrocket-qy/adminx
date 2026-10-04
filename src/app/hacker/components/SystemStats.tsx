@@ -1,6 +1,24 @@
 'use client';
 import { useState, useEffect } from 'react';
 
+interface StatBarProps {
+  label: string;
+  value: number;
+}
+
+const StatBar = ({ label, value }: StatBarProps) => (
+  <div className="flex items-center gap-4">
+    <span className="w-16">{label}</span>
+    <div className="w-full bg-gray-700/50 rounded-full h-4">
+      <div
+        className="bg-green-500 h-4 rounded-full"
+        style={{ width: `${value}%` }}
+      />
+    </div>
+    <span className="w-16 text-right">{value.toFixed(2)}%</span>
+  </div>
+);
+
 const SystemStats = () => {
   const [stats, setStats] = useState({
     cpu: 0,
@@ -19,19 +37,6 @@ const SystemStats = () => {
 
     return () => clearInterval(interval);
   }, []);
-
-  const StatBar = ({ label, value }: { label: string; value: number }) => (
-    <div className="flex items-center gap-4">
-      <span className="w-16">{label}</span>
-      <div className="w-full bg-gray-700/50 rounded-full h-4">
-        <div
-          className="bg-green-500 h-4 rounded-full"
-          style={{ width: `${value}%` }}
-        />
-      </div>
-      <span className="w-16 text-right">{value.toFixed(2)}%</span>
-    </div>
-  );
 
   return (
     <section className="py-12 px-6 bg-black text-green-500 font-mono z-20 relative">

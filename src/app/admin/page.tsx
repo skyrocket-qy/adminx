@@ -10,9 +10,10 @@ export default function Page() {
   useEffect(() => {
     if (!localStorage.getItem('session')) {
       router.push('/auth');
-    } else {
-      setIsAuthenticated(true); 
+      return;
     }
+    const timeout = setTimeout(() => setIsAuthenticated(true), 0);
+    return () => clearTimeout(timeout);
   }, [router]);
 
   if (isAuthenticated === null) {

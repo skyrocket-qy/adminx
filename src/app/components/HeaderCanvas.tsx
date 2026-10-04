@@ -54,6 +54,7 @@ export default function AsciiLogo({ config = {} }) {
   // ---- States & Refs ----
   const [isMobile, setIsMobile] = useState(false);
   const rafRef = useRef<number | null>(null);
+  const loopRef = useRef<(ts: number) => void>(() => {});
 
   // Simulation refs
   const charWidth = useRef(0);
@@ -70,7 +71,7 @@ export default function AsciiLogo({ config = {} }) {
   const tickEject = useRef(0);
 
   // ---- Default Config ----
-  const defaults = {
+  const defaults = useMemo(() => ({
     // Georgia11, Georgi16, Broadway, AMC Tubes, 4Max
     logoText: [
         "       db                                           ",
@@ -121,14 +122,14 @@ export default function AsciiLogo({ config = {} }) {
     logicalCharHeight: 20,
     mobileLogicalCharWidth: 60,
     mobileLogicalCharHeight: 20,
-  };
+  }), []);
 
   const mergedConfig = useMemo(() => {
     return {
       ...defaults,
       ...config,
     };
-  }, [config]);
+  }, [config, defaults]);
 
   // ---- Helpers ----
 
@@ -399,10 +400,14 @@ export default function AsciiLogo({ config = {} }) {
         stepRobot();
       }
       draw();
-      rafRef.current = requestAnimationFrame(loop);
+      rafRef.current = requestAnimationFrame(loopRef.current);
     },
     [draw, stepEjection, stepRobot]
   );
+
+  useEffect(() => {
+    loopRef.current = loop;
+  }, [loop]);
 
   // ---- Init ----
 

@@ -1,23 +1,24 @@
 'use client';
 import { useState, useEffect } from 'react';
 
+const logLines = [
+  { message: "Initializing connection to target mainframe...", status: 'info' },
+  { message: "IP: 192.168.1.101... Port: 443", status: 'info' },
+  { message: "Connection encrypted. SSL handshake complete.", status: 'success' },
+  { message: "Attempting to bypass firewall... Rule #3 bypassed.", status: 'info' },
+  { message: "Rule #7 bypassed. Rule #12 bypassed.", status: 'info' },
+  { message: "Firewall penetration successful.", status: 'success' },
+  { message: "Gaining root access... ", status: 'info' },
+  { message: "Authentication required. Using brute force attack.", status: 'info' },
+  { message: "Password found: 'password123'. Access granted.", status: 'success' },
+  { message: "Downloading sensitive data... accounts.zip (4.7 GB)", status: 'info' },
+  { message: "Download complete. Covering tracks...", status: 'success' },
+  { message: "Deleting server logs... ERROR: Permission denied.", status: 'error' },
+  { message: "Disconnecting from mainframe.", status: 'info' },
+] as const;
+
 const LogDisplay = () => {
   const [logs, setLogs] = useState<{ message: string; status: 'info' | 'success' | 'error' }[]>([]);
-  const logLines = [
-    { message: "Initializing connection to target mainframe...", status: 'info' },
-    { message: "IP: 192.168.1.101... Port: 443", status: 'info' },
-    { message: "Connection encrypted. SSL handshake complete.", status: 'success' },
-    { message: "Attempting to bypass firewall... Rule #3 bypassed.", status: 'info' },
-    { message: "Rule #7 bypassed. Rule #12 bypassed.", status: 'info' },
-    { message: "Firewall penetration successful.", status: 'success' },
-    { message: "Gaining root access... ", status: 'info' },
-    { message: "Authentication required. Using brute force attack.", status: 'info' },
-    { message: "Password found: 'password123'. Access granted.", status: 'success' },
-    { message: "Downloading sensitive data... accounts.zip (4.7 GB)", status: 'info' },
-    { message: "Download complete. Covering tracks...", status: 'success' },
-    { message: "Deleting server logs... ERROR: Permission denied.", status: 'error' },
-    { message: "Disconnecting from mainframe.", status: 'info' },
-  ] as const;
 
   useEffect(() => {
     const interval = setInterval(() => {

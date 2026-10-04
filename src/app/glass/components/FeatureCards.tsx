@@ -22,6 +22,7 @@ const FeatureCards = () => {
   ];
 
   const containerRef = useRef<HTMLDivElement>(null);
+  const rippleKeyRef = useRef(0);
   const [ripples, setRipples] = useState<{ style: React.CSSProperties; key: number; cardIndex: number }[]>([]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -46,7 +47,7 @@ const FeatureCards = () => {
         width: '100px',
         height: '100px',
       },
-      key: Date.now(),
+      key: rippleKeyRef.current++,
       cardIndex: cardIndex,
     };
 

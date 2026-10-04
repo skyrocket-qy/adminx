@@ -14,7 +14,6 @@ export default function CheckBox() {
 
     useEffect(() => {
         if (checkInput.length === 0) {
-            setParseError(null);
             return;
         }
         const timer = setTimeout(() => {
@@ -60,7 +59,12 @@ export default function CheckBox() {
             <Input
                 placeholder="user:123#member@role:admin"
                 value={checkInput}
-                onChange={(e) => setCheckInput(e.target.value)}
+                onChange={(e) => {
+                    setCheckInput(e.target.value);
+                    if (e.target.value.length === 0) {
+                        setParseError(null);
+                    }
+                }}
                 className={clsx(
                     "min-w-64 w-72 transition-all duration-300 bg-white rounded-lg mr-1",
                     parseError && "border border-red-500",

@@ -5,7 +5,8 @@ const Footer = () => {
   const [date, setDate] = useState('');
 
   useEffect(() => {
-    setDate(new Date().toString());
+    const timeout = setTimeout(() => setDate(new Date().toString()), 0);
+    return () => clearTimeout(timeout);
   }, []);
 
   return (

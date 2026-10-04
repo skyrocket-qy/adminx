@@ -4,9 +4,10 @@ import MatrixBackground from "./MatrixBackground";
 import GlitchText from "./GlitchText";
 import AsciiArt from "./AsciiArt";
 
+const messages = ["Accessing Mainframe...", "Bypassing Security...", "Connection Established."];
+
 const HeroSection = () => {
   const [text, setText] = useState("");
-  const messages = ["Accessing Mainframe...", "Bypassing Security...", "Connection Established."];
 
   useEffect(() => {
     let messageIndex = 0;

@@ -10,29 +10,27 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [showHeader, setShowHeader] = useState(false);
+  const [mouseNearEdge, setMouseNearEdge] = useState(false);
   const pathname = usePathname();
+  const showHeader = pathname === '/' || mouseNearEdge;
 
   useEffect(() => {
-    if (pathname == '/'){
-      setShowHeader(true);
+    if (pathname === '/') {
       return;
-    }else{
-      setShowHeader(false);
     }
     const handleMouseMove = (e: MouseEvent) => {
       if (e.clientY < 20 || e.clientY > window.innerHeight - 20 || 
         e.clientX < 20 || e.clientX > window.innerWidth - 20) {
-        setShowHeader(true);
+        setMouseNearEdge(true);
       } else {
-        setShowHeader(false);
+        setMouseNearEdge(false);
       }
     };
 
     // Optional: force hide once navigated if mouse not near top
     const handleLeaveTop = () => {
       if (window.scrollY > 0) {
-        setShowHeader(false);
+        setMouseNearEdge(false);
       }
     };
 
