@@ -1,17 +1,16 @@
 "use client"
 import { Button } from "@/components/ui/button"
-import { useEffect, useState, useLayoutEffect } from "react";
+import { useEffect, useState } from "react";
 import { toast } from 'react-toastify';
 import {
-  ColumnDef,
   flexRender,
-  getCoreRowModel,
-  useReactTable,
-  getPaginationRowModel,
-  SortingState,
-  getFilteredRowModel,
-  ColumnFiltersState,
-  getSortedRowModel,
+  useTable,
+  type ColumnDef,
+  type SortingState,
+  type ColumnFiltersState,
+  type PaginationState,
+  type RowData,
+  type RowSelectionState,
 } from "@tanstack/react-table"
 
 import {
@@ -27,35 +26,41 @@ import { CreateRoleDrawer } from "./drawer"
 import { Input } from "@/components/ui/input"
 import { client } from "@/services/connect/rbac/client";
 import { Role } from "./columns";
+import { adminTableFeatures } from "@/app/admin/table-features";
 import { parseQueryStringToAST } from "@/lib/ast";
 import clsx from "clsx"; // optional: helps manage conditional class names
 import { ArrowUpDown } from "lucide-react"
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[]
+interface DataTableProps<TData extends RowData> {
+  columns: ColumnDef<typeof adminTableFeatures, TData>[]
   data: TData[]
 }
 
-export function DataTable<TData, TValue>({
+export function DataTable<TData extends RowData>({
   columns,
   data,
-}: DataTableProps<TData, TValue>) {
+}: DataTableProps<TData>) {
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
         []
     )
-    const [rowSelection, setRowSelection] = React.useState({});
-    const [pagination, setPagination] = useState({
+    const [rowSelection, setRowSelection] = React.useState<RowSelectionState>({});
+    const [pagination, setPagination] = useState<PaginationState>({
         pageIndex: 0,
         pageSize: 20,
     });
 
 
-    const table = useReactTable({
+    const table = useTable({
+        features: adminTableFeatures,
         data,
         columns,
-        getCoreRowModel: getCoreRowModel(),
-        getPaginationRowModel: getPaginationRowModel(),
+        state: {
+          sorting,
+          columnFilters,
+          pagination,
+          rowSelection,
+        },
         onPaginationChange: setPagination,
         onSortingChange: (updater) => {
             const newSorting =
@@ -69,19 +74,11 @@ export function DataTable<TData, TValue>({
             // optional: store somewhere for your query
             // queryStore.sorting = newSorting;
         },
-        getSortedRowModel: getSortedRowModel(),
         onColumnFiltersChange: setColumnFilters,
         onRowSelectionChange: setRowSelection,
-        getFilteredRowModel: getFilteredRowModel(),
-        state: {
-          sorting,
-          columnFilters,
-          pagination,
-          rowSelection,
-        },
         enableMultiSort: true,
     })
-    
+
     const [queryInput, setQueryInput] = useState<string>("");
     const [parseError, setParseError] = useState<string | null>(null);
     const [triggerShake, setTriggerShake] = useState(false);
@@ -89,7 +86,7 @@ export function DataTable<TData, TValue>({
         const timer = setTimeout(() => {
         console.log("Query input:", queryInput);
         try{
-            const ast = parseQueryStringToAST(queryInput);
+            parseQueryStringToAST(queryInput);
             setParseError(null);
         }catch(e: unknown){
             console.error(e);
@@ -110,18 +107,6 @@ export function DataTable<TData, TValue>({
   return (
     <div className="h-full flex flex-col">
         <div className="flex items-center justify-between pb-4">
-            {/* <Select>
-                <SelectTrigger className="w-[100px] bg-violet-100">
-                    <SelectValue placeholder="Column" />
-                </SelectTrigger>
-                <SelectContent>
-                    <SelectItem value="SbjNs">SbjNs</SelectItem>
-                    <SelectItem value="SbjId">SbjId</SelectItem>
-                    <SelectItem value="Relation">Relation</SelectItem>
-                    <SelectItem value="ObjNs">ObjNs</SelectItem>
-                    <SelectItem value="ObjId">ObjId</SelectItem>
-                </SelectContent>
-            </Select> */}
             <Input
                 placeholder="SbjNs = 123 & Relation = member"
                 value={queryInput}
@@ -149,12 +134,11 @@ export function DataTable<TData, TValue>({
                 className=" mr-1 bg-black"
                 disabled={table.getFilteredSelectedRowModel().rows.length === 0}
                 onClick={async () => {
-                    const selected = table.getFilteredSelectedRowModel().rows as { original: Role }[]
                     try {
-                        const out = await client.deleteRole({
+                        await client.deleteRole({
                         });
                         toast.success("Role delete successfully!");
-                    } catch (e) {
+                    } catch {
                         toast.error("Failed to delelte tuple.");
                     }
                 }}
@@ -209,8 +193,8 @@ export function DataTable<TData, TValue>({
         </div>
         <div className="flex items-center justify-end space-x-2 py-2 pb-0">
             <div className="text-sm text-muted-foreground">
-                Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
-                {" "} (total: {table.getPrePaginationRowModel().rows.length})
+                Page {table.state.pagination.pageIndex + 1} of {table.getPageCount()}
+                {" "} (total: {table.getRowCount()})
             </div>
             <Button
                 variant="outline"

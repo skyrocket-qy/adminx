@@ -1,4 +1,5 @@
 import type { ColumnDef } from '@tanstack/react-table';
+import { adminTableFeatures } from '@/app/admin/table-features';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -29,7 +30,7 @@ interface Row {
   role: string;
 }
 
-const columns: ColumnDef<Row>[] = [
+const columns: ColumnDef<typeof adminTableFeatures, Row>[] = [
   {
     id: 'select',
     header: ({ table }) => (

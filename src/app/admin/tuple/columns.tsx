@@ -1,7 +1,7 @@
 "use client"
 
-import { ColumnDef,
-} from "@tanstack/react-table"
+import { type ColumnDef } from "@tanstack/react-table"
+import { adminTableFeatures } from "@/app/admin/table-features"
 
 import { ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react"
 
@@ -29,7 +29,7 @@ export type Tuple = {
   objId: string
 }
 
-export const columns: ColumnDef<Tuple>[] = [
+export const columns: ColumnDef<typeof adminTableFeatures, Tuple>[] = [
   {
     id: "select",
     header: ({ table }) => (
