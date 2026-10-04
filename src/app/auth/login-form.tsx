@@ -10,7 +10,7 @@ import { Button } from './button';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { signIn}  from './auth';
-import { z } from 'zod';
+import { credentialsSchema } from '@/lib/schemas';
 
 export default function LoginForm() {
   const [errorMessage, setErrorMessage] = useState('');
@@ -22,9 +22,7 @@ export default function LoginForm() {
       username: form.get('username'),
       password: form.get('password'),
     }
-    const parsedCredentials = z
-    .object({ username: z.string(), password: z.string() })
-    .safeParse(data);
+    const parsedCredentials = credentialsSchema.safeParse(data);
     if (parsedCredentials.error) {
       setErrorMessage('Invalid credentials format.');
       return;

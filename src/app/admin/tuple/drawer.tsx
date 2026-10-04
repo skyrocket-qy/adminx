@@ -1,7 +1,6 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from 'react-toastify';
 import {
@@ -14,17 +13,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { client } from "@/services/connect/client";
+import { tupleFormSchema as schema, type TupleFormData as FormData } from "@/lib/schemas";
 
-
-const schema = z.object({
-  subjectNs: z.string().min(1, "Subject namespace is required"),
-  subjectId: z.string().min(1, "Subject id is required"),
-  relation: z.string().min(1, "Relation is required"),
-  objectNs: z.string().min(1, "Object namespace is required"),
-  objectId: z.string().min(1, "Subject id is required"),
-});
-
-type FormData = z.infer<typeof schema>;
 
 export function CreateTupleDrawer() {
   const {
