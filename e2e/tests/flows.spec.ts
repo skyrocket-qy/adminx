@@ -30,3 +30,18 @@ test('blog story selection stays on the blog route', async ({ page }) => {
   await expect(page.getByRole('heading', { level: 1, name: /Gorm/ })).toBeVisible();
   expect(new URL(page.url()).pathname).toBe('/blog');
 });
+
+test('about info renders the CV from resumer', async ({ page }) => {
+  await page.goto('/about/info', { waitUntil: 'networkidle' });
+
+  await expect(page.getByRole('heading', { level: 1, name: 'Jimmy Huang' })).toBeVisible();
+  await expect(
+    page.getByText('Fortune Fantasy Global Tech .Ltd, Backend Engineer')
+  ).toBeVisible();
+  await expect(
+    page.getByText('AWS Certified Solutions Architect – Associate')
+  ).toBeVisible();
+
+  const download = page.getByRole('link', { name: 'Download PDF' });
+  await expect(download).toHaveAttribute('href', '/resume/Jimmy_Huang_CV.pdf');
+});

@@ -1,0 +1,399 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/rendercv/rendercv/refs/tags/v2.8/schema.json
+cv:
+  name: Jimmy Huang
+  headline: Senior Backend Engineer
+  location: Taipei, Taiwan
+  email: skyrocketqy81@gmail.com
+  photo:
+  phone: (+886)975032691
+  website: https://adminx-ebon.vercel.app/
+  social_networks:
+    - network: LinkedIn
+      username: jimmy-huang-07aa4722a
+    - network: GitHub
+      username: skyrocket-qy
+    - network: Leetcode
+      username: rivendinner
+  custom_connections:
+  sections:
+    # Welcome to RenderCV:
+    #   - RenderCV reads a CV written in a YAML file, and generates a PDF with professional typography.
+    #   - Each section title is arbitrary.
+    #   - You can choose any of the 9 entry types for each section.
+    #   - Markdown syntax is supported everywhere. This is **bold**, *italic*, and [link](https://example.com).
+    experience:
+      - company: Fortune Fantasy Global Tech .Ltd
+        position: Backend Engineer
+        start_date: 2025-06
+        location: Taiwan
+        highlights:
+          - Developing various modern slot games
+          - Administrator backend management
+      - company: Fontech
+        position: Senior Backend Engineer
+        start_date: 2024-11
+        end_date: 2025-05
+        location: Remote
+        summary: A real-time, high-throughput, multi-tenant SaaS alarm management service used by various U.S. corporations.
+        highlights:
+          - Built from the ground up
+          - Spearheaded a team of 3 backend engineers, implementing robust library with clean architecture to improve team's 50% delivery velocity
+          - Architected critical system components focusing on horizontal scalability
+          - "Integrated various AWS infrastructure (Cognito, EC2, KMS, RDS...etc) to reduce operational overhead"
+          - Developed advanced SQL query optimizations that reduced complex query times from 60s to 0.1s
+      - company: AMI
+        position: BMC Firmware Engineer II
+        start_date: 2024-10
+        end_date: 2025-03
+        location: Taiwan
+        highlights:
+          - Independently operates in BMC
+          - Proficient in D-Bus usage
+          - Experienced and skilled in developing with Redfish APIs
+          - Implemented optimization library for REP architecture, saving up to 50% time and code to do parse and validate
+          - Resolved multiple defects across different level modules
+          - Proactively proposes solutions to work-related issues and shares them with teams
+          - Collaborate with India and US teams with English communication
+      - company: Taihe Technology Co., Ltd.
+        position: Backend Engineer
+        start_date: 2024-03
+        end_date: 2024-09
+        location: Taiwan
+        highlights:
+          - Implemented new features and maintained existing microservice projects using PHP and Go
+          - Developed new payment and management system using GoFrame and gRPC
+          - Quickly familiarized with customized ORM, project architecture, and memSQL
+          - Assisted juniors in resolving backend and frontend issues
+      - company: CIeNET Technologies
+        position: Software Engineer
+        start_date: 2023-09
+        end_date: 2024-03
+        location: On-site at Google's Camera System Team
+        highlights:
+          - Responsible for testing Pixel cameras, also developing scripts (Python, Shell) to increase automation test coverage from 85% to 95%
+          - Analyzed test data for potential root causes
+          - Maintaining the automated testing pipeline
+      - company: Ubitus
+        position: Backend Engineer
+        start_date: 2021-06
+        end_date: 2023-08
+        location: Taiwan
+        highlights:
+          - Development of programs based on microservices and cloud infrastructure (Kubernetes, AWS) using Go, Python, and Node.js.
+          - Deployment and scripting for setting up cloud services and various services using Docker, Ansible, and Helm.
+          - Development and maintenance of an existing in-game content management system using Node.js, Go, and Python.
+          - Establishing a real-time Twitter comment monitoring system for internal use using Python and Prometheus.
+          - Developing AI-related services and applications like stable-diffustion using Python.
+          - Built up log collectors and workflow mechanisms using Fluentd and Airflow.
+          - Writing unit tests, integration tests, and end-to-end tests using K6.
+      - company: Chung Yuan Christian University
+        position: Teaching Assistant
+        start_date: 2021-09
+        end_date: 2022-06
+        location: Taiwan
+        highlights:
+          - Object Oriented Programming TA
+          - Introduction to Data Science TA
+    education:
+      - institution: Chung Yuan Christian University
+        area: Applied Mathematics
+        degree: MS
+        date:
+        start_date: 2020-09
+        end_date: 2022-06
+        # location: Princeton, NJ
+        # summary:
+        # highlights:
+        #   - "Thesis: Efficient Neural Architecture Search for Resource-Constrained Deployment"
+        #   - "Advisor: Prof. Sanjeev Arora"
+        #   - NSF Graduate Research Fellowship, Siebel Scholar (Class of 2022)
+      - institution: Chang Jung Christian University
+        area: Accounting and Information
+        degree: BS
+        date:
+        start_date: 2015-09
+        end_date: 2019-06
+    projects:
+      - name: Alarm system
+        start_date: 2024-11
+        end_date: 2025-05
+        location: Associated with Fontech
+        summary: The project built on well-known camera corp for alarm management.
+        highlights:
+          - Built the backend infrastructure and db schema to fit business logic.
+          - Optimized the index creation to ensure low RTs, reducing them from 50s to 3s.
+          - Built a real-time alarm monitoring API using Go (Gin) and GORM, supporting complex alarm lifecycles and multi-tenant data isolation.
+          - Integrated AWS Cognito and custom JWT middleware to manage secure user authentication and role-based access control.
+          - Automated schema migrations and versioning across MySQL using Atlas and GORM.
+          - Architected a secure Webhook and API Key system to enable third-party integrations and automated reporting.
+          - Standardized API documentation with Swagger (swag) and implemented structured logging using Zerolog for rapid debugging.
+          - Containerized the application with Docker and automated deployment workflows using Makefiles and Shell scripts.
+      - name: AuthZ
+        start_date: 2025-07
+        end_date: 2025-08
+        highlights:
+          - Architected a real-time, Zanzibar-inspired ReBAC engine supporting complex, recursive permission schemas (RBAC/ABAC), achieving 10k+ RPS per service with sub-1ms median latency.
+          - Engineered a memory-first, sharded graph architecture that eliminated lock contention and facilitated efficient tree-based relationship exploration for authorization tuple operations.
+          - Optimized database performance by implementing Redis-backed Cuckoo Filters for probabilistic existence checks, preventing redundant writes and slashing expensive duplicate lookups.
+          - Built an event-driven state synchronization pipeline utilizing Kafka and Debezium (CDC) to stream tuple updates, ensuring real-time consistency across a distributed cluster.
+          - Integrated comprehensive observability with OpenTelemetry (OTel) for distributed tracing and metrics, streamlining troubleshooting in high-throughput production environments.
+      - name: RAG
+        start_date: 2025-07
+        end_date: 2025-08
+        summary: This project implements a RAG (Retrieval-Augmented Generation) system to accelerate software development tasks like architecture comprehension and debugging. It leverages a large language model (LLM) to understand and analyze a codebase.
+        highlights:
+          - Used LangChain to generate vector embeddings from the source code.
+          - Stored embeddings in a PostgreSQL database using the PGVector extension for efficient similarity searches.
+          - A self-hosted Llama model serves as the core LLM for generation and reasoning.
+          - Retrieves relevant code snippets from the vector store and provides them as context to the LLM upon query.
+      - name: The application of tree-based model for well interpretation strategy
+        start_date: 2022-01
+        end_date: 2023-06
+        location: Associated with Chung Yuan Christian University
+        highlights:
+          - Engineered an automated data extraction pipeline using a web crawler to scrape Grandmaster-level replays, processing game screens every two seconds to create a continuous dataset of 3,309 matches.
+          - Developed a computer vision module utilizing Hough Circles and custom RGB frame filters to detect and extract dynamic in-game features.
+          - Scaled the image dataset for model training by applying extensive data augmentation techniques, including background splitting and randomization, to generate over 52,500 training samples.
+          - Trained and evaluated multiple machine learning models—including CNNs, XGBoost, Random Forest, and GradientBoost—using 8-fold cross-validation to classify game states.
+          - Designed an interpretable decision-tree-based recommendation engine that analyzed real-time feature importance, successfully identifying strategies that increased simulated win rates by 18% to 34%.
+      - name: Vistrace
+        start_date: 2026-02
+        highlights:
+          - Engineered a high-performance ARPG engine in Godot, optimizing the WASM pipeline for sub-second web deployment.
+          - Architected an AI-driven Agentic Workflow utilizing 10+ specialized AI sub-agents to autonomously execute TDD logic, verify builds, and manage cross-module dependencies, reducing development cycles by 30%.
+          - Developed 12+ custom CLI tools and static analysis guardrails that eradicated circular dependencies and automated 80% of the game's content ingestion pipeline.
+          - Automated end-to-end testing and documentation by combining AI scenario generation with Godot-ai MCP, achieving 95%+ test coverage on core systems, cutting manual QA time by 60%, and maintaining 100% automated documentation accuracy.
+          - Integrated generative AI pipelines to accelerate asset creation, deploying 30+ production-ready UI and background assets and reducing deployment time from days to minutes.
+    licenses_and_certifications:
+      - name: AWS Certified Solutions Architect – Associate
+        location: Amazon Web Services (AWS)
+        # start_date: 2026-02
+      - name: Gemini certified student
+        location: Google
+        # highlights:
+        #   - "Gemini, NotebookLM, and +4 skills"
+      # publications:
+      # - title: "Sparse Mixture-of-Experts at Scale: Efficient Routing for Trillion-Parameter Models"
+      #   authors:
+      #     - "*John Doe*"
+      #     - Sarah Williams
+      #     - David Park
+      #   summary:
+      #   doi: 10.1234/neurips.2023.1234
+      #   url:
+      #   journal: NeurIPS 2023
+      #   date: 2023-07
+    # selected_honors:
+    #   - bullet: MIT Technology Review 35 Under 35 Innovators (2024)
+    #   - bullet: Forbes 30 Under 30 in Enterprise Technology (2024)
+    #   - bullet: ACM Doctoral Dissertation Award Honorable Mention (2023)
+    #   - bullet: Google PhD Fellowship in Machine Learning (2020 – 2023)
+    #   - bullet: Fulbright Scholarship for Graduate Studies (2018)
+    skills:
+      - label: Languages
+        details: Go, Python, C, Js/Ts, Lua, Shell
+      - label: Infrastructure & Cloud
+        details: AWS, Kubernetes, Docker, Helm, Ansible, CI/CD
+      - label: AI/ML & Data Science
+        details: LLM, RAG, TensorFlow, CNN, Decision Trees, Web Crawling
+      - label: Monitoring & Observability
+        details: OpenTelemetry, Prometheus, Grafana, Loki, Fluentd, K6
+    languages:
+      - name: Mandarin (Native)
+      - name: English (Professional working proficiency)
+
+    # patents:
+    #   - number: Adaptive Quantization for Neural Network Inference on Edge Devices (US Patent 11,234,567)
+    #   - number: Dynamic Sparsity Patterns for Efficient Transformer Attention (US Patent 11,345,678)
+    #   - number: Hardware-Aware Neural Architecture Search Method (US Patent 11,456,789)
+    # invited_talks:
+    #   - reversed_number: Scaling Laws for Efficient Inference — Stanford HAI Symposium (2024)
+    #   - reversed_number: Building AI Infrastructure for the Next Decade — TechCrunch Disrupt (2024)
+    #   - reversed_number: "From Research to Production: Lessons in ML Systems — NeurIPS Workshop (2023)"
+    #   - reversed_number: "Efficient Deep Learning: A Practitioner's Perspective — Google Tech Talk (2022)"
+design:
+  theme: classic
+  # page:
+  #   size: us-letter
+  #   top_margin: 0.7in
+  #   bottom_margin: 0.7in
+  #   left_margin: 0.7in
+  #   right_margin: 0.7in
+  #   show_footer: true
+  #   show_top_note: true
+  # colors:
+  #   body: rgb(0, 0, 0)
+  #   name: rgb(0, 79, 144)
+  #   headline: rgb(0, 79, 144)
+  #   connections: rgb(0, 79, 144)
+  #   section_titles: rgb(0, 79, 144)
+  #   links: rgb(0, 79, 144)
+  #   footer: rgb(128, 128, 128)
+  #   top_note: rgb(128, 128, 128)
+  # typography:
+  #   line_spacing: 0.6em
+  #   alignment: justified
+  #   date_and_location_column_alignment: right
+  #   font_family:
+  #     body: Source Sans 3
+  #     name: Source Sans 3
+  #     headline: Source Sans 3
+  #     connections: Source Sans 3
+  #     section_titles: Source Sans 3
+  #   font_size:
+  #     body: 10pt
+  #     name: 30pt
+  #     headline: 10pt
+  #     connections: 10pt
+  #     section_titles: 1.4em
+  #   small_caps:
+  #     name: false
+  #     headline: false
+  #     connections: false
+  #     section_titles: false
+  #   bold:
+  #     name: true
+  #     headline: false
+  #     connections: false
+  #     section_titles: true
+  # links:
+  #   underline: false
+  #   show_external_link_icon: false
+  # header:
+  #   alignment: center
+  #   photo_width: 3.5cm
+  #   photo_position: left
+  #   photo_space_left: 0.4cm
+  #   photo_space_right: 0.4cm
+  #   space_below_name: 0.7cm
+  #   space_below_headline: 0.7cm
+  #   space_below_connections: 0.7cm
+  #   connections:
+  #     phone_number_format: national
+  #     hyperlink: true
+  #     show_icons: true
+  #     display_urls_instead_of_usernames: false
+  #     separator: ''
+  #     space_between_connections: 0.5cm
+  # section_titles:
+  #   type: with_partial_line
+  #   line_thickness: 0.5pt
+  #   space_above: 0.5cm
+  #   space_below: 0.3cm
+  # sections:
+  #   allow_page_break: true
+  #   space_between_regular_entries: 1.2em
+  #   space_between_text_based_entries: 0.3em
+  #   show_time_spans_in:
+  #     - experience
+  # entries:
+  #   date_and_location_width: 4.15cm
+  #   side_space: 0.2cm
+  #   space_between_columns: 0.1cm
+  #   allow_page_break: false
+  #   short_second_row: true
+  #   degree_width: 1cm
+  #   summary:
+  #     space_above: 0cm
+  #     space_left: 0cm
+  #   highlights:
+  #     bullet: •
+  #     nested_bullet: •
+  #     space_left: 0.15cm
+  #     space_above: 0cm
+  #     space_between_items: 0cm
+  #     space_between_bullet_and_text: 0.5em
+  # templates:
+  #   footer: '*NAME -- PAGE_NUMBER/TOTAL_PAGES*'
+  #   top_note: '*LAST_UPDATED CURRENT_DATE*'
+  #   single_date: MONTH_ABBREVIATION YEAR
+  #   date_range: START_DATE – END_DATE
+  #   time_span: HOW_MANY_YEARS YEARS HOW_MANY_MONTHS MONTHS
+  #   one_line_entry:
+  #     main_column: '**LABEL:** DETAILS'
+  #   education_entry:
+  #     main_column: |-
+  #       **INSTITUTION**, AREA
+  #       SUMMARY
+  #       HIGHLIGHTS
+  #     degree_column: '**DEGREE**'
+  #     date_and_location_column: |-
+  #       LOCATION
+  #       DATE
+  #   normal_entry:
+  #     main_column: |-
+  #       **NAME**
+  #       SUMMARY
+  #       HIGHLIGHTS
+  #     date_and_location_column: |-
+  #       LOCATION
+  #       DATE
+  #   experience_entry:
+  #     main_column: |-
+  #       **COMPANY**, POSITION
+  #       SUMMARY
+  #       HIGHLIGHTS
+  #     date_and_location_column: |-
+  #       LOCATION
+  #       DATE
+  #   publication_entry:
+  #     main_column: |-
+  #       **TITLE**
+  #       SUMMARY
+  #       AUTHORS
+  #       URL (JOURNAL)
+  #     date_and_location_column: DATE
+locale:
+  language: english
+  # last_updated: Last updated in
+  # month: month
+  # months: months
+  # year: year
+  # years: years
+  # present: present
+  # phrases:
+  #   degree_with_area: DEGREE in AREA
+  # month_abbreviations:
+  #   - Jan
+  #   - Feb
+  #   - Mar
+  #   - Apr
+  #   - May
+  #   - June
+  #   - July
+  #   - Aug
+  #   - Sept
+  #   - Oct
+  #   - Nov
+  #   - Dec
+  # month_names:
+  #   - January
+  #   - February
+  #   - March
+  #   - April
+  #   - May
+  #   - June
+  #   - July
+  #   - August
+  #   - September
+  #   - October
+  #   - November
+  #   - December
+settings:
+  current_date: today
+  render_command:
+    output_folder: rendercv_output
+    design:
+    locale:
+    typst_path: OUTPUT_FOLDER/NAME_IN_SNAKE_CASE_CV.typ
+    pdf_path: OUTPUT_FOLDER/NAME_IN_SNAKE_CASE_CV.pdf
+    markdown_path: OUTPUT_FOLDER/NAME_IN_SNAKE_CASE_CV.md
+    html_path: OUTPUT_FOLDER/NAME_IN_SNAKE_CASE_CV.html
+    png_path: OUTPUT_FOLDER/NAME_IN_SNAKE_CASE_CV.png
+    dont_generate_markdown: false
+    dont_generate_html: false
+    dont_generate_typst: false
+    dont_generate_pdf: false
+    dont_generate_png: false
+  # bold_keywords: [Go, Python, C++, Rust, SQL, AWS, Kubernetes, Docker, RAG, LLM, Redfish, D-Bus, BMC, Microservices, SaaS, Gin, GORM, PostgreSQL, MySQL, Redis, Kafka, AuthZ, Clean Architecture, CI/CD, LangChain, TDD, Redfish]
+  pdf_title: NAME - CV

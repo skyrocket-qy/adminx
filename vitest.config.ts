@@ -40,6 +40,7 @@ export default defineConfig({
         'src/lib/posts.ts',
         'src/lib/ast.ts',
         'src/lib/schemas.ts',
+        'src/lib/resume.ts',
         'src/app/auth/auth.ts',
       ],
       thresholds: {
