@@ -4,7 +4,6 @@
  */
 export const routes = [
   '/',
-  '/Animated',
   '/about',
   '/about/biography',
   '/about/education',
@@ -24,6 +23,4 @@ export const routes = [
   '/auth',
   '/blog',
   '/cyberpunk',
-  '/glass',
-  '/hacker',
 ] as const;

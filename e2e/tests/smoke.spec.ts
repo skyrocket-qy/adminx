@@ -24,4 +24,11 @@ test.describe('route smoke', () => {
     expect(response.status()).toBe(200);
     expect(await response.text()).toContain('404');
   });
+
+  test('removed pages return 404', async ({ request }) => {
+    for (const route of ['/Animated', '/glass', '/hacker']) {
+      const response = await request.get(route);
+      expect(response.status(), `expected ${route} to be removed`).toBe(404);
+    }
+  });
 });
