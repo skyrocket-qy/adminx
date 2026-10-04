@@ -4,25 +4,29 @@ import react from '@vitejs/plugin-react';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 const styleStub = fileURLToPath(new URL('./src/test/style-stub.ts', import.meta.url));
+const serverOnlyStub = fileURLToPath(new URL('./src/test/server-only-stub.ts', import.meta.url));
 
 /**
  * Unit tests don't need the app's CSS pipeline (and Vite 8 cannot load the
  * string-form "@tailwindcss/postcss" plugin used by Next). Resolve every CSS
- * import to an empty module instead.
+ * import to an empty module instead, and stub Next's `server-only` guard.
  */
-const cssStubPlugin = {
-  name: 'css-stub',
+const testStubPlugin = {
+  name: 'test-stubs',
   enforce: 'pre' as const,
   resolveId(source: string) {
     if (source.endsWith('.css')) {
       return styleStub;
+    }
+    if (source === 'server-only') {
+      return serverOnlyStub;
     }
     return null;
   },
 };
 
 export default defineConfig({
-  plugins: [cssStubPlugin, react(), tsconfigPaths()],
+  plugins: [testStubPlugin, react(), tsconfigPaths()],
   test: {
     environment: 'jsdom',
     setupFiles: ['./vitest.setup.ts'],

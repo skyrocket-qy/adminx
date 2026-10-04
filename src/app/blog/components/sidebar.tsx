@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Story } from '@/lib/posts';
+import type { Story } from '@/lib/posts';
 import './sidebar.css';
 
 interface SidebarProps {

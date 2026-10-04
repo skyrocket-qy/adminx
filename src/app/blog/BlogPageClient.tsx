@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Sidebar from './components/sidebar';
 import BlogStory from './components/story';
-import { Story } from '@/lib/posts';
+import type { Story } from '@/lib/posts';
 
 interface BlogPageClientProps {
   stories: Story[];

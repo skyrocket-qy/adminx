@@ -3,7 +3,11 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "target": "ES2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -13,7 +17,7 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "incremental": true,
     "plugins": [
       {
@@ -21,11 +25,26 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"],
-      "three/webgpu": ["./node_modules/three/build/three.webgpu.js"],
-      "three/tsl": ["./node_modules/three/build/three.tsl.js"],
+      "@/*": [
+        "./src/*"
+      ],
+      "three/webgpu": [
+        "./node_modules/three/build/three.webgpu.js"
+      ],
+      "three/tsl": [
+        "./node_modules/three/build/three.tsl.js"
+      ]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules", "copy"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "copy"
+  ]
 }
