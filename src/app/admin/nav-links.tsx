@@ -24,7 +24,7 @@ const links = [
   },
   {
     name: 'rbac',
-    href: '/admin/rbac',
+    href: '/admin/rbac/user',
     icon: DocumentDuplicateIcon,
     count: 3, 
     subLinks: [
@@ -35,15 +35,15 @@ const links = [
   },
   {
     name: 'role',
-    href: '/admin/role',
+    href: '/admin/rbac/role',
     icon: DocumentDuplicateIcon,
     count: 2, 
     subLinks: [
-      { name: 'Pending', href: '/admin/role', count: 1 },
-      { name: 'Paid', href: '/admin/role', count: 1 },
+      { name: 'Pending', href: '/admin/rbac/role', count: 1 },
+      { name: 'Paid', href: '/admin/rbac/role', count: 1 },
     ],
   },
-  { name: 'user', href: '/admin/user', icon: UserGroupIcon, count: 0 },
+  { name: 'user', href: '/admin/rbac/user', icon: UserGroupIcon, count: 0 },
   // { name: 'role', href: '/auth/admin/role', icon: UserGroupIcon, count: 0 },
 ];
 
