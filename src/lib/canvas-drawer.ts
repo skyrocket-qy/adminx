@@ -256,7 +256,7 @@ export const drawDp = (context: CanvasRenderingContext2D, width: number, height:
   const animate = () => {
     frameCounter++;
     if (frameCounter < animationSpeed) {
-        animationFrameId = requestAnimationFrame(animate);
+        requestAnimationFrame(animate);
         return;
     }
     frameCounter = 0;
@@ -281,14 +281,10 @@ export const drawDp = (context: CanvasRenderingContext2D, width: number, height:
     context.textBaseline = 'middle';
     
     for (let k = 0; k < m; k++) {
-        const x = leftMargin - cellWidth / 2;
-        const y = topMargin + (k + 1.5) * cellHeight;
         context.fillStyle = (k === i - 1) ? '#F97316' : 'white';
         // context.fillText(arr1[k], x, y);
     }
     for (let k = 0; k < n; k++) {
-        const x = leftMargin + (k + 1.5) * cellWidth;
-        const y = topMargin - cellHeight / 2;
         context.fillStyle = (k === j - 1 && i <= m) ? '#F97316' : 'white';
         // context.fillText(arr2[k], x, y);
     }
@@ -358,7 +354,6 @@ interface UFNode {
  */
 export const drawUnionFind = async (context: CanvasRenderingContext2D, width: number, height: number) => {
   const numNodes = 12;
-  let animationFrameId: number;
 
   // --- Data Structure State ---
   let parent: number[] = [];
@@ -416,7 +411,7 @@ export const drawUnionFind = async (context: CanvasRenderingContext2D, width: nu
      context.stroke();
   };
   
-  const drawScene = (message: string) => {
+  const drawScene = (_message: string) => {
       context.clearRect(0, 0, width, height);
       nodes.forEach((_, i) => {
           if (parent[i] !== i) drawEdge(nodes[i], nodes[parent[i]], 'rgba(255, 255, 255, 0.3)', false);
@@ -633,16 +628,6 @@ export const drawBinaryIndexTree = async (context: CanvasRenderingContext2D, wid
       }
   };
 
-  const getSum_internal = (index: number) => {
-      let sum = 0;
-      index++; // 1-based index
-      while (index > 0) {
-          sum += bit[index];
-          index -= index & -index;
-      }
-      return sum;
-  };
-  
   const constructBIT = (arr: number[]) => {
       nums = [...arr];
       bit = Array(n + 1).fill(0);
@@ -811,7 +796,6 @@ export const drawSwissTable = async (context: CanvasRenderingContext2D, width: n
   };
 
   // --- Animation Loop ---
-  let animationFrameId: number;
   const animate = () => {
     let allInPlace = true;
     players.forEach(p => {
@@ -827,7 +811,7 @@ export const drawSwissTable = async (context: CanvasRenderingContext2D, width: n
     drawScene(currentMessage, currentPairings);
 
     if (!allInPlace) {
-        animationFrameId = requestAnimationFrame(animate);
+        requestAnimationFrame(animate);
     }
   };
 
@@ -848,7 +832,7 @@ export const drawSwissTable = async (context: CanvasRenderingContext2D, width: n
             p.targetY = startY + index * boxHeight * 1.2;
         });
         
-        animationFrameId = requestAnimationFrame(animate);
+        requestAnimationFrame(animate);
         await sleep(2000);
 
         // 2. Pair players
@@ -1384,7 +1368,7 @@ export const drawStickMan = async (context: CanvasRenderingContext2D, width: num
     context.stroke();
     context.shadowBlur = 0;
   };
-  const drawScene = (message: string) => {
+  const drawScene = (_message: string) => {
     context.clearRect(0, 0, width, height);
     context.fillStyle = '#111827'; context.fillRect(0, 0, width, height);
     if (stickman) { drawWeapon(); drawStickman(); }
@@ -1536,7 +1520,7 @@ export const drawGoGMP = async (context: CanvasRenderingContext2D, width: number
       context.font = 'bold 12px "Inter"'; context.fillStyle = 'black'; context.textAlign = 'center';
       // context.fillText(`G${g.id}`, g.x, g.y);
     };
-    const drawScene = (message: string) => {
+    const drawScene = (_message: string) => {
         context.clearRect(0,0,width,height); context.fillStyle = '#111827'; context.fillRect(0,0,width,height);
         context.font = 'bold 20px "Inter"'; context.fillStyle = 'white'; context.textAlign = 'center'; 
         // context.fillText(message, width/2, 40);
@@ -1659,7 +1643,7 @@ export const drawGoGcTriColorMark = async (context: CanvasRenderingContext2D, wi
         context.lineTo(to.x - objRadius * Math.cos(angle), to.y - objRadius * Math.sin(angle));
         context.strokeStyle = 'rgba(255,255,255,0.3)'; context.lineWidth = 2; context.stroke();
     };
-    const drawScene = (message: string) => {
+    const drawScene = (_message: string) => {
         context.clearRect(0,0,width,height); context.fillStyle = '#111827'; context.fillRect(0,0,width,height);
         context.font = 'bold 20px "Inter"'; context.fillStyle = 'white'; context.textAlign = 'center';
         // context.fillText("Go GC: Tri-Color Mark & Sweep", width/2, 40);

@@ -1,20 +1,5 @@
 import { DataTable } from "./data-table"
-import { client } from "@/services/connect/rbac/client"
 import {  User, columns } from "./columns"
-
-interface ProtoTuple {
-  id: string | number;
-  name?: string;
-  email?: string;
-  isActive?: boolean;
-  isEmailConfirmed?: boolean;
-  authTypes?: string[];
-  orgs?: string[];
-  createdAt?: string;
-  updatedAt?: string;
-  deletedAt?: string | null;
-  userAuths?: string[];
-}
 
 // async function getData(): Promise<User[]> {
 //

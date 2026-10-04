@@ -1,11 +1,8 @@
 'use client'
 import NavLinks from './nav-links';
-import { PowerIcon } from '@heroicons/react/24/outline';
 // import { lusitana } from '@/global/fonts';
-import { useRouter } from 'next/navigation';
 
 export default function SideNav() {
-  const router = useRouter();
   return (
     <div className="flex h-full flex-col px-2 py-2 bg-violet-50">
       {/* <div className="w-full">

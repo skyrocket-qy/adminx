@@ -1,12 +1,5 @@
 import { DataTable } from "./data-table"
-import { client } from "@/services/connect/rbac/client"
 import {  Resource, columns } from "./columns"
-
-interface ProtoTuple {
-  id: string | number;
-  ns?: string;
-  name?: string;
-}
 
 // async function getData(): Promise<Resource[]> {
 //
@@ -15,17 +8,6 @@ interface ProtoTuple {
 //   //     size: 50,
 //   //   }
 //   // })
-
-  
-  const protoTuples: ProtoTuple[] = [];
-
-  const users: Resource[] = protoTuples.map((protoTuple: ProtoTuple) => {
-    return {
-      id: protoTuple.id.toString(),
-      ns: protoTuple.ns || '',
-      name: protoTuple.name || '',
-    }
-  })
 
   // return users;
 // }

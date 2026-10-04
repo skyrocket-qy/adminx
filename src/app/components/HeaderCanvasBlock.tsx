@@ -2,7 +2,7 @@
 
 import { useRef, useEffect } from 'react';
 // 1. Import the specialized header drawing function
-import { drawHeaderWithBlockText, drawBfs, drawStickMan } from '@/lib/canvas-drawer'; 
+import { drawHeaderWithBlockText } from '@/lib/canvas-drawer'; 
 
 interface HeaderCanvasBlockProps {
   title: string;

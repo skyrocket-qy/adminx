@@ -25,7 +25,6 @@ import * as React from "react"
 import { CreateRoleDrawer } from "./drawer"
 import { Input } from "@/components/ui/input"
 import { client } from "@/services/connect/rbac/client";
-import { Role } from "./columns";
 import { adminTableFeatures } from "@/app/admin/table-features";
 import { parseQueryStringToAST } from "@/lib/ast";
 import clsx from "clsx"; // optional: helps manage conditional class names

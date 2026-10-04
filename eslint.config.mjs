@@ -25,7 +25,7 @@ const eslintConfig = defineConfig([
   {
     rules: {
       // Set to "warn" to show a warning without failing the build
-      "@typescript-eslint/no-unused-vars": "warn",
+      "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
       // React Compiler-era advisories introduced by eslint-config-next v16.
       // The app predates these rules; fixing them is tracked separately and
       // is a prerequisite for enabling `reactCompiler` in next.config.ts.

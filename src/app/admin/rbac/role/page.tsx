@@ -1,11 +1,5 @@
 import { DataTable } from "./data-table"
-import { client } from "@/services/connect/rbac/client"
 import {  Role, columns } from "./columns"
-
-interface ProtoTuple {
-  id: string | number;
-  name?: string;
-}
 
 // async function getData(): Promise<Role[]> {
 //

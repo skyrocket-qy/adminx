@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/drawer";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Select, SelectTrigger, SelectContent, SelectItem } from "@/components/ui/select";
 import { client } from "@/services/connect/client";
 import { tupleFormSchema as schema, type TupleFormData as FormData } from "@/lib/schemas";
 
@@ -21,7 +20,6 @@ export function CreateRoleDrawer() {
   const {
     register,
     handleSubmit,
-    setValue,
     reset,
     formState: { errors },
   } = useForm<FormData>({

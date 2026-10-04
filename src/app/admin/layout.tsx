@@ -1,6 +1,5 @@
 'use client';
 import SideNav from './sidenav';
-import { UserAvatarMenu } from './header';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (

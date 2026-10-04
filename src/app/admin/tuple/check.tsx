@@ -20,7 +20,7 @@ export default function CheckBox() {
         const timer = setTimeout(() => {
             console.log("Query input:", checkInput);
             try{
-                const out = parseTuple(checkInput);
+                parseTuple(checkInput);
                 setParseError(null);
             }catch(e: unknown){
                 console.error(e);
