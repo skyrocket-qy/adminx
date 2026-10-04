@@ -24,3 +24,6 @@ test-results
 *.swp
 .idea
 .vscode
+
+# TS incremental build cache
+tsconfig.tsbuildinfo
