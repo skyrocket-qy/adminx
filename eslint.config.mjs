@@ -13,8 +13,14 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     // Committed static export for GitHub Pages
     "docs/**",
+    // Test/build artifacts
+    "coverage/**",
+    "playwright-report/**",
+    "test-results/**",
     // Vendored shadcn/ui components
     "src/components/ui/**",
+    // Generated protobuf code
+    "src/lib/protos/**",
   ]),
   {
     rules: {
