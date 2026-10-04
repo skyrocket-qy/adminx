@@ -1,5 +1,6 @@
 // components/LinkBar.tsx
 import React from 'react';
+import Image from 'next/image';
 import LinkItem from '@/app/components/LinkItem';
 
 const LinkBar = () => {
@@ -14,7 +15,7 @@ const LinkBar = () => {
 
   return (
     <div className=" h-full rounded-lg">
-      <img src='/head.png' className='m-0.5 mb-6 h-9 w-9'/>
+      <Image src='/head.png' alt="Jimmy Huang" width={36} height={36} className='m-0.5 mb-6 h-9 w-9'/>
       <div className="">
         {links.map((link, index) => (
           <LinkItem key={index} href={link.href} src={link.src} alt={link.alt} />

@@ -1,4 +1,5 @@
 // import Link from 'next/link';
+import Image from 'next/image';
 
 export const Header: React.FC = () => {
   return (
@@ -6,7 +7,7 @@ export const Header: React.FC = () => {
         flex flex-row`} 
       >
         <div className='mr-12 ml-8 flex items-center'>
-            <img src='/head.png' className="size-12" />
+            <Image src='/head.png' alt="" width={48} height={48} className="size-12" />
         </div>
         <div className="flex items-center h-full text-xl ml-8 mr-8 text-center">
             Fontech

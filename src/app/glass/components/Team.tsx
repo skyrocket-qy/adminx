@@ -1,4 +1,5 @@
 'use client'
+import Image from "next/image";
 import { motion } from "framer-motion";
 
 const Team = () => {
@@ -42,9 +43,11 @@ const Team = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.2 }}
             >
-              <img
+              <Image
                 src={member.avatar}
                 alt={member.name}
+                width={128}
+                height={128}
                 className="w-32 h-32 rounded-full mx-auto mb-4"
               />
               <h3 className="text-2xl font-bold mb-2">{member.name}</h3>

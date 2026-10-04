@@ -6,6 +6,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuLabel,
 } from "@/components/ui/dropdown-menu"
+import Image from "next/image"
 import { LogOut, User, Settings } from "lucide-react"
 
 export function UserAvatarMenu() {
@@ -15,10 +16,11 @@ export function UserAvatarMenu() {
         <DropdownMenuTrigger asChild>
           <button className="rounded-full border-1 border-violet-300 shadow-sm 
             hover:shadow-md transition focus:outline-none">
-            <img
+            <Image
               src="/user.png"
               alt="User avatar"
-              // className="w-8 h-8 rounded-full object-cover"
+              width={32}
+              height={32}
               className="
                 w-8 h-8 rounded-full object-cover border border-violet-300 shadow-sm
                 transition
